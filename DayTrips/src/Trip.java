@@ -10,11 +10,20 @@ public class Trip {
 	private ArrayList<String> types = new ArrayList<String>();
 	private String duration ="";
 	private int capacity = 0;
-	private boolean soldOut = false;
 	private String location = "";
+	private boolean soldOut = false;	
+	private int value = 0;
 	
 	
-	public static void updateCapacity(String tripID, )
+	public int getCapacity() {
+		return this.capacity;
+		
+	}
+	
+	public void setCapacity(int value) {
+		this.capacity = value;
+		
+	}
 	
 	
 	

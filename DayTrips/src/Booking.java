@@ -10,12 +10,12 @@ public class Booking {
 	
 	public static void insertIntoDB(String name, String date,String ssn,String email, 
 									int pax, String tripID, String phoneNo) {
+		//kalla á rögnu aðferð
+		
 		
 	}
-	public static void updateTripCapacity(String tripID, int pax, String date) {
-		
-	}
-
+	//kalla á setters og getters í trip
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 

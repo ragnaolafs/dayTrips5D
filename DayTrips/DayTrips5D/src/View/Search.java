@@ -5,6 +5,7 @@
  */
 package View;
 
+import Controller.DatabaseController;
 import Model.Trip;
 import java.util.ArrayList;
 
@@ -28,9 +29,15 @@ public class Search extends javax.swing.JFrame {
     public Search() {
         initComponents();
     }
-    
+    /**
+     * Looks for the given string in title and description of all trips
+     * and returns ArrayList<Trip> with the results.
+     **/
     public ArrayList<Trip> search(String string) {
         ArrayList<Trip> searchResult = new ArrayList();
+        searchResult = DatabaseController.search(string); // asdf don't need sql here?
+        // return DatabaseController.search(string); 
+        // Maybe the first two lines are more descriptive?
         return searchResult;
     }
 

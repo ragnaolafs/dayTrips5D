@@ -66,16 +66,15 @@ public class DatabaseConnection {
         
         
         
-        public ArrayList<Trip> getTripList() {
-            ArrayList<Trip> tripList = new ArrayList<Trip>();
-            
-            String q = "SELECT * FROM Trips";
-            
-            ResultSet rs = null;
-            
-            Trip trip;
-            
-            return tripList;
+        public void closeConnection() {
+            try {
+                if(connection != null) {
+                    connection.close();
+                }
+            }
+            catch (SQLException e) {
+                System.err.println(e.getMessage());
+            }
         }
 	
 	public static void main(String[] args) {

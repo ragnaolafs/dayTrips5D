@@ -15,7 +15,7 @@ import java.util.ArrayList;
  */
 public class DatabaseConnection {
 	
-	
+
 	Connection connection = null;
 	Statement stmt = null;
 	ResultSet r = null;
@@ -81,4 +81,5 @@ public class DatabaseConnection {
 	public static void main(String[] args) {
 		
 	}
+
 }

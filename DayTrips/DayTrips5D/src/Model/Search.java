@@ -76,10 +76,10 @@ public class Search {
     **/
     private ArrayList<Trip> searchPrices(){
         ArrayList<Trip> locations = searchLocations(checkboxes);
-        ArrayList<Trip> priceRange = new ArrayList();
+        ArrayList<Trip> priceTrips = new ArrayList();
         
-        int lower = TripsView.jPriceFrom;
-        int higher = TripsView.jPriceTo;
+        int lower = TripsView.jPriceFrom.getValue();
+        int higher = TripsView.jPriceTo.getValue();
         
         for(int i = 0; i < locations.size(); i++){
             

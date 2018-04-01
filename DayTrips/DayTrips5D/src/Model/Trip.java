@@ -15,7 +15,7 @@ public class Trip {
 	private int tripID;
 	private ArrayList<String> dates;
 	private String time;
-	private String nameOfTrip;
+	public String nameOfTrip;
 	private String description;
 	private int price;
 	private ArrayList<String> types;

@@ -96,7 +96,7 @@ public class DatabaseController {
     
     public static ArrayList<Trip> searchDate(String date) {
         
-        String q = "SELECT * FROM Trips WHERE location = '" + date + "'";
+        String q = "SELECT * FROM Trips WHERE dates = '" + date + "'";
         
         ArrayList<Trip> tripList = helperSearch(q);
         
@@ -113,7 +113,73 @@ public class DatabaseController {
         return tripList;
     }
     
-    public static void main(String args[]) {
+    // asdf útfæra föll sem ráða við ef einhvern dálk vantar löglega í töfluna
+    public static void insertTrip(ArrayList<String> dates, String time, String nameOfTrip, 
+            String description, int price, ArrayList<String> types, String duration,
+            int capacity, boolean soldOut, String location, String host) {
         
+   // asdf breyta host í hostlogin!!!
+        
+        DatabaseConnection dbConn = new DatabaseConnection();
+        
+        String datesString = "";
+        for (int i = 0; i < dates.size()-1; i++) {
+            datesString += dates.get(i) + ", ";
+        }
+        // add last date without comma afterwards
+        datesString += dates.get(dates.size()-1); 
+        
+        String typesString = "";
+        for (int i = 0; i < types.size()-1; i++) {
+            typesString += types.get(i) + ", ";
+        }
+        // add last date without comma afterwards
+        typesString += types.get(types.size()-1);
+        
+        int soldOutInt = 0;
+        if (soldOut) {
+            soldOutInt = 1;
+        }
+        System.out.println("insert");
+        String q = "INSERT INTO Trips (dates, time, nameOfTrip, description, " +
+                "price, types, duration, capacity, soldOut, location, host) VALUES ('" 
+                + datesString + "', '" 
+                + time + "', '" 
+                + nameOfTrip + "', '" 
+                + description + "', " 
+                + price + ", '" 
+                + typesString + "', '" 
+                + duration + "', " 
+                + capacity + ", " 
+                + soldOutInt + ", '" 
+                + location + "', '" 
+                + host + "')";
+        System.out.println(q);
+        try {
+            dbConn.insert(q);
+        }
+        catch (Exception e) {
+            
+            System.err.println(e.getMessage());
+        }
+        finally {
+            dbConn.closeConnection();
+        }
+    }
+    
+    
+    public static void main(String args[]) {
+        ArrayList<String> dates = new ArrayList<String>();
+        dates.add("2.2.19");
+        ArrayList<String> types = new ArrayList<String>();
+        types.add("skemmtileg");
+        
+        //insertTrip(dates, "12:00", "Ferd", "skemmtileg", 2000, types, "6 timar",
+        //        30, false, "Akureyri", "Hugrún");
+        
+        ArrayList<Trip> location = searchDate("2.2.19");
+        for (int i = 0; i < location.size(); i++) {
+            System.out.println(location.get(i).getTripID());
+        }
     }
 }

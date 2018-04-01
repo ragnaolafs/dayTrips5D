@@ -5,6 +5,7 @@
  */
 package View;
 
+import Model.Search;
 import Model.Trip;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -49,6 +50,17 @@ public class TripsView extends javax.swing.JFrame {
             row[2]= tripList.get(i).getLocation();
         }
     }
+    
+    public ArrayList<JCheckBox> getCheckboxes(){
+        ArrayList<JCheckBox> checkboxes = new ArrayList();
+        checkboxes.push(jCheckReykjavik);
+        checkboxes.push(jCheckNorth);
+        checkboxes.push(jCheckSouth);
+        checkboxes.push(jCheckWest);
+        checkboxes.push(jCheckEast);
+        return checkboxes;
+    }
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -94,7 +106,7 @@ public class TripsView extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jInfo);
 
         jLabel1.setFont(new java.awt.Font("Malayalam MN", 1, 18)); // NOI18N
-        jLabel1.setText(this.Trip.name);
+        jLabel1.setText(this.getName());
 
         jBook.setText("Book trip");
         jBook.addActionListener(new java.awt.event.ActionListener() {
@@ -160,7 +172,7 @@ public class TripsView extends javax.swing.JFrame {
                 {null, null, null}
             },
             new String [] {
-                "Nafn ferðar", "Verð", "Staðsetning"
+                "Name", "Price", "Location"
             }
         ));
         jScroll.setViewportView(jTable);
@@ -181,6 +193,11 @@ public class TripsView extends javax.swing.JFrame {
         jLabel2.setText("Search after text:");
 
         jSearch.setText("Search");
+        jSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jSearchActionPerformed(evt);
+            }
+        });
 
         jPriceFrom.setMajorTickSpacing(50);
         jPriceFrom.setMaximum(500);
@@ -198,6 +215,7 @@ public class TripsView extends javax.swing.JFrame {
 
         jLabel4.setText("Price range to (thousand/isk):");
 
+        jCheckReykjavik.setSelected(true);
         jCheckReykjavik.setText("Reykjavik(capital area)");
         jCheckReykjavik.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -205,10 +223,13 @@ public class TripsView extends javax.swing.JFrame {
             }
         });
 
+        jCheckNorth.setSelected(true);
         jCheckNorth.setText("North Iceland");
 
+        jCheckSouth.setSelected(true);
         jCheckSouth.setText("South Iceland");
 
+        jCheckWest.setSelected(true);
         jCheckWest.setText("West Iceland");
         jCheckWest.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -216,6 +237,7 @@ public class TripsView extends javax.swing.JFrame {
             }
         });
 
+        jCheckEast.setSelected(true);
         jCheckEast.setText("East Iceland");
 
         jDateChooseTo.setBackground(new java.awt.Color(153, 204, 255));
@@ -241,9 +263,12 @@ public class TripsView extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jPriceFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jCheckReykjavik)
-                                        .addGap(61, 61, 61)
-                                        .addComponent(jLabel5)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jCheckReykjavik)
+                                                .addGap(61, 61, 61)
+                                                .addComponent(jLabel5))
+                                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jDateChooseFrom, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -261,10 +286,8 @@ public class TripsView extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jSearchText, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jMoreInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jMoreInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGroup(jPanel1Layout.createSequentialGroup()
                                                 .addGap(3, 3, 3)
                                                 .addComponent(jSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -272,9 +295,7 @@ public class TripsView extends javax.swing.JFrame {
                                             .addComponent(jCheckNorth)
                                             .addComponent(jCheckEast)
                                             .addComponent(jCheckWest))
-                                        .addGap(94, 94, 94)
-                                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 194, Short.MAX_VALUE)))
+                                        .addGap(0, 0, Short.MAX_VALUE)))
                                 .addContainerGap())))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(30, 30, 30)
@@ -349,10 +370,9 @@ public class TripsView extends javax.swing.JFrame {
 
     private void jMoreInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMoreInfoActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(jDialogMoreInfo, evt);
-
-        //jDialogMoreInfo.setSize(200,200);
-        //jDialogMoreInfo.setVisible(true);
+        //int n = JOptionPane.showConfirmDialog(this, evt, title, WIDTH, HEIGHT)
+        jDialogMoreInfo.setSize(200,200);
+        jDialogMoreInfo.setVisible(true);
     }//GEN-LAST:event_jMoreInfoActionPerformed
 
     private void jBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBookActionPerformed
@@ -371,6 +391,11 @@ public class TripsView extends javax.swing.JFrame {
     private void jCheckWestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckWestActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jCheckWestActionPerformed
+
+    private void jSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSearchActionPerformed
+        // TODO add your handling code here:
+        //Search.search();
+    }//GEN-LAST:event_jSearchActionPerformed
 
     /**
      * @param args the command line arguments
@@ -410,14 +435,14 @@ public class TripsView extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jBook;
-    private javax.swing.JCheckBox jCheckEast;
-    private javax.swing.JCheckBox jCheckNorth;
-    private javax.swing.JCheckBox jCheckReykjavik;
-    private javax.swing.JCheckBox jCheckSouth;
-    private javax.swing.JCheckBox jCheckWest;
+    public javax.swing.JCheckBox jCheckEast;
+    public javax.swing.JCheckBox jCheckNorth;
+    public javax.swing.JCheckBox jCheckReykjavik;
+    public javax.swing.JCheckBox jCheckSouth;
+    public javax.swing.JCheckBox jCheckWest;
     private javax.swing.JButton jClose;
-    private com.toedter.calendar.JDateChooser jDateChooseFrom;
-    private com.toedter.calendar.JDateChooser jDateChooseTo;
+    public com.toedter.calendar.JDateChooser jDateChooseFrom;
+    public com.toedter.calendar.JDateChooser jDateChooseTo;
     private javax.swing.JDialog jDialogMoreInfo;
     private javax.swing.JTextArea jInfo;
     private javax.swing.JLabel jLabel1;
@@ -429,12 +454,12 @@ public class TripsView extends javax.swing.JFrame {
     private javax.swing.JButton jMoreInfo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JSlider jPriceFrom;
-    private javax.swing.JSlider jPriceTo;
+    public javax.swing.JSlider jPriceFrom;
+    public javax.swing.JSlider jPriceTo;
     private javax.swing.JScrollPane jScroll;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jSearch;
-    private javax.swing.JTextField jSearchText;
+    public javax.swing.JTextField jSearchText;
     private javax.swing.JTable jTable;
     // End of variables declaration//GEN-END:variables
 }

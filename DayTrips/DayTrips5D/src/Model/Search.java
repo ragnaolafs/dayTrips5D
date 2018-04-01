@@ -6,60 +6,94 @@
 package Model;
 
 import View.TripsView;
+import Controller.DatabaseController;
 import java.util.ArrayList;
 import javax.swing.JCheckBox;
 
 /**
- * This class searches the database for trips whose location, time/date, 
- * name, description, price, type and duration fall within the conditions
- * selected/specified by the user through the GUI. 
- * Search first searches the database for trips having the desired locations 
+ * This class can search the database for trips whose location, date, 
+ * price, name and description fall within the conditions selected/specified by
+ * the user through the GUI. 
+ * Each search method returns a container with some properties that 
+ * DatabaseController then uses to search for the desired trips.
+ * (Search first searches the database for trips having the desired locations 
  * and gives an ArrayList<Trip> with the results. The following search methods 
  * then each search the results of their forerunning ArrayList<Trip> objects in 
  * a cascading manner until the last method delivers the final result of the 
- * search.
+ * search.)
  * @author karen
  */
 public class Search {
     
+    private String query;
     private String location;
     private int priceHigher;
     private int priceLower;
     private String[] dates; // hmm
     private String keyword;
-    private JCheckBox[] checkboxes = [TripsView.jCheckReykjavik];
-    // ^til að þetta virki, pulla - hugrún gerði public
+    private TripsView tripsView = new TripsView();
+    private final ArrayList<JCheckBox> checkboxes = tripsView.getCheckboxes();
     private ArrayList<Trip> resultSet;
 
     /**
     * Looks for trips placed in locations selected by the user through the
     * GUI and returns ArrayList<Trip> with the results.
     **/
-    private ArrayList<JCheckBox> searchLocations(JCheckBox[] checkboxes){ // breyta inntaki eitthað asdf
+    private ArrayList<Trip> searchLocations(ArrayList<JCheckBox> checkboxes){
+        // ef leitarstrengurinn er tómur, gera þetta eins og venjulega
+        // ef ekki, þá leita þar og svo gera rest
         ArrayList<JCheckBox> selectedBoxes = new ArrayList();
+        ArrayList<Trip> trips = new ArrayList();
         
-        for(int i = 0; i < checkboxes.length; i++){
-            if(checkboxes[i].isSelected()){
-                selectedBoxes.add(checkboxes[i]);
+        for(int i = 0; i < checkboxes.size(); i++){
+            if(checkboxes.get(i).isSelected()){
+                selectedBoxes.add(checkboxes.get(i));
             }
         }
         
         // If no locations are selected, search in all locations.
         if(selectedBoxes.isEmpty()){
-            for(int i = 0; i < checkboxes.length; i++){
-                selectedBoxes.add(checkboxes[i]);
+            for(int i = 0; i < checkboxes.size(); i++){
+                selectedBoxes.add(checkboxes.get(i));
             }
         }
-        return selectedBoxes;
+        
+        // Now look through all trips in database and find those in desired
+        // locations.
+        for(int i = 0; i < selectedBoxes.size(); i++){// fyrir öll völdu boxin asdf
+            // locationTrips includes all trips for a location in selectedBoxes
+            ArrayList<Trip> locationTrips = new ArrayList();
+            locationTrips = DatabaseController.searchLocation(selectedBoxes.get(i).getText());
+            
+            for(int j = 0; j < locationTrips.size(); j++){
+                trips.add(locationTrips.get(j));
+            }
+        }
+        return trips;
     }
     
     /**
     * Looks for trips within the timeframe specified by the user through the
     * GUI and returns ArrayList<Trip> with the results.
     **/
-    private int[] searchPrices(){
-        int[] priceRange = [TripsView.jPriceFrom, TripsView.jPriceTo];
-        return priceRange;
+    private ArrayList<Trip> searchPrices(){
+        //sql taka inn result?
+        ArrayList<Trip> locations = searchLocations(checkboxes);
+        ArrayList<Trip> priceTrips = new ArrayList();
+        
+        int lower = tripsView.jPriceFrom.getValue();
+        int higher = tripsView.jPriceTo.getValue();
+        
+        // Leita að öllum trips within price range
+        // Fyrir öll stök í price range: Ef location.contains þær ferðir
+        //  þá priceTrips.add(i)
+        
+        for(int i = 0; i < locations.size(); i++){
+            if(locations.get(i).getPrice()<lower || locations.get(i).getPrice()>higher){
+                locations.remove(i);
+            }
+        }
+        return priceTrips;
     }
     
     /**
@@ -67,9 +101,9 @@ public class Search {
     * GUI and returns ArrayList<Trip> with the results.
     **/
     private ArrayList<Trip> searchDates(){
-        ArrayList<Trip> result = searchPrices(priceHigher, priceLower, resultSet);
-        
-        return result;
+        ArrayList<Trip> dates = new ArrayList();
+        TripsView.jDateChooseFrom
+        return dates;
     }
     
     // Ef síðasta result skilar null, grípa það og skila e-u

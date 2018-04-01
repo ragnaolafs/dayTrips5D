@@ -28,8 +28,9 @@ public class Search {
     private String duration;
     private String[] dates;
     
-    // Order: Location, price, string(if empty then return input),
-    // date, time, type, duration
+    // Order: Location, price, 
+    // string(if empty then return input),
+    // date, type
    
     /**
     * Looks for trips placed in locations selected by the user through the
@@ -39,6 +40,7 @@ public class Search {
         ArrayList<Trip> result = new ArrayList();
         // iterate through checkboxes and push their true (checked)
         // values into an ArrayList, which is then returned.
+        // IF NONE are selected, search in all locations
         return result;
     }
     
@@ -60,6 +62,18 @@ public class Search {
            
         return result;
     }
+    
+    /**
+    * Looks for trips within the timeframe specified by the user through the
+    * GUI and returns ArrayList<Trip> with the results.
+    **/
+    public ArrayList<Trip> searchTypes(){
+        ArrayList<Trip> result = new ArrayList();
+           
+        return result;
+    }
+    
+    // Ef síðasta result skilar null, grípa það og skila e-u
     
     /**
     * Looks for the given string in title and description of all trips

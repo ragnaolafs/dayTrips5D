@@ -5,7 +5,9 @@
  */
 package Model;
 
+import View.TripsView;
 import java.util.ArrayList;
+import javax.swing.JCheckBox;
 
 /**
  * This class searches the database for trips whose location, time/date, 
@@ -20,56 +22,53 @@ import java.util.ArrayList;
  */
 public class Search {
     
-    private ArrayList<String> type;
-    private int priceRange;
-    private int priceHigher;
     private String location;
+    private int priceHigher;
+    private int priceLower;
+    private String[] dates; // hmm
     private String keyword;
-    private String duration;
-    private String[] dates;
-    
-    // Order: Location, price, 
-    // string(if empty then return input),
-    // date, type
-   
+    private JCheckBox[] checkboxes = [TripsView.jCheckReykjavik];
+    // ^til að þetta virki, pulla - hugrún gerði public
+    private ArrayList<Trip> resultSet;
+
     /**
     * Looks for trips placed in locations selected by the user through the
     * GUI and returns ArrayList<Trip> with the results.
     **/
-    public ArrayList<Trip> searchLocations(String checkboxes){ // breyta inntaki eitthað asdf
-        ArrayList<Trip> result = new ArrayList();
-        // iterate through checkboxes and push their true (checked)
-        // values into an ArrayList, which is then returned.
-        // IF NONE are selected, search in all locations
-        return result;
+    private ArrayList<JCheckBox> searchLocations(JCheckBox[] checkboxes){ // breyta inntaki eitthað asdf
+        ArrayList<JCheckBox> selectedBoxes = new ArrayList();
+        
+        for(int i = 0; i < checkboxes.length; i++){
+            if(checkboxes[i].isSelected()){
+                selectedBoxes.add(checkboxes[i]);
+            }
+        }
+        
+        // If no locations are selected, search in all locations.
+        if(selectedBoxes.isEmpty()){
+            for(int i = 0; i < checkboxes.length; i++){
+                selectedBoxes.add(checkboxes[i]);
+            }
+        }
+        return selectedBoxes;
     }
     
     /**
     * Looks for trips within the timeframe specified by the user through the
     * GUI and returns ArrayList<Trip> with the results.
     **/
-    public ArrayList<Trip> searchPrices(int lower, int higher){
-        ArrayList<Trip> result = searchLocations();
-        return result;
+    private int[] searchPrices(){
+        int[] priceRange = [TripsView.jPriceFrom, TripsView.jPriceTo];
+        return priceRange;
     }
     
     /**
     * Looks for trips within the timeframe specified by the user through the
     * GUI and returns ArrayList<Trip> with the results.
     **/
-    public ArrayList<Trip> searchDates(){
-        ArrayList<Trip> result = new ArrayList();
-           
-        return result;
-    }
-    
-    /**
-    * Looks for trips within the timeframe specified by the user through the
-    * GUI and returns ArrayList<Trip> with the results.
-    **/
-    public ArrayList<Trip> searchTypes(){
-        ArrayList<Trip> result = new ArrayList();
-           
+    private ArrayList<Trip> searchDates(){
+        ArrayList<Trip> result = searchPrices(priceHigher, priceLower, resultSet);
+        
         return result;
     }
     
@@ -79,11 +78,15 @@ public class Search {
     * Looks for the given string in title and description of all trips
     * and returns ArrayList<Trip> with the results.
     **/
-    public ArrayList<Trip> searchStrings(String string) {
+    private ArrayList<Trip> searchStrings(String string) {
        ArrayList<Trip> searchResult = new ArrayList();
        searchResult = DatabaseController.search(string); 
        // return DatabaseController.search(string); 
        // Maybe the first two lines are more descriptive?
        return searchResult;
+    }
+    
+    public ArrayList<Trip> search() {
+        
     }
 }

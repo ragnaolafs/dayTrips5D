@@ -16,23 +16,35 @@ import java.util.ArrayList;
  */
 public class DatabaseController {
     
-    public static ArrayList<Trip> search(String q) {
+    private static ArrayList<String> stringToArrayList(String s) {
+        String[] split = s.split(", ");
+        ArrayList<String> splitList = new ArrayList<String>();
+        for (int i = 0; i < split.length; i++) {
+            splitList.add(split[i]);
+        }
+        return splitList;
+    }
+    
+    
+    private static ArrayList<Trip> helperSearch(String q) {
         ArrayList<Trip> tripList = new ArrayList<Trip>();
         
         DatabaseConnection dbConn = new DatabaseConnection();
         
-        String searchQuery = "SELECT * FROM Trips WHERE nameOfTrip LIKE '%" + q + "%'"; // '%q%'
-        
         try {
-            // asdf útfæra streng betur!!!
-            ResultSet rs = dbConn.select(searchQuery);
+            ResultSet rs = dbConn.select(q);
             Trip trip;
 
             while (rs.next()) {
-                trip = new Trip(rs.getInt("tripID"), rs.getString("dates"), 
+                String dates = rs.getString("dates");
+                String types = rs.getString("types");
+                ArrayList<String> datesList = stringToArrayList(dates);
+                ArrayList<String> typesList = stringToArrayList(dates);
+                
+                trip = new Trip(rs.getInt("tripID"), datesList, 
                         rs.getString("time"), rs.getString("nameOfTrip"), 
-                        rs.getString("description"), rs.getString("price"), 
-                        rs.getString("types"), rs.getString("duration"), 
+                        rs.getString("description"), rs.getInt("price"), 
+                        typesList, rs.getString("duration"), 
                         rs.getInt("capacity"), rs.getBoolean("soldOut"), 
                         rs.getString("location"));
                 
@@ -48,36 +60,55 @@ public class DatabaseController {
         
         return tripList;
     }
-            
-            
-    public static ArrayList<Trip> getTripList() {
-        ArrayList<Trip> tripList = new ArrayList<Trip>();
+    
+    
+    public static ArrayList<Trip> search(String q) {
         
-        DatabaseConnection dbConn = new DatabaseConnection();
+        String searchQuery = "SELECT * FROM Trips WHERE nameOfTrip LIKE '%" + q + 
+                "%' COLLATE NOCASE OR description LIKE '%" + q + "%' COLLATE NOCASE"; // '%q%'
+        
+        ArrayList<Trip> tripList = helperSearch(searchQuery);
+        
+        return tripList;
+    }
+    
+    
+    public static ArrayList<Trip> searchLocation(String location) {
+        
+        String q = "SELECT * FROM Trips WHERE location = '" + location + "'";
+        
+        ArrayList<Trip> tripList = helperSearch(q);
+        
+        return tripList;
+    }
+    
+    
+    public static ArrayList<Trip> searchPrice(int lower, int higher) {
+        
+        String q = "SELECT * FROM Trips WHERE price > " + lower + 
+                " AND price < " + higher;
+        
+        ArrayList<Trip> tripList = helperSearch(q);
+        
+        return tripList;
+    }
+    
+    
+    public static ArrayList<Trip> searchDate(String date) {
+        
+        String q = "SELECT * FROM Trips WHERE location = '" + date + "'";
+        
+        ArrayList<Trip> tripList = helperSearch(q);
+        
+        return tripList;
+    }
+            
+            
+    public static ArrayList<Trip> getTripList() {       
 
         String q = "SELECT * FROM Trips";
         
-        try {
-            ResultSet rs = dbConn.select(q);
-            Trip trip;
-
-            while (rs.next()) {
-                trip = new Trip(rs.getInt("tripID"), rs.getString("dates"), 
-                        rs.getString("time"), rs.getString("nameOfTrip"), 
-                        rs.getString("description"), rs.getString("price"), 
-                        rs.getString("types"), rs.getString("duration"), 
-                        rs.getInt("capacity"), rs.getBoolean("soldOut"), 
-                        rs.getString("location"));
-                
-                tripList.add(trip);
-            }
-        }
-        catch (SQLException e) {
-            System.err.println(e.getMessage());
-        }
-        finally {
-            dbConn.closeConnection();
-        }
+        ArrayList<Trip> tripList = helperSearch(q);
 
         return tripList;
     }

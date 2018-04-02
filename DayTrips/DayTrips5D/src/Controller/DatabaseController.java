@@ -8,7 +8,10 @@ package Controller;
 import Model.Trip;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -100,16 +103,28 @@ public class DatabaseController {
     }
     
     
-    public ArrayList<Trip> searchDate(String dateTo, String dateFrom) {
+    public ArrayList<Trip> searchDate(String dateFrom, String dateTo) throws ParseException {
+        
+        SimpleDateFormat from = new SimpleDateFormat(dateFrom);
+        SimpleDateFormat to = new SimpleDateFormat(dateTo);
+        
+        Date fromD = from.parse(dateFrom);
+        Date toD = from.parse(dateTo);
+        
         
         ArrayList<Trip> allTrips = getTripList();
-        
         ArrayList<Trip> tripMatches = new ArrayList<Trip>();
         
         for (int i = 0; i < allTrips.size(); i++) {
             ArrayList<String> dates = allTrips.get(i).getDates();
+            
+            
             for (int j = 0; j < dates.size(); j++) {
-                if (dates.get(i).equals(dateTo)) {
+                SimpleDateFormat tripDate = new SimpleDateFormat(dates.get(j));
+                Date tripD = tripDate.parse(dates.get(j));
+                
+                if ((tripD.after(fromD) || tripD.equals(fromD)) && 
+                        (tripD.before(toD) || tripD.equals(toD))) {
                     tripMatches.add(allTrips.get(i));
                     break;
                 }
@@ -120,7 +135,7 @@ public class DatabaseController {
         
         //ArrayList<Trip> tripList = helperSearch(q);
         
-        return null;
+        return tripMatches;
     }
             
             

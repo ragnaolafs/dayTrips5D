@@ -466,14 +466,14 @@ public class TripsView extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jBook;
-    public javax.swing.JCheckBox jCheckEast;
-    public javax.swing.JCheckBox jCheckNorth;
-    public javax.swing.JCheckBox jCheckReykjavik;
-    public javax.swing.JCheckBox jCheckSouth;
-    public javax.swing.JCheckBox jCheckWest;
+    private javax.swing.JCheckBox jCheckEast;
+    private javax.swing.JCheckBox jCheckNorth;
+    private javax.swing.JCheckBox jCheckReykjavik;
+    private javax.swing.JCheckBox jCheckSouth;
+    private javax.swing.JCheckBox jCheckWest;
     private javax.swing.JButton jClose;
-    public com.toedter.calendar.JDateChooser jDateChooseFrom;
-    public com.toedter.calendar.JDateChooser jDateChooseTo;
+    private com.toedter.calendar.JDateChooser jDateChooseFrom;
+    private com.toedter.calendar.JDateChooser jDateChooseTo;
     private javax.swing.JDialog jDialogMoreInfo;
     private javax.swing.JTextArea jInfo;
     private javax.swing.JLabel jLabel1;
@@ -485,12 +485,12 @@ public class TripsView extends javax.swing.JFrame {
     private javax.swing.JButton jMoreInfo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    public javax.swing.JSlider jPriceFrom;
-    public javax.swing.JSlider jPriceTo;
+    private javax.swing.JSlider jPriceFrom;
+    private javax.swing.JSlider jPriceTo;
     private javax.swing.JScrollPane jScroll;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jSearch;
-    public javax.swing.JTextField jSearchText;
+    private javax.swing.JTextField jSearchText;
     private javax.swing.JTable jTable;
     // End of variables declaration//GEN-END:variables
 }

@@ -41,35 +41,33 @@ public class Search {
         dbController = new DatabaseController();
     }
     
-
     /**
     * Looks for trips placed in locations selected by the user through the
     * GUI and returns ArrayList<Trip> with the results.
     **/
-    private ArrayList<Trip> searchLocations(ArrayList<String> locations){
-        // ef leitarstrengurinn er tómur, gera þetta eins og venjulega
-        // ef ekki, þá leita þar og svo gera rest
-        
-        // look through all trips in database and find those in desired
-        // locations.
+    private ArrayList<Trip> searchLocations(ArrayList<String> locations, ArrayList<Trip> queryResult){
+        // look through all trips in database and find those in desired locations.
         ArrayList<Trip> trips = dbController.searchLocation(locations);
         
+        if(!queryResult.isEmpty()){ // ef það er leitarstrengur, er queryResult ekki tómt
+            // og við erum með trip lista til að gera samanburð við.
+             
+        }
+        
+        //Annars skilum við bara trips.
         return trips;
     }
     
     /**
-    * Looks for trips within the timeframe specified by the user through the
-    * GUI and returns ArrayList<Trip> with the results.
+    * Looks through the list of trips in the desired locations for trips within the price range specified by the user through the
+    * GUI, then . and returns ArrayList<Trip> with the results.
     **/
-    private ArrayList<Trip> searchPrices(){
-        //sql taka inn result?
-        ArrayList<Trip> locations = searchLocations(checkboxes);
-        ArrayList<Trip> priceTrips = new ArrayList();
+    private ArrayList<Trip> searchPrices(int priceLower, int priceHigher, ArrayList<Trip> trLocations){
+        // lower og higher koma beint úr TripsView, gildi sem yfiraðferð
+        //    tekur inn. Hún kallar svo á searchPrices með þeim.
+        //    trLocations kemur úr inntaki og má bera saman við price leitarniðurst.
         
-        int lower = tripsView.jPriceFrom.getValue();
-        int higher = tripsView.jPriceTo.getValue();
-        
-        // Leita að öllum trips within price range
+        // Leita að öllum trips within price range.
         // Fyrir öll stök í price range: Ef location.contains þær ferðir
         //  þá priceTrips.add(i)
         
@@ -109,18 +107,21 @@ public class Search {
     
     public ArrayList<Trip> search(ArrayList<String> locations, int priceLower,
             int priceHigher, String dateFrom, String dateTo, String searchQuery) {
-        
+        // ASDF bæta við type of trip líka!
         ArrayList<Trip> tripList;
         
         if (searchQuery != "") {
-            tripList = searchStrings(searchQuery);
+            tripList = searchStrings(searchQuery); //búið að búa til arraylist af trips með streng
+            tripList = searchLocations(locations, tripList); //breytum triplist í þessa niðurst
+            tripList = searchPrices(priceLower, priceHigher, tripList);
             // bæta við searchlocation og eyða ef trip í triplist er ekki með location sem passar
         }
         
         else {
-            tripList = searchLocations(locations);
+            ArrayList<Trip> emptyTripList = new Arraylist();
+            tripList = searchLocations(locations, emptyTripList);
         }
         
-        
+        return tripList;
     }
 }

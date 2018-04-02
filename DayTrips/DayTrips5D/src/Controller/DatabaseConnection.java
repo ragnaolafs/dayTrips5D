@@ -27,13 +27,14 @@ public class DatabaseConnection {
                 stmt = connection.createStatement();
             }
             catch (Exception e) {
-                System.err.println(e.getMessage());
+                System.out.println(e);
             }
 	}
         
         
         public void insert(String insertValues) {
             try {
+                System.out.println(insertValues);
                 stmt.executeUpdate(insertValues);
             }
             catch (SQLException e) {

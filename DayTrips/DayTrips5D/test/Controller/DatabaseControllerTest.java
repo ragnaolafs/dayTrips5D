@@ -5,7 +5,10 @@
  */
 package Controller;
 
+import Model.Trip;
+import java.util.ArrayList;
 import org.junit.*;
+import static org.junit.Assert.*;
 
 /**
  *
@@ -27,6 +30,25 @@ public class DatabaseControllerTest {
     
     @Test
     public void testSearch() {
-        
+        ArrayList<Trip> tripList = dbConnMock.select("walk");
+        assertEquals(2, tripList.size());
+    }
+    
+    @Test
+    public void testSearchFail() {
+        ArrayList<Trip> tripList = dbConnMock.select("dustbunnies");
+        assertEquals(0, tripList.size());
+    }
+    
+    @Test
+    public void testSearchLocation() {
+        ArrayList<Trip> tripList = dbConnMock.selectLocation("North");
+        assertEquals(1, tripList.size());
+    }
+    
+    @Test
+    public void testSearchDates() {
+        ArrayList<Trip> tripList = dbConnMock.selectDates("2018-05-03", "2018-05-05");
+        assertEquals(3, tripList.size());
     }
 }

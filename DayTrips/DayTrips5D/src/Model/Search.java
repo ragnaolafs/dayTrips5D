@@ -98,7 +98,7 @@ public class Search {
     
     /**
     * Looks for trips within the timeframe specified by the user through the
-    * GUI and returns ArrayList<Trip> with the results.
+    * GUI and returns 3ArrayList<Trip> with the results.
     **/
     private ArrayList<Trip> searchDates(){
         ArrayList<Trip> dates = new ArrayList();

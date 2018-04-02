@@ -10,9 +10,13 @@ import Model.Trip;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.JCheckBox;
+
 
 /**
  *
@@ -20,6 +24,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class TripsView extends javax.swing.JFrame {
 
+    
     /**
      * Creates new form TripsView
      */
@@ -53,11 +58,11 @@ public class TripsView extends javax.swing.JFrame {
     
     public ArrayList<JCheckBox> getCheckboxes(){
         ArrayList<JCheckBox> checkboxes = new ArrayList();
-        checkboxes.push(jCheckReykjavik);
-        checkboxes.push(jCheckNorth);
-        checkboxes.push(jCheckSouth);
-        checkboxes.push(jCheckWest);
-        checkboxes.push(jCheckEast);
+        checkboxes.add(jCheckReykjavik);
+        checkboxes.add(jCheckNorth);
+        checkboxes.add(jCheckSouth);
+        checkboxes.add(jCheckWest);
+        checkboxes.add(jCheckEast);
         return checkboxes;
     }
    
@@ -393,8 +398,34 @@ public class TripsView extends javax.swing.JFrame {
     }//GEN-LAST:event_jCheckWestActionPerformed
 
     private void jSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSearchActionPerformed
-        // TODO add your handling code here:
-        //Search.search();
+        // Make ArrayList<JCheckBox> for all checked boxes
+        ArrayList<JCheckBox> checkboxes = getCheckboxes();
+        ArrayList<String> locations = new ArrayList();
+        
+        for(int i = 0; i < checkboxes.size(); i++){
+            if(checkboxes.get(i).isSelected()){
+                locations.add(checkboxes.get(i).getText());
+            }
+        }
+        // If no locations are selected, search in all locations.
+        if(locations.isEmpty()){
+            for(int i = 0; i < checkboxes.size(); i++){
+                locations.add(checkboxes.get(i).getText());
+            }
+        }
+        
+        int priceLower = jPriceFrom.getValue();
+        int priceHigher = jPriceTo.getValue();
+        
+        Date dateF = jDateChooseFrom.getDate();
+        String dateFrom = DateFormat.getDateInstance().format(dateF);
+        Date dateT = jDateChooseTo.getDate();
+        String dateTo = DateFormat.getDateInstance().format(dateT);
+        
+        String query = jSearchText.getText();
+        
+        Search search = new Search();
+        search.search(locations, priceLower, priceHigher, dateFrom, dateTo, query);
     }//GEN-LAST:event_jSearchActionPerformed
 
     /**

@@ -13,7 +13,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import org.junit.*;
 import static org.junit.Assert.*;
-
+import java.util.ArrayList;
+import org.junit.*;
+import static org.junit.Assert.*;
 
 public class DatabaseControllerTest {
 
@@ -52,5 +54,4 @@ public class DatabaseControllerTest {
         ArrayList<Trip> tripList = dbConnMock.selectDates("2018-05-03", "2018-05-05");
         assertEquals(3, tripList.size());
     }
-    
 }

@@ -3,18 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package Controller;
 
 import Model.Trip;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import org.junit.*;
+import static org.junit.Assert.*;
 import java.util.ArrayList;
 import org.junit.*;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author ragna
- */
 public class DatabaseControllerTest {
 
     private DatabaseConnectionMock dbConnMock;

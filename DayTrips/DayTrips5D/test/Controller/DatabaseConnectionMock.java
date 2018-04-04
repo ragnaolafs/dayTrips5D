@@ -112,4 +112,6 @@ public class DatabaseConnectionMock {
         
         return tripMatches;
     }
+
 }
+

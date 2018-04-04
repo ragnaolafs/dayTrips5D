@@ -6,6 +6,7 @@
 package Controller;
 
 import Model.Trip;
+import java.text.ParseException;
 import java.util.ArrayList;
 import org.junit.*;
 import static org.junit.Assert.*;
@@ -47,7 +48,7 @@ public class DatabaseControllerTest {
     }
     
     @Test
-    public void testSearchDates() {
+    public void testSearchDates() throws ParseException {
         ArrayList<Trip> tripList = dbConnMock.selectDates("2018-05-03", "2018-05-05");
         assertEquals(3, tripList.size());
     }

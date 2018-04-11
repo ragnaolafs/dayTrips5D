@@ -8,7 +8,10 @@ package Controller;
 import Model.Trip;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -16,7 +19,9 @@ import java.util.ArrayList;
  */
 public class DatabaseController {
     
-    private static ArrayList<String> stringToArrayList(String s) {
+    
+    
+    private ArrayList<String> stringToArrayList(String s) {
         String[] split = s.split(", ");
         ArrayList<String> splitList = new ArrayList<String>();
         for (int i = 0; i < split.length; i++) {
@@ -26,7 +31,7 @@ public class DatabaseController {
     }
     
     
-    private static ArrayList<Trip> helperSearch(String q) {
+    private ArrayList<Trip> helperSearch(String q) {
         ArrayList<Trip> tripList = new ArrayList<Trip>();
         
         DatabaseConnection dbConn = new DatabaseConnection();
@@ -62,7 +67,7 @@ public class DatabaseController {
     }
     
     
-    public static ArrayList<Trip> search(String q) {
+    public ArrayList<Trip> search(String q) {
         
         String searchQuery = "SELECT * FROM Trips WHERE nameOfTrip LIKE '%" + q + 
                 "%' COLLATE NOCASE OR description LIKE '%" + q + "%' COLLATE NOCASE"; // '%q%'
@@ -73,9 +78,13 @@ public class DatabaseController {
     }
     
     
-    public static ArrayList<Trip> searchLocation(String location) {
+    public ArrayList<Trip> searchLocation(ArrayList<String> locations) {
         
-        String q = "SELECT * FROM Trips WHERE location = '" + location + "'";
+        String q = "SELECT * FROM Trips WHERE location = '" + locations.get(0) + "'";
+        
+        for (int i = 1; i < locations.size(); i++) {
+            q += "AND location = '" + locations.get(i) + "'";
+        }
         
         ArrayList<Trip> tripList = helperSearch(q);
         
@@ -83,7 +92,7 @@ public class DatabaseController {
     }
     
     
-    public static ArrayList<Trip> searchPrice(int lower, int higher) {
+    public ArrayList<Trip> searchPrice(int lower, int higher) {
         
         String q = "SELECT * FROM Trips WHERE price > " + lower + 
                 " AND price < " + higher;
@@ -94,17 +103,43 @@ public class DatabaseController {
     }
     
     
-    public static ArrayList<Trip> searchDate(String date) {
+    public ArrayList<Trip> searchDate(String dateFrom, String dateTo) throws ParseException {
         
-        String q = "SELECT * FROM Trips WHERE dates = '" + date + "'";
+        SimpleDateFormat from = new SimpleDateFormat(dateFrom);
+        SimpleDateFormat to = new SimpleDateFormat(dateTo);
         
-        ArrayList<Trip> tripList = helperSearch(q);
+        Date fromD = from.parse(dateFrom);
+        Date toD = from.parse(dateTo);
         
-        return tripList;
+        
+        ArrayList<Trip> allTrips = getTripList();
+        ArrayList<Trip> tripMatches = new ArrayList<Trip>();
+        
+        for (int i = 0; i < allTrips.size(); i++) {
+            ArrayList<String> dates = allTrips.get(i).getDates();
+            
+            
+            for (int j = 0; j < dates.size(); j++) {
+                SimpleDateFormat tripDate = new SimpleDateFormat(dates.get(j));
+                Date tripD = tripDate.parse(dates.get(j));
+                
+                if ((tripD.after(fromD) || tripD.equals(fromD)) && 
+                        (tripD.before(toD) || tripD.equals(toD))) {
+                    tripMatches.add(allTrips.get(i));
+                    break;
+                }
+            }
+        }
+        
+        //String q = "SELECT * FROM Trips WHERE dates = '" + dateTo + "'":
+        
+        //ArrayList<Trip> tripList = helperSearch(q);
+        
+        return tripMatches;
     }
             
             
-    public static ArrayList<Trip> getTripList() {       
+    public ArrayList<Trip> getTripList() {       
 
         String q = "SELECT * FROM Trips";
         
@@ -114,7 +149,7 @@ public class DatabaseController {
     }
     
     // asdf útfæra föll sem ráða við ef einhvern dálk vantar löglega í töfluna
-    public static void insertTrip(ArrayList<String> dates, String time, String nameOfTrip, 
+    public void insertTrip(ArrayList<String> dates, String time, String nameOfTrip, 
             String description, int price, ArrayList<String> types, String duration,
             int capacity, boolean soldOut, String location, String host) {
         
@@ -177,9 +212,11 @@ public class DatabaseController {
         //insertTrip(dates, "12:00", "Ferd", "skemmtileg", 2000, types, "6 timar",
         //        30, false, "Akureyri", "Hugrún");
         
-        ArrayList<Trip> location = searchDate("2.2.19");
+        DatabaseController dbController = new DatabaseController();
+        
+        /*ArrayList<Trip> location = dbController.searchDate("2.2.19");
         for (int i = 0; i < location.size(); i++) {
             System.out.println(location.get(i).getTripID());
-        }
+        }*/
     }
 }

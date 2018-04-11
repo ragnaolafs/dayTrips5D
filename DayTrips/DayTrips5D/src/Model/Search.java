@@ -34,57 +34,40 @@ public class Search {
     private TripsView tripsView = new TripsView();
     private final ArrayList<JCheckBox> checkboxes = tripsView.getCheckboxes();
     private ArrayList<Trip> resultSet;
-
+    private DatabaseController dbController;
+    
+    
+    public Search() {
+        dbController = new DatabaseController();
+    }
+    
     /**
     * Looks for trips placed in locations selected by the user through the
     * GUI and returns ArrayList<Trip> with the results.
     **/
-    private ArrayList<Trip> searchLocations(ArrayList<JCheckBox> checkboxes){
-        // ef leitarstrengurinn er tómur, gera þetta eins og venjulega
-        // ef ekki, þá leita þar og svo gera rest
-        ArrayList<JCheckBox> selectedBoxes = new ArrayList();
-        ArrayList<Trip> trips = new ArrayList();
+    private ArrayList<Trip> searchLocations(ArrayList<String> locations, ArrayList<Trip> queryResult){
+        // look through all trips in database and find those in desired locations.
+        ArrayList<Trip> trips = dbController.searchLocation(locations);
         
-        for(int i = 0; i < checkboxes.size(); i++){
-            if(checkboxes.get(i).isSelected()){
-                selectedBoxes.add(checkboxes.get(i));
-            }
+        if(!queryResult.isEmpty()){ // ef það er leitarstrengur, er queryResult ekki tómt
+            // og við erum með trip lista til að gera samanburð við.
+             
         }
         
-        // If no locations are selected, search in all locations.
-        if(selectedBoxes.isEmpty()){
-            for(int i = 0; i < checkboxes.size(); i++){
-                selectedBoxes.add(checkboxes.get(i));
-            }
-        }
-        
-        // Now look through all trips in database and find those in desired
-        // locations.
-        for(int i = 0; i < selectedBoxes.size(); i++){// fyrir öll völdu boxin asdf
-            // locationTrips includes all trips for a location in selectedBoxes
-            ArrayList<Trip> locationTrips = new ArrayList();
-            locationTrips = DatabaseController.searchLocation(selectedBoxes.get(i).getText());
-            
-            for(int j = 0; j < locationTrips.size(); j++){
-                trips.add(locationTrips.get(j));
-            }
-        }
+        //Annars skilum við bara trips.
         return trips;
     }
     
     /**
-    * Looks for trips within the timeframe specified by the user through the
-    * GUI and returns ArrayList<Trip> with the results.
+    * Looks through the list of trips in the desired locations for trips within the price range specified by the user through the
+    * GUI, then . and returns ArrayList<Trip> with the results.
     **/
-    private ArrayList<Trip> searchPrices(){
-        //sql taka inn result?
-        ArrayList<Trip> locations = searchLocations(checkboxes);
-        ArrayList<Trip> priceTrips = new ArrayList();
+    private ArrayList<Trip> searchPrices(int lower, int higher, ArrayList<Trip> locations){
+        // lower og higher koma beint úr TripsView, gildi sem yfiraðferð
+        //    tekur inn. Hún kallar svo á searchPrices með þeim.
+        //    trLocations kemur úr inntaki og má bera saman við price leitarniðurst.
         
-        int lower = tripsView.jPriceFrom.getValue();
-        int higher = tripsView.jPriceTo.getValue();
-        
-        // Leita að öllum trips within price range
+        // Leita að öllum trips within price range.
         // Fyrir öll stök í price range: Ef location.contains þær ferðir
         //  þá priceTrips.add(i)
         
@@ -93,12 +76,12 @@ public class Search {
                 locations.remove(i);
             }
         }
-        return priceTrips;
+        return locations;
     }
     
     /**
     * Looks for trips within the timeframe specified by the user through the
-    * GUI and returns ArrayList<Trip> with the results.
+    * GUI and returns 3ArrayList<Trip> with the results.
     **/
     private ArrayList<Trip> searchDates(){
         ArrayList<Trip> dates = new ArrayList();
@@ -113,13 +96,32 @@ public class Search {
     **/
     private ArrayList<Trip> searchStrings(String string) {
        ArrayList<Trip> searchResult = new ArrayList();
-       searchResult = DatabaseController.search(string); 
+       searchResult = dbController.search(string); 
        // return DatabaseController.search(string); 
        // Maybe the first two lines are more descriptive?
        return searchResult;
     }
+
     
-    /*public ArrayList<Trip> search() {
+    
+    public ArrayList<Trip> search(ArrayList<String> locations, int priceLower,
+            int priceHigher, String dateFrom, String dateTo, String searchQuery) {
+        // ASDF bæta við type of trip líka!
+        ArrayList<Trip> tripList;
         
-    }*/
+        if (searchQuery != "") {
+            tripList = searchStrings(searchQuery); //búið að búa til arraylist af trips með streng
+            tripList = searchLocations(locations, tripList); //breytum triplist í þessa niðurst
+            tripList = searchPrices(priceLower, priceHigher, tripList);
+            // bæta við searchlocation og eyða ef trip í triplist er ekki með location sem passar
+        }
+        
+        else {
+            ArrayList<Trip> emptyTripList = new ArrayList<Trip>();
+            tripList = searchLocations(locations, emptyTripList);
+        }
+        
+        return tripList;
+    }
+
 }

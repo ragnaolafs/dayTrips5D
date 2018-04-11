@@ -5,14 +5,22 @@
  */
 package View;
 
+import Controller.DatabaseController;
+import Model.Search;
 import Model.Trip;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
+
+import java.util.Date;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.JCheckBox;
+
 
 /**
  *
@@ -20,6 +28,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class TripsView extends javax.swing.JFrame {
 
+    
     /**
      * Creates new form TripsView
      */
@@ -41,7 +50,8 @@ public class TripsView extends javax.swing.JFrame {
     }
     
     public void showTrips(){
-        ArrayList<Trip> tripList = Controller.DatabaseController.getTripList();
+        DatabaseController cntr = new DatabaseController();
+        ArrayList<Trip> tripList =cntr.getTripList();
         DefaultTableModel model = (DefaultTableModel)jTable.getModel();
         Object[] row = new Object[3];
         for(int i = 0; i < tripList.size(); i++){
@@ -400,8 +410,34 @@ public class TripsView extends javax.swing.JFrame {
     }//GEN-LAST:event_jCheckWestActionPerformed
 
     private void jSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSearchActionPerformed
-        // TODO add your handling code here:
-        //Search.search();
+        // Make ArrayList<JCheckBox> for all checked boxes
+        ArrayList<JCheckBox> checkboxes = getCheckboxes();
+        ArrayList<String> locations = new ArrayList();
+        
+        for(int i = 0; i < checkboxes.size(); i++){
+            if(checkboxes.get(i).isSelected()){
+                locations.add(checkboxes.get(i).getText());
+            }
+        }
+        // If no locations are selected, search in all locations.
+        if(locations.isEmpty()){
+            for(int i = 0; i < checkboxes.size(); i++){
+                locations.add(checkboxes.get(i).getText());
+            }
+        }
+        
+        int priceLower = jPriceFrom.getValue();
+        int priceHigher = jPriceTo.getValue();
+        
+        Date dateF = jDateChooseFrom.getDate();
+        String dateFrom = DateFormat.getDateInstance().format(dateF);
+        Date dateT = jDateChooseTo.getDate();
+        String dateTo = DateFormat.getDateInstance().format(dateT);
+        
+        String query = jSearchText.getText();
+        
+        Search search = new Search();
+        search.search(locations, priceLower, priceHigher, dateFrom, dateTo, query);
     }//GEN-LAST:event_jSearchActionPerformed
 
     /**
@@ -442,14 +478,14 @@ public class TripsView extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jBook;
-    public javax.swing.JCheckBox jCheckEast;
-    public javax.swing.JCheckBox jCheckNorth;
-    public javax.swing.JCheckBox jCheckReykjavik;
-    public javax.swing.JCheckBox jCheckSouth;
-    public javax.swing.JCheckBox jCheckWest;
+    private javax.swing.JCheckBox jCheckEast;
+    private javax.swing.JCheckBox jCheckNorth;
+    private javax.swing.JCheckBox jCheckReykjavik;
+    private javax.swing.JCheckBox jCheckSouth;
+    private javax.swing.JCheckBox jCheckWest;
     private javax.swing.JButton jClose;
-    public com.toedter.calendar.JDateChooser jDateChooseFrom;
-    public com.toedter.calendar.JDateChooser jDateChooseTo;
+    private com.toedter.calendar.JDateChooser jDateChooseFrom;
+    private com.toedter.calendar.JDateChooser jDateChooseTo;
     private javax.swing.JDialog jDialogMoreInfo;
     private javax.swing.JTextArea jInfo;
     private javax.swing.JLabel jLabel1;
@@ -461,12 +497,12 @@ public class TripsView extends javax.swing.JFrame {
     private javax.swing.JButton jMoreInfo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    public javax.swing.JSlider jPriceFrom;
-    public javax.swing.JSlider jPriceTo;
+    private javax.swing.JSlider jPriceFrom;
+    private javax.swing.JSlider jPriceTo;
     private javax.swing.JScrollPane jScroll;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jSearch;
-    public javax.swing.JTextField jSearchText;
+    private javax.swing.JTextField jSearchText;
     private javax.swing.JTable jTable;
     // End of variables declaration//GEN-END:variables
 }

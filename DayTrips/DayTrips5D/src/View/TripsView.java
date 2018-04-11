@@ -383,6 +383,11 @@ public class TripsView extends javax.swing.JFrame {
     private void jBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBookActionPerformed
         // TODO add your handling code here:
         //bookthistrip
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new BookingView().setVisible(true);
+            }
+        });
     }//GEN-LAST:event_jBookActionPerformed
 
     private void jSearchTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSearchTextActionPerformed

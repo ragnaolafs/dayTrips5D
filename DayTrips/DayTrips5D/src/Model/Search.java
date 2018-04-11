@@ -62,7 +62,7 @@ public class Search {
     * Looks through the list of trips in the desired locations for trips within the price range specified by the user through the
     * GUI, then . and returns ArrayList<Trip> with the results.
     **/
-    private ArrayList<Trip> searchPrices(int priceLower, int priceHigher, ArrayList<Trip> trLocations){
+    private ArrayList<Trip> searchPrices(int lower, int higher, ArrayList<Trip> locations){
         // lower og higher koma beint úr TripsView, gildi sem yfiraðferð
         //    tekur inn. Hún kallar svo á searchPrices með þeim.
         //    trLocations kemur úr inntaki og má bera saman við price leitarniðurst.
@@ -76,7 +76,7 @@ public class Search {
                 locations.remove(i);
             }
         }
-        return priceTrips;
+        return locations;
     }
     
     /**
@@ -85,7 +85,7 @@ public class Search {
     **/
     private ArrayList<Trip> searchDates(){
         ArrayList<Trip> dates = new ArrayList();
-        TripsView.jDateChooseFrom
+        
         return dates;
     }
     
@@ -118,7 +118,7 @@ public class Search {
         }
         
         else {
-            ArrayList<Trip> emptyTripList = new Arraylist();
+            ArrayList<Trip> emptyTripList = new ArrayList<Trip>();
             tripList = searchLocations(locations, emptyTripList);
         }
         

@@ -26,7 +26,7 @@ public class HostLogin {
             for(int i = 0; i < pw.length;i++){
                 password = password + i;
             }
-            DatabaseController.login(username,password);
+            //DatabaseController.login(username,password);
 		
 	}
         public static void createNewUser(String fullname, String username, char[] pw){
@@ -34,7 +34,7 @@ public class HostLogin {
             for(int i = 0; i < pw.length;i++){
                 password = password + i;
             }
-            DatabaseController.createNewUser(fullname,username,password);
+            //DatabaseController.createNewUser(fullname,username,password);
             
         }
 }

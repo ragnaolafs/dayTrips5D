@@ -18,6 +18,14 @@ import java.util.Date;
  * @author ragna
  */
 public class DatabaseController {
+
+    public static void createNewUser(String fullname, String username, String password) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public static void login(String username, String password) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     
     

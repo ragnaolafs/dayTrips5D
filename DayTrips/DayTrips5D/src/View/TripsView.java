@@ -5,6 +5,7 @@
  */
 package View;
 
+import Controller.DatabaseController;
 import Model.Search;
 import Model.Trip;
 import java.sql.Connection;
@@ -12,6 +13,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.util.ArrayList;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+
 import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -46,7 +50,8 @@ public class TripsView extends javax.swing.JFrame {
     }
     
     public void showTrips(){
-        ArrayList<Trip> tripList = Controller.DatabaseController.getTripList();
+        DatabaseController cntr = new DatabaseController();
+        ArrayList<Trip> tripList =cntr.getTripList();
         DefaultTableModel model = (DefaultTableModel)jTable.getModel();
         Object[] row = new Object[3];
         for(int i = 0; i < tripList.size(); i++){
@@ -65,6 +70,11 @@ public class TripsView extends javax.swing.JFrame {
         checkboxes.add(jCheckEast);
         return checkboxes;
     }
+    
+    /*public ArrayList<String> getSelectedDates(){
+        Date from = jDateChooseFrom.getDate();
+        Date to = jDateChooseTo.getDate();
+    }*/
    
     /**
      * This method is called from within the constructor to initialize the form.
@@ -375,19 +385,16 @@ public class TripsView extends javax.swing.JFrame {
 
     private void jMoreInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMoreInfoActionPerformed
         // TODO add your handling code here:
-        //int n = JOptionPane.showConfirmDialog(this, evt, title, WIDTH, HEIGHT)
-        jDialogMoreInfo.setSize(200,200);
+        //int n = JOptionPane.showConfirmDialog(this, evt, title, WIDTH, HEIGHT
         jDialogMoreInfo.setVisible(true);
     }//GEN-LAST:event_jMoreInfoActionPerformed
 
     private void jBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBookActionPerformed
         // TODO add your handling code here:
         //bookthistrip
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new BookingView().setVisible(true);
-            }
-        });
+        JFrame BookingView = new BookingView();
+        BookingView.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jBookActionPerformed
 
     private void jSearchTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSearchTextActionPerformed

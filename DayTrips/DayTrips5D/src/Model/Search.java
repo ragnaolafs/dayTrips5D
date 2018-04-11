@@ -85,7 +85,6 @@ public class Search {
     **/
     private ArrayList<Trip> searchDates(){
         ArrayList<Trip> dates = new ArrayList();
-        
         return dates;
     }
     
@@ -102,7 +101,7 @@ public class Search {
        // Maybe the first two lines are more descriptive?
        return searchResult;
     }
-    
+
     
     
     public ArrayList<Trip> search(ArrayList<String> locations, int priceLower,
@@ -124,4 +123,5 @@ public class Search {
         
         return tripList;
     }
+
 }

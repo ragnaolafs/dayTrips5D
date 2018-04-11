@@ -102,7 +102,6 @@ public class Search {
     **/
     private ArrayList<Trip> searchDates(){
         ArrayList<Trip> dates = new ArrayList();
-        TripsView.jDateChooseFrom
         return dates;
     }
     
@@ -120,7 +119,7 @@ public class Search {
        return searchResult;
     }
     
-    public ArrayList<Trip> search() {
+    /*public ArrayList<Trip> search() {
         
-    }
+    }*/
 }

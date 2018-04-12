@@ -5,6 +5,8 @@
  */
 package Model;
 
+import java.util.Date;
+
 /**
  *
  * @author ragna
@@ -12,18 +14,19 @@ package Model;
 
 public class Booking {
     private String name = "";
-    private String date ="";
+    private Date date;
     private String ssn ="";
     private String email ="";
     private int pax = 0;
     // tripID =""; setja sem hlut af klasa - gagnagrunnur sér um þetta
+    private Trip trip;
     private String phoneNo ="";
 
-    public static void insertIntoDB(String name, String date,String ssn,String email, 
-                                                                    int pax, String tripID, String phoneNo) {
+    public static void insertIntoDB(String name, Date date,String email, 
+                                                                    int pax, Trip trip, String phoneNo) {
 
     }
-    public static void updateTripCapacity(String tripID, int pax, String date) {
+    public static void updateTripCapacity(String tripID, int pax, Date date) {
 
     }
 

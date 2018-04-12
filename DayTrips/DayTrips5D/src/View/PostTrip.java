@@ -7,7 +7,9 @@ package View;
 
 import Model.HostLogin;
 import Model.Trip;
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.DefaultListModel;
 
 /**
@@ -490,8 +492,8 @@ public class PostTrip extends javax.swing.JFrame {
     
     private void jAddDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jAddDateActionPerformed
         DefaultListModel model = (DefaultListModel) jDateList.getModel();
-        String t = "" + jChooseDate.getDate();
-        String date = t.substring(0,10)+ t.substring(23,28);
+        Date t = jChooseDate.getDate();
+        String date = DateFormat.getDateInstance().format(t);
         model.addElement(date);
         jDateList.setModel(model);
 

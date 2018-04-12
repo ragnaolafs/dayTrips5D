@@ -188,9 +188,6 @@ public class DatabaseController {
             }
         }
         
-        //String q = "SELECT * FROM Trips WHERE dates = '" + dateTo + "'":
-        
-        //ArrayList<Trip> tripList = helperSearch(q);
         
         return tripMatches;
     }

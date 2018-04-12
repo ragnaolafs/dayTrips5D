@@ -7,7 +7,10 @@ package Model;
 
 import View.TripsView;
 import Controller.DatabaseController;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JCheckBox;
 
 /**
@@ -45,50 +48,72 @@ public class Search {
     * Looks for trips placed in locations selected by the user through the
     * GUI and returns ArrayList<Trip> with the results.
     **/
-    private ArrayList<Trip> searchLocations(ArrayList<String> locations, ArrayList<Trip> queryResult){
-        // look through all trips in database and find those in desired locations.
-        ArrayList<Trip> trips = dbController.searchLocation(locations);
-        
-        if(!queryResult.isEmpty()){ // ef það er leitarstrengur, er queryResult ekki tómt
-            // og við erum með trip lista til að gera samanburð við.
-             
+    private ArrayList<Trip> searchLocations(ArrayList<String> locations, ArrayList<Trip> tripList){
+
+        for (int i = 0; i < tripList.size(); i++) {
+            boolean locationMatch = false;
+            for (int j = 0; j < locations.size(); j++) {
+                if (tripList.get(i).getLocation().equals(locations.get(j))) {
+                    locationMatch = true;
+                    break;
+                }
+            }
+            // if no selected locations matches trip location then remove it
+            if (!locationMatch) {
+                tripList.remove(i);
+            }
         }
-        
-        //Annars skilum við bara trips.
-        return trips;
+        return tripList;
     }
     
     /**
     * Looks through the list of trips in the desired locations for trips within the price range specified by the user through the
     * GUI, then . and returns ArrayList<Trip> with the results.
     **/
-    private ArrayList<Trip> searchPrices(int lower, int higher, ArrayList<Trip> locations){
-        // lower og higher koma beint úr TripsView, gildi sem yfiraðferð
-        //    tekur inn. Hún kallar svo á searchPrices með þeim.
-        //    trLocations kemur úr inntaki og má bera saman við price leitarniðurst.
-        
-        // Leita að öllum trips within price range.
-        // Fyrir öll stök í price range: Ef location.contains þær ferðir
-        //  þá priceTrips.add(i)
-        
-        for(int i = 0; i < locations.size(); i++){
-            if(locations.get(i).getPrice()<lower || locations.get(i).getPrice()>higher){
-                locations.remove(i);
+    private ArrayList<Trip> searchPrices(int lower, int higher, ArrayList<Trip> tripList){
+
+        for(int i = 0; i < tripList.size(); i++){
+            if(tripList.get(i).getPrice()<lower || tripList.get(i).getPrice()>higher){
+                tripList.remove(i);
             }
         }
-        return locations;
+        return tripList;
     }
     
     /**
     * Looks for trips within the timeframe specified by the user through the
     * GUI and returns 3ArrayList<Trip> with the results.
     **/
-    private ArrayList<Trip> searchDates(){
-        ArrayList<Trip> dates = new ArrayList();
-        return dates;
+    private ArrayList<Trip> searchDates(String dateFrom, String dateTo, ArrayList<Trip> tripList) throws ParseException{
+        SimpleDateFormat from = new SimpleDateFormat(dateFrom);
+        SimpleDateFormat to = new SimpleDateFormat(dateTo);
+        
+        Date fromD = from.parse(dateFrom);
+        Date toD = from.parse(dateTo);
+        
+        
+        for (int i = 0; i < tripList.size(); i++) {
+            ArrayList<String> dates = tripList.get(i).getDates();
+            
+            boolean dateMatch = false;
+            
+            for (int j = 0; j < dates.size(); j++) {
+                SimpleDateFormat tripDate = new SimpleDateFormat(dates.get(j));
+                Date tripD = tripDate.parse(dates.get(j));
+                
+                if ((tripD.after(fromD) || tripD.equals(fromD)) && 
+                        (tripD.before(toD) || tripD.equals(toD))) {
+                    dateMatch = true;
+                    break;
+                }
+                if(!dateMatch) {
+                    tripList.remove(i);
+                }
+            }
+        }
+        return tripList;
     }
     
-    // Ef síðasta result skilar null, grípa það og skila e-u
     
     /**
     * Looks for the given string in title and description of all trips
@@ -96,29 +121,26 @@ public class Search {
     **/
     private ArrayList<Trip> searchStrings(String string) {
        ArrayList<Trip> searchResult = dbController.search(string); 
-       // return DatabaseController.search(string); 
-       // Maybe the first two lines are more descriptive?
        return searchResult;
     }
 
     
     
     public ArrayList<Trip> search(ArrayList<String> locations, int priceLower,
-            int priceHigher, String dateFrom, String dateTo, String searchQuery) {
+            int priceHigher, String dateFrom, String dateTo, String searchQuery) throws ParseException {
         // ASDF bæta við type of trip líka!
         ArrayList<Trip> tripList;
         
         if (searchQuery != "") {
-            tripList = searchStrings(searchQuery); //búið að búa til arraylist af trips með streng
-            tripList = searchLocations(locations, tripList); //breytum triplist í þessa niðurst
-            tripList = searchPrices(priceLower, priceHigher, tripList);
-            // bæta við searchlocation og eyða ef trip í triplist er ekki með location sem passar
+            tripList = searchStrings(searchQuery); 
+        }
+        else {
+            tripList = dbController.getTripList();
         }
         
-        else {
-            ArrayList<Trip> emptyTripList = new ArrayList<Trip>();
-            tripList = searchLocations(locations, emptyTripList);
-        }
+        tripList = searchLocations(locations, tripList); //breytum triplist í þessa niðurst
+        tripList = searchPrices(priceLower, priceHigher, tripList);
+        tripList = searchDates(dateFrom, dateTo, tripList);
         
         return tripList;
     }

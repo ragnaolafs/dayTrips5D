@@ -95,8 +95,7 @@ public class Search {
     * and returns ArrayList<Trip> with the results.
     **/
     private ArrayList<Trip> searchStrings(String string) {
-       ArrayList<Trip> searchResult = new ArrayList();
-       searchResult = dbController.search(string); 
+       ArrayList<Trip> searchResult = dbController.search(string); 
        // return DatabaseController.search(string); 
        // Maybe the first two lines are more descriptive?
        return searchResult;

@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Model.HostLogin;
 import Model.Trip;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,12 +20,60 @@ import java.util.Date;
  */
 public class DatabaseController {
 
-    public static void createNewUser(String fullname, String username, String password) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void createNewUser(String fullname, String username, String password) {
+        
+        DatabaseConnection dbConn = new DatabaseConnection();
+        
+        String q = "INSERT INTO Hosts (fullname, username, password) VALUES ('" 
+                + fullname + "', '" + username + "', '" + password + "')";
+        
+        try {
+            dbConn.insert(q);
+        }
+        catch (Exception e) {
+            
+            System.err.println(e.getMessage());
+        }
+        finally {
+            dbConn.closeConnection();
+        }
     }
 
-    public static void login(String username, String password) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean login(String username, String password) {
+        ArrayList<HostLogin> hostsList = new ArrayList<HostLogin>();
+        
+        DatabaseConnection dbConn = new DatabaseConnection();
+        
+        String q = "SELECT * FROM Hosts";
+        try {
+            ResultSet rs = dbConn.select(q);
+            HostLogin host;
+            
+            while (rs.next()) {
+                String fullnameHost = rs.getString("fullname");
+                String usernameHost = rs.getString("username");
+                String passwordHost = rs.getString("password");
+                
+                host = new HostLogin(fullnameHost, usernameHost, passwordHost);
+                
+                hostsList.add(host);
+            }
+        }
+        catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+        finally {
+            dbConn.closeConnection();
+        }
+        
+        for (int i = 0; i < hostsList.size(); i++) {
+            HostLogin host = hostsList.get(i);
+            if (host.getUsername().equals(username) && host.getPassword().equals(password)) {
+                return true;
+            }
+        }
+
+        return false;
     }
     
     

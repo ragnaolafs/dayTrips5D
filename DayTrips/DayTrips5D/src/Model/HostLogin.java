@@ -13,28 +13,35 @@ import Controller.DatabaseController;
  */
 public class HostLogin {
 	private String username = "";
-	private static String password = "";
-	
+	private static String password = "";	
 	private String hostName = "";
-	//public String hostEmail = "";
-	//public String hostPhone = "";
-        //ASDF beil á þessu tvennu ?
+        public HostLogin(String fullname, String username, String password){
+            this.hostName=fullname;
+            this.username=username;
+            this.password=password;
+        }
+
+    public HostLogin(String username, String password) {
+        this.username=username;
+        this.password=password;
+    }
+
 	
-	
-	public static void login(String username, char[] pw) {
-        
-            for(int i = 0; i < pw.length;i++){
-                password = password + i;
-            }
-            //DatabaseController.login(username,password);
+	public void login(String username, String password) {
+            DatabaseController logincontrol = new DatabaseController();
+            logincontrol.login(username,password);
 		
 	}
-        public static void createNewUser(String fullname, String username, char[] pw){
+        public void createNewUser(String fullname, String username, String password){
              
-            for(int i = 0; i < pw.length;i++){
-                password = password + i;
-            }
-            //DatabaseController.createNewUser(fullname,username,password);
+            DatabaseController newuser = new DatabaseController();
+            newuser.createNewUser(fullname,username,password);
             
+        }
+        public String getUsername(){
+            return this.username;
+        }
+        public String getPassword(){
+            return this.password;
         }
 }

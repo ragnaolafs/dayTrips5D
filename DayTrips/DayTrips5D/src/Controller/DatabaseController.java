@@ -188,9 +188,6 @@ public class DatabaseController {
             }
         }
         
-        //String q = "SELECT * FROM Trips WHERE dates = '" + dateTo + "'":
-        
-        //ArrayList<Trip> tripList = helperSearch(q);
         
         return tripMatches;
     }
@@ -259,21 +256,54 @@ public class DatabaseController {
         }
     }
     
+    public void insertBooking(String contactName, String date, String contactEmail, 
+                    int pax, Trip trip, String contactPhoneNo){
+        
+        DatabaseConnection dbConn = new DatabaseConnection();
+        
+        System.out.println("insert into Booking");
+        String q = "INSERT INTO Bookings (contactName, date, contactEmail, " +
+                "pax, trip, contactPhoneNo) VALUES ('" 
+                + contactName + "', '" 
+                + date + "', '" 
+                + contactEmail + "', '" 
+                + pax + "', " 
+                + trip + ", '" 
+                + contactPhoneNo + "')";
+        System.out.println(q);
+        try {
+            dbConn.insert(q);
+        }
+        catch (Exception e) {
+            
+            System.err.println(e.getMessage());
+        }
+        finally {
+            dbConn.closeConnection();
+        }
+    }
     
     public static void main(String args[]) {
         ArrayList<String> dates = new ArrayList<String>();
         dates.add("2.2.19");
+        dates.add("3.3.19");
         ArrayList<String> types = new ArrayList<String>();
         types.add("skemmtileg");
+        types.add("mjög skemmtileg");
         
-        //insertTrip(dates, "12:00", "Ferd", "skemmtileg", 2000, types, "6 timar",
-        //        30, false, "Akureyri", "Hugrún");
+        DatabaseController dbc = new DatabaseController();
+        //dbc.insertTrip(dates, "12:00", "Ferd", "skemmtileg", 2000, types, "6 timar",
+          //      30, false, "Austurland", "Karen");
         
-        DatabaseController dbController = new DatabaseController();
         
         /*ArrayList<Trip> location = dbController.searchDate("2.2.19");
         for (int i = 0; i < location.size(); i++) {
             System.out.println(location.get(i).getTripID());
         }*/
+        
+        ArrayList<Trip> matches = dbc.searchPrice(1000, 1500);
+        for (int i = 0; i < matches.size(); i++) {
+            System.out.println(matches.get(i).getTripID());
+        }
     }
 }

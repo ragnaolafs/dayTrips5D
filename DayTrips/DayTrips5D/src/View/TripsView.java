@@ -12,11 +12,14 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JCheckBox;
@@ -27,6 +30,10 @@ import javax.swing.JCheckBox;
  * @author hugrungudmundsdottir
  */
 public class TripsView extends javax.swing.JFrame {
+
+    static Trip getSelectedTrip() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
     
     /**
@@ -453,7 +460,11 @@ public class TripsView extends javax.swing.JFrame {
         String query = jSearchText.getText();
         
         Search search = new Search();
-        search.search(locations, priceLower, priceHigher, dateFrom, dateTo, query);
+        try {
+            search.search(locations, priceLower, priceHigher, dateFrom, dateTo, query);
+        } catch (ParseException ex) {
+            Logger.getLogger(TripsView.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jSearchActionPerformed
 
     private void jHostLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jHostLoginActionPerformed

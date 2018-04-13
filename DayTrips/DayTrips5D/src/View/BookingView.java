@@ -5,10 +5,14 @@
  */
 package View;
 
+import Controller.DatabaseController;
+import Model.Booking;
 import Model.Trip;
 import java.util.Locale;
 import java.util.Set;
 import static org.eclipse.persistence.expressions.ExpressionOperator.Log;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  * This view class lets the user book a trip for herself/himself
@@ -16,31 +20,54 @@ import static org.eclipse.persistence.expressions.ExpressionOperator.Log;
  * @author hugrungudmundsdottir
  */
 public class BookingView extends javax.swing.JFrame {
+    
+    private Trip trip = TripsView.getSelectedTrip();
+    private ArrayList<String> tripDates = trip.getDates();
+    private Booking booking = new Booking();
 
     /**
      * Creates new form BookingView
      */
     public BookingView() {
-        
         initComponents();
+        for(int i = 0; i < tripDates.size(); i++){
+            jDateChooser.add(tripDates.get(i));
+        }
     }
+    
+    // ASDF þarf að gera aðferð í TripsView sem heitir getSelectedTrip()
+    // og skilar þeirri ferð sem notandinn ætlar að bóka
     
     
     public String getName(){
         return jContactName.getText();
     }
-    
+
     public void af(){
         Locale land = jCountry.getLocale();
         land.getISO3Country();
     }
-    
 
+    public String getDate(){
+        return jDateChooser.getSelectedItem();
+    }
     
+    public String getEmail(){
+        return jContactEmail.getText();
+    }
     
+    public int getPax(){
+        return (Integer)jPax.getValue();
+    }
+    
+    public String getPhoneNo(){
+        return jContactPhone.getText();
+    }
+    
+    public Trip getTrip(){
+        return trip;
+    }
 
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -60,11 +87,19 @@ public class BookingView extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jContactEmail = new javax.swing.JTextField();
+<<<<<<< HEAD
         jPhoneNumber = new javax.swing.JTextField();
         jSpinner1 = new javax.swing.JSpinner();
         jCountry = new com.toedter.components.JLocaleChooser();
         jSpinField1 = new com.toedter.components.JSpinField();
         jCountryCode = new javax.swing.JComboBox<>();
+=======
+        jContactPhone = new javax.swing.JTextField();
+        jButtonBook = new javax.swing.JButton();
+        jButtonCancel = new javax.swing.JButton();
+        jDateChooser = new java.awt.Choice();
+        jPax = new javax.swing.JSpinner();
+>>>>>>> 3e16f75c3e13db0bc7dee77d414009cde02acc29
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -96,7 +131,7 @@ public class BookingView extends javax.swing.JFrame {
 
         jLabel3.setText("Choose date:");
 
-        jLabel4.setText("How many participants (you included!)?");
+        jLabel4.setText("How many participants (you included)?");
 
         jLabel6.setText("Your phone number (external and internal):");
 
@@ -106,13 +141,28 @@ public class BookingView extends javax.swing.JFrame {
             }
         });
 
+<<<<<<< HEAD
         jPhoneNumber.addActionListener(new java.awt.event.ActionListener() {
+=======
+        jContactPhone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jPhoneNumberActionPerformed(evt);
+                jContactPhoneActionPerformed(evt);
             }
         });
 
+        jButtonBook.setText("Book my trip");
+        jButtonBook.addActionListener(new java.awt.event.ActionListener() {
+>>>>>>> 3e16f75c3e13db0bc7dee77d414009cde02acc29
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBookActionPerformed(evt);
+            }
+        });
+
+<<<<<<< HEAD
         jCountryCode.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+=======
+        jButtonCancel.setText("Cancel");
+>>>>>>> 3e16f75c3e13db0bc7dee77d414009cde02acc29
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -124,6 +174,7 @@ public class BookingView extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+<<<<<<< HEAD
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jCountry, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
@@ -148,6 +199,25 @@ public class BookingView extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jCountryCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(71, 71, 71))))))
+=======
+                    .addComponent(jPax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jContactEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel6)
+                            .addComponent(jContactPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel1)
+                            .addComponent(jContactName, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(117, 117, 117)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButtonBook)
+                            .addComponent(jButtonCancel))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+>>>>>>> 3e16f75c3e13db0bc7dee77d414009cde02acc29
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -157,6 +227,7 @@ public class BookingView extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jContactName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+<<<<<<< HEAD
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -181,6 +252,32 @@ public class BookingView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPhoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(37, 37, 37))
+=======
+                .addGap(18, 18, 18)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jContactEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addComponent(jPax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(jButtonBook))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jContactPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(43, 43, 43))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButtonCancel)
+                        .addGap(23, 23, 23))))
+>>>>>>> 3e16f75c3e13db0bc7dee77d414009cde02acc29
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -209,9 +306,55 @@ public class BookingView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jContactEmailActionPerformed
 
+
     private void jPhoneNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPhoneNumberActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jPhoneNumberActionPerformed
+
+    private void jContactPhoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jContactPhoneActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jContactPhoneActionPerformed
+
+    private void jButtonBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBookActionPerformed
+        // If all conditions are met (all user input is valid),
+        // book said trip by inserting the data into the database.
+        // If user types in invalid information, she/he will be notified.
+        boolean canBook = true;
+        int pax = this.getPax();
+        
+        if(pax <= 0 || pax > trip.getCapacity()){
+            canBook = false;
+            JOptionPane.showMessageDialog(null, "There is not enough room on this trip for " + 
+                    " participants.",
+                    "Not enough room!",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
+
+        /*
+        if(invalid email somehow){
+            canBook = false;
+            // asdf láta vita ef email er rangt slegið inn
+        }*/
+        String email = jContactEmail.getText();
+        if(!email.contains("@") || !email.contains(".")){
+            canBook = false;
+            JOptionPane.showMessageDialog(null, "Please type in a valid email address.",
+                    "Email address invalid",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
+        
+        if(canBook) {
+            booking.bookTrip();
+            System.out.println("capacity before booking: " + trip.getCapacity());
+            booking.updateTripCapacity();
+            System.out.println("capacity after booking: " + trip.getCapacity());
+            
+            JOptionPane.showMessageDialog(null, "Your trip has been successfully booked.",
+                    "Success!",
+                    JOptionPane.INFORMATION_MESSAGE);
+            // Fara aftur á byrjunarskjá.
+        }
+    }//GEN-LAST:event_jButtonBookActionPerformed
 
     /**
      * @param args the command line arguments
@@ -249,10 +392,17 @@ public class BookingView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonBook;
+    private javax.swing.JButton jButtonCancel;
     private javax.swing.JTextField jContactEmail;
     private javax.swing.JTextField jContactName;
+<<<<<<< HEAD
     private com.toedter.components.JLocaleChooser jCountry;
     private javax.swing.JComboBox<String> jCountryCode;
+=======
+    private javax.swing.JTextField jContactPhone;
+    private java.awt.Choice jDateChooser;
+>>>>>>> 3e16f75c3e13db0bc7dee77d414009cde02acc29
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -260,8 +410,12 @@ public class BookingView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+<<<<<<< HEAD
     private javax.swing.JTextField jPhoneNumber;
     private com.toedter.components.JSpinField jSpinField1;
     private javax.swing.JSpinner jSpinner1;
+=======
+    private javax.swing.JSpinner jPax;
+>>>>>>> 3e16f75c3e13db0bc7dee77d414009cde02acc29
     // End of variables declaration//GEN-END:variables
 }

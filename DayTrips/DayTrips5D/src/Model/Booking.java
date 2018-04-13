@@ -5,29 +5,28 @@
  */
 package Model;
 
-import java.util.Date;
-
+import Controller.DatabaseController;
+import View.BookingView;
 /**
  *
  * @author ragna
  */
 
 public class Booking {
-    private String name = "";
-    private Date date;
-    private String ssn ="";
-    private String email ="";
-    private int pax = 0;
-    // tripID =""; setja sem hlut af klasa - gagnagrunnur sér um þetta
-    private Trip trip;
-    private String phoneNo ="";
+    private BookingView bView = new BookingView();
+    private String name = bView.getName();
+    private String date = bView.getDate();
+    private String email = bView.getEmail();
+    private int pax = bView.getPax();
+    private Trip trip = bView.getTrip();
+    private String phoneNo = bView.getPhoneNo();
+    private DatabaseController databaseController = new DatabaseController();
 
-    public static void insertIntoDB(String name, Date date,String email, 
-                                                                    int pax, Trip trip, String phoneNo) {
-
+    public void bookTrip() {
+        databaseController.insertBooking(name, date, email, pax, trip, phoneNo);
     }
-    public static void updateTripCapacity(String tripID, int pax, Date date) {
-
+    public void updateTripCapacity() {
+        trip.setCapacity(trip.getCapacity()-pax);
     }
 
     public static void main(String[] args) {

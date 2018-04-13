@@ -56,7 +56,6 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jPax" min="-2" max="-2" attributes="0"/>
                       <Component id="jDateChooser" min="-2" pref="92" max="-2" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -75,6 +74,7 @@
                               <Component id="jButtonCancel" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
+                      <Component id="jPax" alignment="0" min="-2" pref="59" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>

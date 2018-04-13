@@ -5,7 +5,6 @@
  */
 package View;
 
-import Controller.DatabaseController;
 import Model.Booking;
 import Model.Trip;
 import java.util.ArrayList;
@@ -150,7 +149,6 @@ public class BookingView extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -165,7 +163,8 @@ public class BookingView extends javax.swing.JFrame {
                         .addGap(117, 117, 117)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButtonBook)
-                            .addComponent(jButtonCancel))))
+                            .addComponent(jButtonCancel)))
+                    .addComponent(jPax, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -233,9 +232,7 @@ public class BookingView extends javax.swing.JFrame {
     }//GEN-LAST:event_jContactPhoneActionPerformed
 
     private void jButtonBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBookActionPerformed
-        // If all conditions are met (all user input is valid),
-        // book said trip by inserting the data into the database.
-        // If user types in invalid information, she/he will be notified.
+
         boolean canBook = true;
         int pax = this.getPax();
         
@@ -269,7 +266,8 @@ public class BookingView extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Your trip has been successfully booked.",
                     "Success!",
                     JOptionPane.INFORMATION_MESSAGE);
-            // Fara aftur á byrjunarskjá.
+            
+            this.setVisible(false);
         }
     }//GEN-LAST:event_jButtonBookActionPerformed
 

@@ -259,6 +259,32 @@ public class DatabaseController {
         }
     }
     
+    public void insertBooking(String contactName, String date, String contactEmail, 
+                    int pax, Trip trip, String contactPhoneNo){
+        
+        DatabaseConnection dbConn = new DatabaseConnection();
+        
+        System.out.println("insert into Booking");
+        String q = "INSERT INTO Bookings (contactName, date, contactEmail, " +
+                "pax, trip, contactPhoneNo) VALUES ('" 
+                + contactName + "', '" 
+                + date + "', '" 
+                + contactEmail + "', '" 
+                + pax + "', " 
+                + trip + ", '" 
+                + contactPhoneNo + "')";
+        System.out.println(q);
+        try {
+            dbConn.insert(q);
+        }
+        catch (Exception e) {
+            
+            System.err.println(e.getMessage());
+        }
+        finally {
+            dbConn.closeConnection();
+        }
+    }
     
     public static void main(String args[]) {
         ArrayList<String> dates = new ArrayList<String>();

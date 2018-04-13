@@ -28,6 +28,10 @@ import javax.swing.JCheckBox;
  */
 public class TripsView extends javax.swing.JFrame {
 
+    static Trip getSelectedTrip() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     
     /**
      * Creates new form TripsView

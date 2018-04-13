@@ -104,10 +104,11 @@ public class Trip {
         }
         public void setDuration(){
             
+        }*/
+        public void setCapacity(int capacity){
+            this.capacity = capacity;
         }
-        public void setCapacity(){
-            
-        }
+        /*
         public void setSoldOut(){
             
         }

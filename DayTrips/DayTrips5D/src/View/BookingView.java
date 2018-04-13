@@ -84,7 +84,7 @@ public class BookingView extends javax.swing.JFrame {
         jDateChooser = new java.awt.Choice();
         jPax = new javax.swing.JSpinner();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 250, 240));
 

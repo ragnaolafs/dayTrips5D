@@ -6,6 +6,7 @@
 package View;
 
 import Model.HostLogin;
+import javax.swing.JFrame;
 
 
 /**
@@ -40,7 +41,7 @@ public class LoginView extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        jCreate = new javax.swing.JButton();
         jNewUserpw = new javax.swing.JPasswordField();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -50,13 +51,7 @@ public class LoginView extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jCancel = new javax.swing.JButton();
         jSkrainn = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-
-        jFullName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jFullNameActionPerformed(evt);
-            }
-        });
+        jSignUpBtn = new javax.swing.JButton();
 
         jLabel4.setText("Full name:");
 
@@ -67,10 +62,10 @@ public class LoginView extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Malayalam MN", 1, 24)); // NOI18N
         jLabel7.setText("Create your account");
 
-        jButton2.setText("Create");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jCreate.setText("Create");
+        jCreate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jCreateActionPerformed(evt);
             }
         });
 
@@ -82,7 +77,7 @@ public class LoginView extends javax.swing.JFrame {
                 .addGroup(jSignUpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jSignUpLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jSignUpLayout.createSequentialGroup()
                         .addGap(52, 52, 52)
                         .addComponent(jLabel4)
@@ -123,11 +118,11 @@ public class LoginView extends javax.swing.JFrame {
                     .addComponent(jNewUserpw, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
                 .addGap(26, 26, 26)
-                .addComponent(jButton2)
+                .addComponent(jCreate)
                 .addContainerGap(53, Short.MAX_VALUE))
         );
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(153, 204, 255));
 
@@ -159,10 +154,10 @@ public class LoginView extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Sign up");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jSignUpBtn.setText("Sign up");
+        jSignUpBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jSignUpBtnActionPerformed(evt);
             }
         });
 
@@ -192,7 +187,7 @@ public class LoginView extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jCancel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addComponent(jSignUpBtn)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -216,7 +211,7 @@ public class LoginView extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jCancel)
-                            .addComponent(jButton1))
+                            .addComponent(jSignUpBtn))
                         .addContainerGap())))
         );
 
@@ -242,31 +237,42 @@ public class LoginView extends javax.swing.JFrame {
         // TODO add your handling code here:
         //login handled
         String username = jUsername.getText();
-        char[] password = jPassword.getPassword();
+        char[] pw = jPassword.getPassword();
+        String password="";
+        for(int i = 0; i < pw.length;i++){
+                password = password + pw[i];
+        }
         
-        HostLogin.login(username, password);
+        HostLogin user = new HostLogin(username, password);       
+        user.login(username, password);
     }//GEN-LAST:event_jSkrainnActionPerformed
 
     private void jCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCancelActionPerformed
         // TODO add your handling code here:
         //close window and go to trips
+        JFrame Trips = new TripsView();
+        Trips.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jCancelActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jSignUpBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSignUpBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        jSignUp.setSize(500,500);
+        jSignUp.setVisible(true);
+    }//GEN-LAST:event_jSignUpBtnActionPerformed
 
-    private void jFullNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFullNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jFullNameActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCreateActionPerformed
         // TODO add your handling code here:
         String name = jFullName.getText();
         String user = jNewUser.getText();
         char[] pw = jNewUserpw.getPassword();
-        HostLogin.createNewUser(name, user, pw);
-    }//GEN-LAST:event_jButton2ActionPerformed
+        String password = "";
+        for(int i = 0; i < pw.length;i++){
+                password = password + pw[i];
+            }
+        HostLogin newuser = new HostLogin(name, user, password);
+        newuser.createNewUser(name, user, password);
+    }//GEN-LAST:event_jCreateActionPerformed
 
     /**
      * @param args the command line arguments
@@ -304,9 +310,8 @@ public class LoginView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jCancel;
+    private javax.swing.JButton jCreate;
     private javax.swing.JTextField jFullName;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -320,6 +325,7 @@ public class LoginView extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPasswordField jPassword;
     private javax.swing.JDialog jSignUp;
+    private javax.swing.JButton jSignUpBtn;
     private javax.swing.JButton jSkrainn;
     private javax.swing.JTextField jUsername;
     // End of variables declaration//GEN-END:variables

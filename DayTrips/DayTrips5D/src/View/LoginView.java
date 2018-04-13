@@ -234,7 +234,6 @@ public class LoginView extends javax.swing.JFrame {
     }//GEN-LAST:event_jUsernameActionPerformed
 
     private void jSkrainnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSkrainnActionPerformed
-        // TODO add your handling code here:
         //login handled
         String username = jUsername.getText();
         char[] pw = jPassword.getPassword();
@@ -248,7 +247,6 @@ public class LoginView extends javax.swing.JFrame {
     }//GEN-LAST:event_jSkrainnActionPerformed
 
     private void jCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCancelActionPerformed
-        // TODO add your handling code here:
         //close window and go to trips
         JFrame Trips = new TripsView();
         Trips.setVisible(true);
@@ -256,13 +254,12 @@ public class LoginView extends javax.swing.JFrame {
     }//GEN-LAST:event_jCancelActionPerformed
 
     private void jSignUpBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSignUpBtnActionPerformed
-        // TODO add your handling code here:
         jSignUp.setSize(500,500);
         jSignUp.setVisible(true);
     }//GEN-LAST:event_jSignUpBtnActionPerformed
 
     private void jCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCreateActionPerformed
-        // TODO add your handling code here:
+        
         String name = jFullName.getText();
         String user = jNewUser.getText();
         char[] pw = jNewUserpw.getPassword();

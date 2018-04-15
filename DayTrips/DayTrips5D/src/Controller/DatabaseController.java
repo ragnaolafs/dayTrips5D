@@ -255,7 +255,16 @@ public class DatabaseController {
             dbConn.closeConnection();
         }
     }
-    
+    /**
+     * This method updates the Bookings table.
+     * If 
+     * @param contactName
+     * @param date
+     * @param contactEmail
+     * @param pax
+     * @param trip
+     * @param contactPhoneNo 
+     */
     public void insertBooking(String contactName, String date, String contactEmail, 
                     int pax, Trip trip, String contactPhoneNo){
         

@@ -15,6 +15,7 @@ public class HostLogin {
 	private String username = "";
 	private static String password = "";	
 	private String hostName = "";
+        private String loggedInUser ="";
         public HostLogin(String fullname, String username, String password){
             this.hostName=fullname;
             this.username=username;
@@ -25,11 +26,17 @@ public class HostLogin {
         this.username=username;
         this.password=password;
     }
+    public HostLogin() {
+      
+    }
 
 	
 	public void login(String username, String password) {
+            loggedInUser = username;
             DatabaseController logincontrol = new DatabaseController();
             logincontrol.login(username,password);
+            
+            
 		
 	}
         public void createNewUser(String fullname, String username, String password){
@@ -43,5 +50,8 @@ public class HostLogin {
         }
         public String getPassword(){
             return this.password;
+        }
+        public String getLoggedIn(){
+            return loggedInUser;
         }
 }

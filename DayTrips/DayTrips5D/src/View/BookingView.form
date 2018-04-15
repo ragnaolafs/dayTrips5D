@@ -63,6 +63,19 @@
                                   <EmptySpace pref="95" max="32767" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="jPax" min="-2" pref="59" max="-2" attributes="0"/>
+<<<<<<< HEAD
+<<<<<<< HEAD
+                                      <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                          <Component id="jButtonBook" min="-2" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                                              <Component id="filler2" min="-2" pref="185" max="-2" attributes="0"/>
+                                              <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jDateChooser" min="-2" pref="92" max="-2" attributes="0"/>
+=======
+=======
+
+>>>>>>> 086d7facbc340940c54dac4f6366f13fea22a16e
                                       <Group type="102" alignment="0" attributes="0">
                                           <Group type="103" groupAlignment="1" attributes="0">
                                               <Component id="jButtonBook" min="-2" max="-2" attributes="0"/>
@@ -73,14 +86,31 @@
                                                   <Component id="jDateChooser" min="-2" pref="92" max="-2" attributes="0"/>
                                               </Group>
                                               <Component id="jButtonCancel" alignment="1" min="-2" max="-2" attributes="0"/>
+<<<<<<< HEAD
+>>>>>>> a7820e847be8e4ccc6422387b5dca4e8e5d352a8
+=======
+>>>>>>> 086d7facbc340940c54dac4f6366f13fea22a16e
                                           </Group>
-                                          <EmptySpace min="0" pref="17" max="32767" attributes="0"/>
+                                          <Component id="jButtonCancel" alignment="1" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
+<<<<<<< HEAD
+<<<<<<< HEAD
+                                  <EmptySpace min="0" pref="17" max="32767" attributes="0"/>
+                              </Group>
+=======
                               </Group>
                               <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
+>>>>>>> a7820e847be8e4ccc6422387b5dca4e8e5d352a8
+=======
+                              </Group>
+                              <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
+>>>>>>> 086d7facbc340940c54dac4f6366f13fea22a16e
                               <Group type="102" attributes="0">
-                                  <Component id="jContactPhone" min="-2" pref="257" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jContactPhone" min="-2" pref="257" max="-2" attributes="0"/>
+                                  </Group>
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>

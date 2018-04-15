@@ -26,15 +26,15 @@ public class DatabaseConnectionMock {
         dates2.add("2018-05-01");
         
         ArrayList<String> dates3 = new ArrayList();
-        dates2.add("2018-05-06");
+        dates3.add("2018-05-06");
         
         ArrayList<String> types1 = new ArrayList();
-        dates1.add("Horseback");
-        dates1.add("Sightseeing");
+        types1.add("Horseback");
+        types1.add("Sightseeing");
         
         ArrayList<String> types2 = new ArrayList();
-        dates1.add("Hiking/Yoga");
-        dates1.add("Northern Lights");
+        types2.add("Hiking/Yoga");
+        types2.add("Northern Lights");
         
         trips.add(new Trip(1, dates1, "1200", "walk on the lava", 
                 "this is a trip where we go and walk on the lava with horses",

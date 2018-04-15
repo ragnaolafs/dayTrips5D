@@ -22,6 +22,7 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JCheckBox;
@@ -174,8 +175,6 @@ public class TripsView extends javax.swing.JFrame {
                 .addComponent(jTripName, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(20, Short.MAX_VALUE))
         );
-
-        jTripName.getAccessibleContext().setAccessibleName("");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -447,7 +446,6 @@ public class TripsView extends javax.swing.JFrame {
         System.out.println(trip);
         jDialogMoreInfo.setSize(200,200);
         jDialogMoreInfo.setVisible(true); 
-        
         String descr = trip.getDescription();
         ArrayList<String> types = trip.getTypes();
         String typestring = types.get(0);

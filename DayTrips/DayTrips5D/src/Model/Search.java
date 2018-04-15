@@ -88,8 +88,9 @@ public class Search {
         SimpleDateFormat from = new SimpleDateFormat(dateFrom);
         SimpleDateFormat to = new SimpleDateFormat(dateTo);
         
+        
         Date fromD = from.parse(dateFrom);
-        Date toD = from.parse(dateTo);
+        Date toD = to.parse(dateTo);
         
         
         for (int i = 0; i < tripList.size(); i++) {

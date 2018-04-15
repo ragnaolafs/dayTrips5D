@@ -527,10 +527,11 @@ public class TripsView extends javax.swing.JFrame {
         String dateTo = "";
         try{
             dateTo = new SimpleDateFormat("yyyy-MM-dd").format(dateT);
+            System.out.println(dateTo);
         }catch (Exception e){
             if(dateT == null){
             Date date= new Date();
-            dateFrom = new SimpleDateFormat("yyyy-MM-dd").format(date);
+            dateTo = new SimpleDateFormat("yyyy-MM-dd").format(date);
             }    
         }
 

@@ -175,8 +175,6 @@ public class TripsView extends javax.swing.JFrame {
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
-        jTripName.getAccessibleContext().setAccessibleName("");
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -447,7 +445,6 @@ public class TripsView extends javax.swing.JFrame {
         System.out.println(trip);
         jDialogMoreInfo.setSize(200,200);
         jDialogMoreInfo.setVisible(true); 
-        
         String descr = trip.getDescription();
         ArrayList<String> types = trip.getTypes();
         String typestring = types.get(0);

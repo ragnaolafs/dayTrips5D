@@ -45,7 +45,8 @@ public class TripsView extends javax.swing.JFrame {
      */
     public TripsView() {
         initComponents();
-      
+        BookingView bookingView = new BookingView(); // asdf taka út
+        bookingView.setVisible(true); // asdf taka út
         
     }
     public Connection getConnection(){
@@ -487,8 +488,8 @@ public class TripsView extends javax.swing.JFrame {
     private void jBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBookActionPerformed
         // TODO add your handling code here:
         //bookthistrip
-        JFrame BookingView = new BookingView();
-        BookingView.setVisible(true);
+        JFrame bookingView = new BookingView();
+        bookingView.setVisible(true);
         jDialogMoreInfo.setVisible(false);
  
     }//GEN-LAST:event_jBookActionPerformed

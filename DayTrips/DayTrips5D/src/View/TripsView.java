@@ -14,6 +14,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
@@ -130,9 +131,16 @@ public class TripsView extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jHostLogin = new javax.swing.JButton();
 
+        jDialogMoreInfo.setResizable(false);
+
         jPanel2.setBackground(new java.awt.Color(255, 250, 240));
 
         jClose.setText("Close");
+        jClose.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCloseActionPerformed(evt);
+            }
+        });
 
         jInfo.setEditable(false);
         jInfo.setColumns(20);
@@ -317,7 +325,7 @@ public class TripsView extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(45, 45, 45)
                 .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 385, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 386, Short.MAX_VALUE)
                 .addComponent(jHostLogin)
                 .addContainerGap())
         );
@@ -337,7 +345,7 @@ public class TripsView extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(43, 43, 43)
+                .addGap(44, 44, 44)
                 .addComponent(jScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 363, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -444,7 +452,7 @@ public class TripsView extends javax.swing.JFrame {
         int m = jTable.getSelectedColumn();
         Trip trip = (Trip) jTable.getValueAt(n, m);
         System.out.println(trip);
-        jDialogMoreInfo.setSize(200,200);
+        jDialogMoreInfo.setSize(700,500);
         jDialogMoreInfo.setVisible(true); 
         String descr = trip.getDescription();
         ArrayList<String> types = trip.getTypes();
@@ -504,30 +512,27 @@ public class TripsView extends javax.swing.JFrame {
         
         int priceLower = jPriceFrom.getValue();
         int priceHigher = jPriceTo.getValue();
-        String dateFrom = "";
+        
         Date dateF = jDateChooseFrom.getDate();
+        String dateFrom="";
         try{
-            dateFrom = DateFormat.getDateInstance().format(dateF);
+           dateFrom = new SimpleDateFormat("yyyy-MM-dd").format(dateF);
         }catch (Exception e){
             if(dateF == null){
             Date date= new Date();
-            dateFrom = DateFormat.getDateInstance().format(date);
+            dateFrom = new SimpleDateFormat("yyyy-MM-dd").format(date);
             }   
         }
         Date dateT = jDateChooseTo.getDate();
         String dateTo = "";
         try{
-            dateTo = DateFormat.getDateInstance().format(dateT);
+            dateTo = new SimpleDateFormat("yyyy-MM-dd").format(dateT);
+            System.out.println(dateTo);
         }catch (Exception e){
             if(dateT == null){
             Date date= new Date();
-            dateTo = DateFormat.getDateInstance().format(date);
+            dateTo = new SimpleDateFormat("yyyy-MM-dd").format(date);
             }    
-        }
-  
-        if(dateT == null){
-            Date date= new Date();
-            dateTo = DateFormat.getDateInstance().format(date);
         }
 
         String query = jSearchText.getText();
@@ -545,6 +550,11 @@ public class TripsView extends javax.swing.JFrame {
         JFrame Login = new LoginView();
         Login.setVisible(true);
     }//GEN-LAST:event_jHostLoginActionPerformed
+
+    private void jCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCloseActionPerformed
+        // TODO add your handling code here:
+        jDialogMoreInfo.setVisible(false);
+    }//GEN-LAST:event_jCloseActionPerformed
 
     /**
      * @param args the command line arguments

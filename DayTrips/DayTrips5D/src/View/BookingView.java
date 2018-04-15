@@ -10,6 +10,7 @@ import Model.Trip;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
+
 /**
  * This view class lets the user book a trip for herself/himself
  * and more people, if desired.
@@ -17,18 +18,43 @@ import javax.swing.JOptionPane;
  */
 public class BookingView extends javax.swing.JFrame {
     
-    private Trip trip = TripsView.getSelectedTrip();
-    private ArrayList<String> tripDates = trip.getDates();
+    //private Trip trip = TripsView.getSelectedTrip(); Commenta inn aftur
+    private ArrayList<String> types = new ArrayList(); // asdf taka út
+
+    // private ArrayList<String> tripDates = trip.getDates(); Commenta inn aftur
+    private ArrayList<String> tripDates;
     private Booking booking = new Booking();
+    Trip trip;
 
     /**
      * Creates new form BookingView
      */
     public BookingView() {
         initComponents();
+        /**
+        * Mock Trip hlutur til að testa á:
+         */
+        tripDates.add("2018-05-05"); 
+        tripDates.add("2018-05-04"); 
+        tripDates.add("2018-05-03");
+
+        types.add("Horseback"); 
+        types.add("Sightseeing"); 
+        String time = "1600";
+        
         for(int i = 0; i < tripDates.size(); i++){
             jDateChooser.add(tripDates.get(i));
         }
+        trip.setDates(tripDates);
+        trip.setTime(time);
+        trip.setName("nafn");
+        trip.setDescription("descrtiption");
+        trip.setPrice(60000);
+        trip.setTypes(types);
+        trip.setDuration("duration");
+        trip.setCapacity(50);
+        trip.setSoldOut(false);
+        trip.setLocation("North");
     }
     
     // ASDF þarf að gera aðferð í TripsView sem heitir getSelectedTrip()
@@ -59,7 +85,6 @@ public class BookingView extends javax.swing.JFrame {
     public Trip getTrip(){
         return trip;
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -243,10 +268,17 @@ public class BookingView extends javax.swing.JFrame {
         boolean canBook = true;
         int pax = this.getPax();
         
-        if(pax <= 0 || pax > trip.getCapacity()){
+        if(pax <= 0) {
+            canBook = false;
+            JOptionPane.showMessageDialog(null, "Please specify correct number of participants.",
+                    "Participant number error",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
+        
+        if(pax > trip.getCapacity()){
             canBook = false;
             JOptionPane.showMessageDialog(null, "There is not enough room on this trip for " + 
-                    " participants.",
+                    pax + " participants.",
                     "Not enough room!",
                     JOptionPane.INFORMATION_MESSAGE);
         }
@@ -270,7 +302,9 @@ public class BookingView extends javax.swing.JFrame {
                     JOptionPane.INFORMATION_MESSAGE);
             
             this.setVisible(false);
+            System.out.println("booking successful!");
         }
+            
     }//GEN-LAST:event_jButtonBookActionPerformed
 
     /**

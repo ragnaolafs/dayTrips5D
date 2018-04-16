@@ -6,32 +6,32 @@
 package Model;
 
 import Controller.DatabaseController;
-import View.BookingView;
+import java.util.ArrayList;
 /**
  *
  * @author ragna
  */
 
 public class Booking {
-    private BookingView bView = new BookingView();
-    private String name = bView.getName();
-    private String date = bView.getDate();
-    private String email = bView.getEmail();
-    private int pax = bView.getPax();
-    private Trip trip = bView.getTrip();
-    private String phoneNo = bView.getPhoneNo();
-    private DatabaseController databaseController = new DatabaseController();
 
-    public void bookTrip() {
-        databaseController.insertBooking(name, date, email, pax, trip, phoneNo);
+
+
+    public static void bookTrip(String name, String date, String email, int pax, int tripID, String phoneNo) {
+        DatabaseController dbctr = new DatabaseController();
+        dbctr.insertBooking(name, date, email, pax, tripID, phoneNo);
     }
-    public void updateTripCapacity() {
-        trip.setCapacity(trip.getCapacity()-pax);
+    public static void updateTripCapacity(int pax, int tripID) {
+        DatabaseController dbctr = new DatabaseController();
+        dbctr.updateTripCapacity(tripID, pax);
+
+
     }
 
     public static void main(String[] args) {
         // TODO Auto-generated method stub
     }
+
+
 
 }
 

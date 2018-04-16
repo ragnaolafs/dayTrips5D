@@ -526,15 +526,16 @@ public class TripsView extends javax.swing.JFrame {
     private void jBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBookActionPerformed
         // TODO add your handling code here:
         //bookthistrip
-        JFrame BookingView = new BookingView();
-        BookingView.setVisible(true);
-        jDialogMoreInfo.setVisible(false);
+        
         int n = jTable.getSelectedRow();
         DatabaseController cntr = new DatabaseController();
         ArrayList<Trip> tripList =cntr.getTripList();
         
         selectedTrip = tripList.get(n);
- 
+
+        JFrame BookingView = new BookingView();
+        BookingView.setVisible(true);
+        jDialogMoreInfo.setVisible(false);
     }//GEN-LAST:event_jBookActionPerformed
 
     private void jSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSearchActionPerformed

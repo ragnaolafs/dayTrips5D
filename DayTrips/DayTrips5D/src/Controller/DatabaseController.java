@@ -284,18 +284,18 @@ public class DatabaseController {
      * @param contactPhoneNo 
      */
     public void insertBooking(String contactName, String date, String contactEmail, 
-                    int pax, Trip trip, String contactPhoneNo){
+                    int pax, int tripID, String contactPhoneNo){
         
         DatabaseConnection dbConn = new DatabaseConnection();
         
         System.out.println("insert into Booking");
         String q = "INSERT INTO Bookings (contactName, date, contactEmail, " +
-                "pax, trip, contactPhoneNo) VALUES ('" 
+                "pax, tripID, contactPhoneNo) VALUES ('" 
                 + contactName + "', '" 
                 + date + "', '" 
                 + contactEmail + "', '" 
                 + pax + "', " 
-                + trip + ", '" 
+                + tripID + ", '" 
                 + contactPhoneNo + "')";
         System.out.println(q);
         try {

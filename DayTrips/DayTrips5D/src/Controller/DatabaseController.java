@@ -202,6 +202,24 @@ public class DatabaseController {
         return tripList;
     }
     
+    public void updateTripCapacity(int tripID, int newCapacity) {
+        
+        DatabaseConnection dbConn = new DatabaseConnection();
+        
+        String q = "UPDATE Trips SET capacity = " + newCapacity + " WHERE tripID = " + tripID;
+        
+        try {
+            dbConn.update(q);
+        }
+        catch (Exception e) {
+            
+            System.err.println(e.getMessage());
+        }
+        finally {
+            dbConn.closeConnection();
+        }
+    }
+    
     // asdf útfæra föll sem ráða við ef einhvern dálk vantar löglega í töfluna
     public void insertTrip(ArrayList<String> dates, String time, String nameOfTrip, 
             String description, int price, ArrayList<String> types, String duration,
@@ -317,5 +335,7 @@ public class DatabaseController {
         for (int i = 0; i < matches.size(); i++) {
             System.out.println(matches.get(i).getTripID());
         }
+        
+        dbc.updateTripCapacity(1, 29);
     }
 }

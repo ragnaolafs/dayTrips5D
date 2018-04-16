@@ -9,15 +9,12 @@ import Controller.DatabaseController;
 import Model.HostLogin;
 import Model.Search;
 import Model.Trip;
-import java.awt.Component;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 
 import java.util.Date;
@@ -28,6 +25,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JCheckBox;
+import javax.swing.ListModel;
 
 
 /**
@@ -36,10 +34,7 @@ import javax.swing.JCheckBox;
  */
 public class TripsView extends javax.swing.JFrame {
 
-    static Trip getSelectedTrip() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+  
     
     /**
      * Creates new form TripsView
@@ -47,7 +42,7 @@ public class TripsView extends javax.swing.JFrame {
     public TripsView() {
         initComponents();
         jLogout.setVisible(false);
-
+        showTrips();
       
         
     }
@@ -62,17 +57,27 @@ public class TripsView extends javax.swing.JFrame {
         
         
     }
+      public Trip getSelectedTrip() {
+        int n =jTable.getSelectedRow();
+        int m = jTable.getSelectedColumn();
+        Trip trip = (Trip) jTable.getValueAt(n, m);
+        return trip;    
+    }
+
     
     public void showTrips(){
         DatabaseController cntr = new DatabaseController();
         ArrayList<Trip> tripList =cntr.getTripList();
         DefaultTableModel model = (DefaultTableModel)jTable.getModel();
         Object[] row = new Object[3];
+  
         for(int i = 0; i < tripList.size(); i++){
             row[0]= tripList.get(i).getName();
             row[1]= tripList.get(i).getPrice();
             row[2]= tripList.get(i).getLocation();
+            model.insertRow(i, row);
         }
+        jTable.setModel(model);
     }
     
     public ArrayList<JCheckBox> getCheckboxes(){
@@ -85,10 +90,7 @@ public class TripsView extends javax.swing.JFrame {
         return checkboxes;
     }
     
-    /*public ArrayList<String> getSelectedDates(){
-        Date from = jDateChooseFrom.getDate();
-        Date to = jDateChooseTo.getDate();
-    }*/
+
    
     /**
      * This method is called from within the constructor to initialize the form.
@@ -486,38 +488,43 @@ public class TripsView extends javax.swing.JFrame {
         // TODO add your handling code here:
         //int n = JOptionPane.showConfirmDialog(this, evt, title, WIDTH, HEIGHT
         int n = jTable.getSelectedRow();
-        int m = jTable.getSelectedColumn();
-        Trip trip = (Trip) jTable.getValueAt(n, m);
-        System.out.println(trip);
+        //int m = jTable.getSelectedColumn();
+        //Object trip = jTable.getValueAt(n, m);
+        //System.out.println(trip);
+        DatabaseController cntr = new DatabaseController();
+        ArrayList<Trip> tripList =cntr.getTripList();
+        tripList.get(n).getName();
+
         jDialogMoreInfo.setSize(700,500);
         jDialogMoreInfo.setVisible(true); 
-        String descr = trip.getDescription();
-        ArrayList<String> types = trip.getTypes();
+        
+        String descr = tripList.get(n).getDescription();
+        ArrayList<String> types = tripList.get(n).getTypes();
         String typestring = types.get(0);
         for(int i = 1; i<types.size();i++){
             typestring = " and " + types.get(i);
         }
-        String time = trip.getTime();
-        int price = trip.getPrice();
-        String loc = trip.getLocation();
-        int cap = trip.getCapacity();
-        String dur = trip.getDuration();
-        String everything = "Description: "+ descr +"/n" + "When : " + time +"for " + dur + "hours" + "/n"
-                            + "Where: " + loc + "/n" + "Available spots: " + cap + "/n" + "Price: " + price;
+        String time = tripList.get(n).getTime();
+        int price = tripList.get(n).getPrice();
+        String loc = tripList.get(n).getLocation();
+        int cap = tripList.get(n).getCapacity();
+        String dur = tripList.get(n).getDuration();
+        String everything = "Description: "+ descr +"\n" + "When : " + time +"for " + dur + "hours" + "\n"
+                            + "Where: " + loc + "\n" + "Available spots: " + cap + "\n" + "Price: " + price;
                 
                 
         jInfo.setText(everything);
         
-        String name = trip.getName();
+        String name = tripList.get(n).getName();
         jTripName.setText(name);
         
-        ArrayList<String> dates = trip.getDates();
-        DefaultListModel datemodel = (DefaultListModel) jDatesAvail.getModel();
+        ArrayList<String> dates = tripList.get(n).getDates();
+        DefaultListModel datemodel = new DefaultListModel();
         for(int i = 0; i< dates.size();i++){
             datemodel.addElement(dates.get(i));
         }
         jDatesAvail.setModel(datemodel);
-        
+       
         
     }//GEN-LAST:event_jMoreInfoActionPerformed
 

@@ -34,7 +34,7 @@ import javax.swing.ListModel;
  */
 public class TripsView extends javax.swing.JFrame {
 
-  
+    public static Trip selectedTrip;
     
     /**
      * Creates new form TripsView
@@ -53,15 +53,7 @@ public class TripsView extends javax.swing.JFrame {
             return con;
         } catch(SQLException e){
             return null;
-        }
-        
-        
-    }
-      public Trip getSelectedTrip() {
-        int n =jTable.getSelectedRow();
-        int m = jTable.getSelectedColumn();
-        Trip trip = (Trip) jTable.getValueAt(n, m);
-        return trip;    
+        }     
     }
 
     
@@ -509,7 +501,7 @@ public class TripsView extends javax.swing.JFrame {
         String loc = tripList.get(n).getLocation();
         int cap = tripList.get(n).getCapacity();
         String dur = tripList.get(n).getDuration();
-        String everything = "Description: "+ descr +"\n" + "When : " + time +"for " + dur + "hours" + "\n"
+        String everything = "Description: "+ descr +"\n" + "When : " + time + " for " + dur + " hours" + "\n"
                             + "Where: " + loc + "\n" + "Available spots: " + cap + "\n" + "Price: " + price;
                 
                 
@@ -534,6 +526,11 @@ public class TripsView extends javax.swing.JFrame {
         JFrame BookingView = new BookingView();
         BookingView.setVisible(true);
         jDialogMoreInfo.setVisible(false);
+        int n = jTable.getSelectedRow();
+        DatabaseController cntr = new DatabaseController();
+        ArrayList<Trip> tripList =cntr.getTripList();
+        
+        selectedTrip = tripList.get(n);
  
     }//GEN-LAST:event_jBookActionPerformed
 

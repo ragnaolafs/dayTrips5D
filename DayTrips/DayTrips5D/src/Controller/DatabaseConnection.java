@@ -53,6 +53,17 @@ public class DatabaseConnection {
         }
         
         
+        public void update(String updateValues) {
+            try {
+                System.out.println(updateValues);
+                stmt.executeUpdate(updateValues);
+            }
+            catch (SQLException e) {
+                System.err.println(e.getMessage());
+            }
+        }
+        
+        
         public ResultSet select(String selectQuery) {
             ResultSet rs = null;
             try {

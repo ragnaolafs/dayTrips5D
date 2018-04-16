@@ -5,6 +5,7 @@
  */
 package View;
 
+import Controller.DatabaseController;
 import Model.HostLogin;
 import Model.Trip;
 import java.text.DateFormat;
@@ -105,7 +106,7 @@ public class PostTrip extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Post trip");
 
         jPanel1.setBackground(new java.awt.Color(255, 250, 240));
@@ -443,12 +444,16 @@ public class PostTrip extends javax.swing.JFrame {
 
        ArrayList<String> err = new ArrayList();
        err = check(name,descr,dates,types);
-        /*DatabaseController.insertTrip(dates, timefrom, name, 
-        descr, price, types, duration, capac, false, location, VANTAR HOST);*/
+       DatabaseController insert = new DatabaseController();
+       HostLogin host = new HostLogin();
+       String user = host.getLoggedIn();
+       String duration = getduration();
+       insert.insertTrip(dates, timefrom, name, 
+       descr, price, types, duration, capac, false, location, user);
         
     }//GEN-LAST:event_jPostActionPerformed
     
-    private int getduration(){
+    private String getduration(){
        String timefrom = "" + jTimeFrom.getSelectedItem();
        String timeto = "" + jTimeTo.getSelectedItem();
        int hourFrom = Integer.parseInt(timefrom.substring(0,2));
@@ -462,7 +467,8 @@ public class PostTrip extends javax.swing.JFrame {
        if (duration < 0){
             duration = duration + 1440;
        }
-       return duration;
+       String dur = ""+duration;
+       return dur;
     }
     
     private ArrayList<String> getdate(){

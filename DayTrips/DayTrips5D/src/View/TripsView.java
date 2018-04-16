@@ -6,6 +6,7 @@
 package View;
 
 import Controller.DatabaseController;
+import Model.HostLogin;
 import Model.Search;
 import Model.Trip;
 import java.awt.Component;
@@ -14,6 +15,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
@@ -44,6 +46,8 @@ public class TripsView extends javax.swing.JFrame {
      */
     public TripsView() {
         initComponents();
+        jLogout.setVisible(false);
+
       
         
     }
@@ -129,10 +133,21 @@ public class TripsView extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jHostLogin = new javax.swing.JButton();
+        jLogout = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jCreateTrip = new javax.swing.JMenuItem();
+
+        jDialogMoreInfo.setResizable(false);
 
         jPanel2.setBackground(new java.awt.Color(255, 250, 240));
 
         jClose.setText("Close");
+        jClose.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCloseActionPerformed(evt);
+            }
+        });
 
         jInfo.setEditable(false);
         jInfo.setColumns(20);
@@ -211,7 +226,7 @@ public class TripsView extends javax.swing.JFrame {
                         .addComponent(jBook, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(jClose)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jDialogMoreInfoLayout = new javax.swing.GroupLayout(jDialogMoreInfo.getContentPane());
@@ -265,7 +280,7 @@ public class TripsView extends javax.swing.JFrame {
         jPriceFrom.setPaintLabels(true);
         jPriceFrom.setPaintTicks(true);
 
-        jLabel3.setText("Price range from (thousand/isk):");
+        jLabel3.setText("Price range from (EUR):");
 
         jPriceTo.setMajorTickSpacing(50);
         jPriceTo.setMaximum(500);
@@ -273,7 +288,7 @@ public class TripsView extends javax.swing.JFrame {
         jPriceTo.setPaintLabels(true);
         jPriceTo.setPaintTicks(true);
 
-        jLabel4.setText("Price range to (thousand/isk):");
+        jLabel4.setText("Price range to (EUR):");
 
         jCheckReykjavik.setSelected(true);
         jCheckReykjavik.setText("Reykjavik(capital area)");
@@ -310,6 +325,8 @@ public class TripsView extends javax.swing.JFrame {
             }
         });
 
+        jLogout.setText("Log out");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -317,18 +334,24 @@ public class TripsView extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(45, 45, 45)
                 .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 385, Short.MAX_VALUE)
-                .addComponent(jHostLogin)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jHostLogin, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLogout, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(22, 22, 22)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(jHostLogin))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addComponent(jLabel7)
+                .addContainerGap(30, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jHostLogin)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLogout)
+                .addGap(18, 18, 18))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -337,53 +360,60 @@ public class TripsView extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(43, 43, 43)
+                .addGap(44, 44, 44)
                 .addComponent(jScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 363, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jCheckSouth)
-                            .addComponent(jCheckNorth)
-                            .addComponent(jCheckEast)
-                            .addComponent(jCheckWest)
-                            .addComponent(jSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jCheckSouth)
+                                    .addComponent(jCheckEast)
+                                    .addComponent(jCheckWest)
+                                    .addComponent(jSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jMoreInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(31, 31, 31)
+                                        .addComponent(jLabel2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jSearchText, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jPriceFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jCheckNorth)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(jLabel5))
+                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                                    .addGap(240, 240, 240)
+                                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(jCheckReykjavik)))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jDateChooseTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jDateChooseFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(jPriceTo, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 52, Short.MAX_VALUE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(31, 31, 31)
-                                .addComponent(jLabel4))
+                                .addGap(28, 28, 28)
+                                .addComponent(jLabel3))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jMoreInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(31, 31, 31)
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jSearchText, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jPriceFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel5)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addGap(240, 240, 240)
-                                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addComponent(jCheckReykjavik)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jDateChooseTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jDateChooseFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jPriceTo, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(52, 52, 52)
-                                .addComponent(jLabel3)))
-                        .addGap(0, 52, Short.MAX_VALUE))))
+                                .addGap(33, 33, 33)
+                                .addComponent(jLabel4)))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -391,9 +421,9 @@ public class TripsView extends javax.swing.JFrame {
                                 .addComponent(jLabel2)
                                 .addComponent(jSearchText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jMoreInfo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(12, 12, 12)
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPriceFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel4)
@@ -403,10 +433,11 @@ public class TripsView extends javax.swing.JFrame {
                         .addComponent(jCheckReykjavik)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(jDateChooseFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jCheckNorth)
-                                .addComponent(jLabel5))
-                            .addComponent(jDateChooseFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(3, 3, 3)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -415,13 +446,27 @@ public class TripsView extends javax.swing.JFrame {
                             .addComponent(jDateChooseTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jCheckEast)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jCheckWest)
                         .addGap(67, 67, 67)
                         .addComponent(jSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 502, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30))
         );
+
+        jMenu1.setText("Host menu");
+
+        jCreateTrip.setText("Create a trip");
+        jCreateTrip.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCreateTripActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jCreateTrip);
+
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -444,7 +489,7 @@ public class TripsView extends javax.swing.JFrame {
         int m = jTable.getSelectedColumn();
         Trip trip = (Trip) jTable.getValueAt(n, m);
         System.out.println(trip);
-        jDialogMoreInfo.setSize(200,200);
+        jDialogMoreInfo.setSize(700,500);
         jDialogMoreInfo.setVisible(true); 
         String descr = trip.getDescription();
         ArrayList<String> types = trip.getTypes();
@@ -504,30 +549,27 @@ public class TripsView extends javax.swing.JFrame {
         
         int priceLower = jPriceFrom.getValue();
         int priceHigher = jPriceTo.getValue();
-        String dateFrom = "";
+        
         Date dateF = jDateChooseFrom.getDate();
+        String dateFrom="";
         try{
-            dateFrom = DateFormat.getDateInstance().format(dateF);
+           dateFrom = new SimpleDateFormat("yyyy-MM-dd").format(dateF);
         }catch (Exception e){
             if(dateF == null){
             Date date= new Date();
-            dateFrom = DateFormat.getDateInstance().format(date);
+            dateFrom = new SimpleDateFormat("yyyy-MM-dd").format(date);
             }   
         }
         Date dateT = jDateChooseTo.getDate();
         String dateTo = "";
         try{
-            dateTo = DateFormat.getDateInstance().format(dateT);
+            dateTo = new SimpleDateFormat("yyyy-MM-dd").format(dateT);
+            System.out.println(dateTo);
         }catch (Exception e){
             if(dateT == null){
             Date date= new Date();
-            dateTo = DateFormat.getDateInstance().format(date);
+            dateTo = new SimpleDateFormat("yyyy-MM-dd").format(date);
             }    
-        }
-  
-        if(dateT == null){
-            Date date= new Date();
-            dateTo = DateFormat.getDateInstance().format(date);
         }
 
         String query = jSearchText.getText();
@@ -545,6 +587,28 @@ public class TripsView extends javax.swing.JFrame {
         JFrame Login = new LoginView();
         Login.setVisible(true);
     }//GEN-LAST:event_jHostLoginActionPerformed
+
+    private void jCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCloseActionPerformed
+        // TODO add your handling code here:
+        jDialogMoreInfo.setVisible(false);
+    }//GEN-LAST:event_jCloseActionPerformed
+
+    private void jCreateTripActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCreateTripActionPerformed
+        // TODO add your handling code here:
+        PostTrip create = new PostTrip();
+        HostLogin kisi = new HostLogin();
+        System.out.println(kisi.getLoggedIn());
+        if(kisi.getLoggedIn() == null || "".equals(kisi.getLoggedIn())){
+            JOptionPane.showMessageDialog(this, "You must be logged in");
+            create.setVisible(false);
+            jLogout.setVisible(false);
+        }else{
+            create.setVisible(true);
+            jLogout.setVisible(true);
+            
+        }
+        
+    }//GEN-LAST:event_jCreateTripActionPerformed
 
     /**
      * @param args the command line arguments
@@ -589,6 +653,7 @@ public class TripsView extends javax.swing.JFrame {
     private javax.swing.JCheckBox jCheckSouth;
     private javax.swing.JCheckBox jCheckWest;
     private javax.swing.JButton jClose;
+    private javax.swing.JMenuItem jCreateTrip;
     private com.toedter.calendar.JDateChooser jDateChooseFrom;
     private com.toedter.calendar.JDateChooser jDateChooseTo;
     private javax.swing.JList<String> jDatesAvail;
@@ -602,6 +667,9 @@ public class TripsView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JButton jLogout;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JButton jMoreInfo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

@@ -294,23 +294,26 @@ public class DatabaseController {
     
     public static void main(String args[]) {
         ArrayList<String> dates = new ArrayList<String>();
-        dates.add("2.2.19");
-        dates.add("3.3.19");
+        dates.add("2018-05-06");
+        dates.add("2018-05-07");
         ArrayList<String> types = new ArrayList<String>();
-        types.add("skemmtileg");
-        types.add("mjög skemmtileg");
+        types.add("Hot Spring tour");
+        
+        String descr = "The geothermal water originates 2,000 metres below the surface, where freshwater and seawater combine at extreme temperatures. It is then harnessed via drilling holes at a nearby geothermal power plant, Svartsengi, to create electricity and hot water for nearby communities." +
+" On its way to the surface, the water picks up silica and minerals. When the water emerges, its temperature is generally between 37°C and 40°C (98-104°F). But owing to variables outside of our control - including weather and time of year - the water temperature sometimes fluctuates beyond this range.";
         
         DatabaseController dbc = new DatabaseController();
         //dbc.insertTrip(dates, "12:00", "Ferd", "skemmtileg", 2000, types, "6 timar",
           //      30, false, "Austurland", "Karen");
         
-        
+        //dbc.insertTrip(dates, "12:00", "Blue Lagoon", descr, 9900, types, "2",
+          //      30, false, "Capital area", "1");
         /*ArrayList<Trip> location = dbController.searchDate("2.2.19");
         for (int i = 0; i < location.size(); i++) {
             System.out.println(location.get(i).getTripID());
         }*/
         
-        ArrayList<Trip> matches = dbc.searchPrice(1000, 1500);
+        ArrayList<Trip> matches = dbc.searchPrice(1000, 15000);
         for (int i = 0; i < matches.size(); i++) {
             System.out.println(matches.get(i).getTripID());
         }

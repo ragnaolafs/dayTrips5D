@@ -55,6 +55,9 @@ public class TripsView extends javax.swing.JFrame {
             return null;
         }     
     }
+    public static Trip getSelectedTrip(){
+        return selectedTrip;
+    }
 
     
     public void showTrips(){

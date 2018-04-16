@@ -46,8 +46,7 @@ public class Trip {
          */
         
         public int getTripID(){
-            return tripID;
-            
+            return tripID;    
         }
         public ArrayList<String> getDates(){
             return dates;
@@ -79,41 +78,7 @@ public class Trip {
         public String getLocation(){
             return location;
         }
-        
-        /**
-         * SETTERS
-         */
-        
-        public void setDates(ArrayList<String> dates){
-            this.dates = dates;
-        }
-        public void setTime(String time){
-            this.time = time;
-        }
-        public void setName(String name){
-            this.nameOfTrip = name;
-        }
-        public void setDescription(String descr){
-            this.description = descr;
-        }  
-        public void setPrice(int price){
-            this.price = price;
-        }
-	public void setTypes(ArrayList<String> types){
-            this.types = types;
-        }
-        public void setDuration(String duration){
-            this.duration = duration;
-        }
-        public void setCapacity(int capacity){
-            this.capacity = capacity;
-        }
-        public void setSoldOut(boolean soldout){
-            this.soldOut = soldout;
-        }
-        public void setLocation(String location){
-            this.location = location;
-        }
+
         
         
         public static void main(String[] args) {

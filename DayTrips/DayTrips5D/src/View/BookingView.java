@@ -18,53 +18,17 @@ import javax.swing.JOptionPane;
  */
 public class BookingView extends javax.swing.JFrame {
     
-    //private Trip trip = TripsView.getSelectedTrip(); Commenta inn aftur
-    private ArrayList<String> types = new ArrayList(); // asdf taka út
-
-    // private ArrayList<String> tripDates = trip.getDates(); Commenta inn aftur
-    private ArrayList<String> tripDates;
-    private Booking booking = new Booking();
-    Trip trip;
-
     /**
      * Creates new form BookingView
      */
     public BookingView() {
         initComponents();
-
-        for(int i = 0; i < tripDates.size(); i++){
-            jDateChooser.add(tripDates.get(i));
+        Trip trip =TripsView.getSelectedTrip();
+        ArrayList<String> dates = trip.getDates();
+        for(int i = 0; i<dates.size();i++){
+            jDateChooser.add(dates.get(i));
         }
 
-    }
-    
-    // ASDF þarf að gera aðferð í TripsView sem heitir getSelectedTrip()
-    // og skilar þeirri ferð sem notandinn ætlar að bóka
-    // núna ekki hægt því listinn er bara tafla
-    
-    
-    public String getName(){
-        return jContactName.getText();
-    }
-    
-    public String getDate(){
-        return jDateChooser.getSelectedItem();
-    }
-    
-    public String getEmail(){
-        return jContactEmail.getText();
-    }
-    
-    public int getPax(){
-        return (Integer)jPax.getValue();
-    }
-    
-    public String getPhoneNo(){
-        return jContactPhone.getText();
-    }
-    
-    public Trip getTrip(){
-        return trip;
     }
 
     /**
@@ -90,13 +54,13 @@ public class BookingView extends javax.swing.JFrame {
         jButtonBook = new javax.swing.JButton();
         jButtonCancel = new javax.swing.JButton();
         jDateChooser = new java.awt.Choice();
-        jPax = new javax.swing.JSpinner();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 32767));
         filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 32767));
         jLabel8 = new javax.swing.JLabel();
         filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 32767));
         jLocaleChooser1 = new com.toedter.components.JLocaleChooser();
         jLabel5 = new javax.swing.JLabel();
+        jPax2 = new com.toedter.components.JSpinField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setFocusCycleRoot(false);
@@ -146,6 +110,11 @@ public class BookingView extends javax.swing.JFrame {
         });
 
         jButtonCancel.setText("Cancel");
+        jButtonCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCancelActionPerformed(evt);
+            }
+        });
 
         jLabel8.setText("(external and internal):");
 
@@ -161,22 +130,19 @@ public class BookingView extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jContactPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel4)
-                                .addGap(33, 33, 33)
-                                .addComponent(jPax, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(188, 188, 188))
+                                .addGap(29, 29, 29)
+                                .addComponent(jPax2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGap(199, 199, 199)
+                                .addComponent(jButtonBook, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addGap(0, 0, Short.MAX_VALUE)
-                                        .addComponent(jButtonBook, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel5)
-                                        .addGap(21, 21, 21)
-                                        .addComponent(jLocaleChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                                .addComponent(jLabel5)
+                                .addGap(21, 21, 21)
+                                .addComponent(jLocaleChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(filler3, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jContactName, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -239,20 +205,22 @@ public class BookingView extends javax.swing.JFrame {
                         .addComponent(filler3, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jButtonBook, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(16, 16, 16)
+                                .addComponent(jLabel4))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jPax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel4))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jPax2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel5)
                                     .addComponent(jLocaleChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(38, 38, 38)
-                                .addComponent(jButtonCancel)))
+                                .addComponent(jButtonCancel))
+                            .addComponent(jButtonBook, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap())))
         );
 
@@ -273,11 +241,15 @@ public class BookingView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBookActionPerformed
-
-        boolean canBook = true;
-        int pax = this.getPax();
+        Trip trip =TripsView.selectedTrip;
+        ArrayList<String> dates = trip.getDates();
+        for(int i = 0; i<dates.size();i++){
+            jDateChooser.add(dates.get(i));
+        }
         
-        if(pax <= 0) {
+        boolean canBook = true;
+        int pax = jPax2.getValue();
+        if(pax == 0) {
             canBook = false;
             JOptionPane.showMessageDialog(null, "Please specify correct number of participants.",
                     "Participant number error",
@@ -286,7 +258,7 @@ public class BookingView extends javax.swing.JFrame {
         
         if(pax > trip.getCapacity()){
             canBook = false;
-            JOptionPane.showMessageDialog(null, "There is not enough room on this trip for " + 
+            JOptionPane.showMessageDialog(this, "There is not enough room on this trip for " + 
                     pax + " participants.",
                     "Not enough room!",
                     JOptionPane.INFORMATION_MESSAGE);
@@ -295,15 +267,18 @@ public class BookingView extends javax.swing.JFrame {
         String email = jContactEmail.getText();
         if(!email.contains("@") || !email.contains(".")){
             canBook = false;
-            JOptionPane.showMessageDialog(null, "Please type in a valid email address.",
+            JOptionPane.showMessageDialog(this, "Please type in a valid email address.",
                     "Email address invalid",
                     JOptionPane.INFORMATION_MESSAGE);
         }
-        
+        String date = jDateChooser.getSelectedItem();
+        String cname = jContactName.getText();
+        String phoneNo = jContactPhone.getText();
+        int tripID = trip.getTripID();
         if(canBook) {
-            booking.bookTrip();
+            Booking.bookTrip(cname,  date,  email,  pax,  tripID,  phoneNo);
             System.out.println("capacity before booking: " + trip.getCapacity());
-            booking.updateTripCapacity();
+            Booking.updateTripCapacity(pax,tripID);
             System.out.println("capacity after booking: " + trip.getCapacity());
             
             JOptionPane.showMessageDialog(null, "Your trip has been successfully booked.",
@@ -315,6 +290,11 @@ public class BookingView extends javax.swing.JFrame {
         }
             
     }//GEN-LAST:event_jButtonBookActionPerformed
+
+    private void jButtonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+    }//GEN-LAST:event_jButtonCancelActionPerformed
 
     /**
      * @param args the command line arguments
@@ -372,6 +352,6 @@ public class BookingView extends javax.swing.JFrame {
     private com.toedter.components.JLocaleChooser jLocaleChooser1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JSpinner jPax;
+    private com.toedter.components.JSpinField jPax2;
     // End of variables declaration//GEN-END:variables
 }

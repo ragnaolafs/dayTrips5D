@@ -13,29 +13,14 @@ import java.util.ArrayList;
  */
 
 public class Booking {
-    private String name;
-    private String date;
-    private String email;
-    public int pax;
-    private int tripID;
-    private String phoneNo;
-    
-    public Booking(String name, String date, String email, int pax, int tripID, String phoneNo){
-        this.name=name;
-        this.date=date;
-        this.email=email;
-        this.pax=pax;
-        this.tripID=tripID;
-        this.phoneNo=phoneNo;
-        
-    }
 
 
-    public void bookTrip(String name, String date, String email, int pax, int tripID, String phoneNo) {
+
+    public static void bookTrip(String name, String date, String email, int pax, int tripID, String phoneNo) {
         DatabaseController dbctr = new DatabaseController();
         dbctr.insertBooking(name, date, email, pax, tripID, phoneNo);
     }
-    public void updateTripCapacity(int pax, int tripID) {
+    public static void updateTripCapacity(int pax, int tripID) {
         DatabaseController dbctr = new DatabaseController();
         dbctr.updateTripCapacity(tripID, pax);
 

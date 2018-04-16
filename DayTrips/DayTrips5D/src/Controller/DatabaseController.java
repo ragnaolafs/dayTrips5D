@@ -202,6 +202,24 @@ public class DatabaseController {
         return tripList;
     }
     
+    public void updateTripCapacity(int tripID, int newCapacity) {
+        
+        DatabaseConnection dbConn = new DatabaseConnection();
+        
+        String q = "UPDATE Trips SET capacity = " + newCapacity + " WHERE tripID = " + tripID;
+        
+        try {
+            dbConn.update(q);
+        }
+        catch (Exception e) {
+            
+            System.err.println(e.getMessage());
+        }
+        finally {
+            dbConn.closeConnection();
+        }
+    }
+    
     // asdf útfæra föll sem ráða við ef einhvern dálk vantar löglega í töfluna
     public void insertTrip(ArrayList<String> dates, String time, String nameOfTrip, 
             String description, int price, ArrayList<String> types, String duration,
@@ -266,18 +284,18 @@ public class DatabaseController {
      * @param contactPhoneNo 
      */
     public void insertBooking(String contactName, String date, String contactEmail, 
-                    int pax, Trip trip, String contactPhoneNo){
+                    int pax, int tripID, String contactPhoneNo){
         
         DatabaseConnection dbConn = new DatabaseConnection();
         
         System.out.println("insert into Booking");
         String q = "INSERT INTO Bookings (contactName, date, contactEmail, " +
-                "pax, trip, contactPhoneNo) VALUES ('" 
+                "pax, tripID, contactPhoneNo) VALUES ('" 
                 + contactName + "', '" 
                 + date + "', '" 
                 + contactEmail + "', '" 
                 + pax + "', " 
-                + trip + ", '" 
+                + tripID + ", '" 
                 + contactPhoneNo + "')";
         System.out.println(q);
         try {
@@ -317,5 +335,7 @@ public class DatabaseController {
         for (int i = 0; i < matches.size(); i++) {
             System.out.println(matches.get(i).getTripID());
         }
+        
+        dbc.updateTripCapacity(1, 29);
     }
 }

@@ -9,6 +9,7 @@ import Controller.DatabaseController;
 import Model.HostLogin;
 import Model.Trip;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.DefaultListModel;
@@ -427,8 +428,7 @@ public class PostTrip extends javax.swing.JFrame {
 
     private void jPostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPostActionPerformed
 
-       String timefrom = "" + jTimeFrom.getSelectedItem();
-       String timeto = "" + jTimeTo.getSelectedItem();
+       String time = "" + jTimeFrom.getSelectedItem() + "-" + jTimeTo.getSelectedItem();
  
        String name = jTripName.getText();
        String descr = jTripDescr.getText();
@@ -448,7 +448,7 @@ public class PostTrip extends javax.swing.JFrame {
        HostLogin host = new HostLogin();
        String user = host.getLoggedIn();
        String duration = getduration();
-       insert.insertTrip(dates, timefrom, name, 
+       insert.insertTrip(dates, time, name, 
        descr, price, types, duration, capac, false, location, user);
         
     }//GEN-LAST:event_jPostActionPerformed
@@ -457,9 +457,10 @@ public class PostTrip extends javax.swing.JFrame {
        String timefrom = "" + jTimeFrom.getSelectedItem();
        String timeto = "" + jTimeTo.getSelectedItem();
        int hourFrom = Integer.parseInt(timefrom.substring(0,2));
-       int minutesFrom = Integer.parseInt(timefrom.substring(2,4));
+       int minutesFrom = Integer.parseInt(timefrom.substring(3,5));
+       
        int hourTo = Integer.parseInt(timeto.substring(0,2));
-       int minutesTo = Integer.parseInt(timeto.substring(2,4));
+       int minutesTo = Integer.parseInt(timeto.substring(3,5));
        
        int start = (hourFrom * 60) + minutesFrom;
        int end = (hourTo * 60) + minutesTo;
@@ -467,6 +468,7 @@ public class PostTrip extends javax.swing.JFrame {
        if (duration < 0){
             duration = duration + 1440;
        }
+       duration=duration/60;
        String dur = ""+duration;
        return dur;
     }
@@ -514,9 +516,9 @@ public class PostTrip extends javax.swing.JFrame {
     
     private void jAddDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jAddDateActionPerformed
         DefaultListModel model = (DefaultListModel) jDateList.getModel();
-        Date t = jChooseDate.getDate();
-        String date = DateFormat.getDateInstance().format(t);
-        model.addElement(date);
+        Date date = jChooseDate.getDate();
+        String dateadd = new SimpleDateFormat("yyyy-MM-dd").format(date);
+        model.addElement(dateadd);
         jDateList.setModel(model);
 
     }//GEN-LAST:event_jAddDateActionPerformed

@@ -34,8 +34,6 @@ public class Search {
     private int priceLower;
     private String[] dates; // hmm
     private String keyword;
-    private TripsView tripsView = new TripsView();
-    private final ArrayList<JCheckBox> checkboxes = tripsView.getCheckboxes();
     private ArrayList<Trip> resultSet;
     private DatabaseController dbController;
     

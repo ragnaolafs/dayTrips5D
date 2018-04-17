@@ -25,7 +25,6 @@ import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JCheckBox;
-import javax.swing.ListModel;
 
 
 /**
@@ -41,7 +40,12 @@ public class TripsView extends javax.swing.JFrame {
      */
     public TripsView() {
         initComponents();
-        jLogout.setVisible(false);
+        HostLogin mja = new HostLogin();
+        if("".equals(mja.getLoggedIn()) ){
+            jLogout.setVisible(false);
+        }else{
+            jLogout.setVisible(true);
+        }
         showTrips();
       
         
@@ -61,8 +65,8 @@ public class TripsView extends javax.swing.JFrame {
 
     
     public void showTrips(){
-        DatabaseController cntr = new DatabaseController();
-        ArrayList<Trip> tripList =cntr.getTripList();
+        Search search = new Search();
+        ArrayList<Trip> tripList =search.resetSearch();
         DefaultTableModel model = (DefaultTableModel)jTable.getModel();
         Object[] row = new Object[3];
   
@@ -131,6 +135,7 @@ public class TripsView extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jHostLogin = new javax.swing.JButton();
         jLogout = new javax.swing.JButton();
+        jCancelSearch = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jCreateTrip = new javax.swing.JMenuItem();
@@ -177,14 +182,14 @@ public class TripsView extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(72, 72, 72)
-                .addComponent(jTripName, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jTripName, javax.swing.GroupLayout.PREFERRED_SIZE, 624, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(70, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(jTripName, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14)
+                .addComponent(jTripName, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
@@ -288,7 +293,7 @@ public class TripsView extends javax.swing.JFrame {
         jLabel4.setText("Price range to (EUR):");
 
         jCheckReykjavik.setSelected(true);
-        jCheckReykjavik.setText("Reykjavik(capital area)");
+        jCheckReykjavik.setText("Reykjavik (capital area)");
 
         jCheckNorth.setSelected(true);
         jCheckNorth.setText("North Iceland");
@@ -342,7 +347,7 @@ public class TripsView extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addComponent(jLabel7)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jHostLogin)
@@ -350,6 +355,13 @@ public class TripsView extends javax.swing.JFrame {
                 .addComponent(jLogout)
                 .addGap(18, 18, 18))
         );
+
+        jCancelSearch.setText("Cancel search");
+        jCancelSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCancelSearchActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -368,8 +380,11 @@ public class TripsView extends javax.swing.JFrame {
                                     .addComponent(jCheckSouth)
                                     .addComponent(jCheckEast)
                                     .addComponent(jCheckWest)
-                                    .addComponent(jSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jCancelSearch)))
+                                .addContainerGap(218, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -442,11 +457,14 @@ public class TripsView extends javax.swing.JFrame {
                                 .addComponent(jLabel6))
                             .addComponent(jDateChooseTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jCheckEast)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jCheckWest)
-                        .addGap(67, 67, 67)
-                        .addComponent(jSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jCheckEast)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jCheckWest)
+                                .addGap(67, 67, 67)
+                                .addComponent(jSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jCancelSearch)))
                     .addComponent(jScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 502, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30))
         );
@@ -481,13 +499,10 @@ public class TripsView extends javax.swing.JFrame {
 
     private void jMoreInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMoreInfoActionPerformed
         // TODO add your handling code here:
-        //int n = JOptionPane.showConfirmDialog(this, evt, title, WIDTH, HEIGHT
         int n = jTable.getSelectedRow();
-        //int m = jTable.getSelectedColumn();
-        //Object trip = jTable.getValueAt(n, m);
-        //System.out.println(trip);
-        DatabaseController cntr = new DatabaseController();
-        ArrayList<Trip> tripList =cntr.getTripList();
+        Search search = new Search();
+        ArrayList<Trip> tripList =search.resetSearch();
+        
         tripList.get(n).getName();
 
         jDialogMoreInfo.setSize(700,500);
@@ -584,10 +599,30 @@ public class TripsView extends javax.swing.JFrame {
         
         Search search = new Search();
         try {
-            search.search(locations, priceLower, priceHigher, dateFrom, dateTo, query);
+            System.out.println("try");
+            ArrayList<Trip> search1 = search.search(locations, priceLower, priceHigher, dateFrom, dateTo, query);
+            DefaultTableModel model = (DefaultTableModel)jTable.getModel();
+            
+            Object[] row = new Object[3];
+            System.out.println(model.getRowCount());
+            int rowCount = model.getRowCount();
+            for(int i = 0; i<rowCount; i++){
+                model.removeRow(i);
+            }
+
+            for(int i = 0; i < search1.size(); i++){
+                row[0]= search1.get(i).getName();
+                row[1]= search1.get(i).getPrice();
+                row[2]= search1.get(i).getLocation();
+            
+                model.insertRow(i, row);
+            }
+            jTable.setModel(model);
         } catch (ParseException ex) {
+            System.out.println("catch");
             Logger.getLogger(TripsView.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }//GEN-LAST:event_jSearchActionPerformed
 
     private void jHostLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jHostLoginActionPerformed
@@ -617,6 +652,17 @@ public class TripsView extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_jCreateTripActionPerformed
+
+    private void jCancelSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCancelSearchActionPerformed
+        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel)jTable.getModel();
+        int rowCount = model.getRowCount();
+        for(int i = 0; i<rowCount; i++){
+            model.removeRow(i);
+        }
+        
+        showTrips();
+    }//GEN-LAST:event_jCancelSearchActionPerformed
 
     /**
      * @param args the command line arguments
@@ -655,6 +701,7 @@ public class TripsView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBook;
+    private javax.swing.JButton jCancelSearch;
     private javax.swing.JCheckBox jCheckEast;
     private javax.swing.JCheckBox jCheckNorth;
     private javax.swing.JCheckBox jCheckReykjavik;

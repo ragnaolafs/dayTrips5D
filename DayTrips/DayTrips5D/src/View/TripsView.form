@@ -149,16 +149,16 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
-                          <Component id="jTripName" min="-2" pref="130" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="jTripName" min="-2" pref="624" max="-2" attributes="0"/>
+                          <EmptySpace pref="70" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-                          <Component id="jTripName" min="-2" pref="23" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                          <Component id="jTripName" min="-2" pref="40" max="-2" attributes="0"/>
                           <EmptySpace pref="20" max="32767" attributes="0"/>
                       </Group>
                   </Group>
@@ -255,9 +255,13 @@
                                       <Component id="jCheckSouth" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="jCheckEast" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="jCheckWest" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jSearch" min="-2" pref="152" max="-2" attributes="0"/>
+                                      <Group type="102" attributes="0">
+                                          <Component id="jSearch" min="-2" pref="152" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="jCancelSearch" min="-2" max="-2" attributes="0"/>
+                                      </Group>
                                   </Group>
-                                  <EmptySpace max="32767" attributes="0"/>
+                                  <EmptySpace pref="218" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
@@ -355,11 +359,16 @@
                               <Component id="jDateChooseTo" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jCheckEast" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jCheckWest" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
-                          <Component id="jSearch" min="-2" pref="56" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="jCheckEast" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jCheckWest" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
+                                  <Component id="jSearch" min="-2" pref="56" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="jCancelSearch" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                       <Component id="jScroll" min="-2" pref="502" max="-2" attributes="0"/>
                   </Group>
@@ -462,7 +471,7 @@
         <Component class="javax.swing.JCheckBox" name="jCheckReykjavik">
           <Properties>
             <Property name="selected" type="boolean" value="true"/>
-            <Property name="text" type="java.lang.String" value="Reykjavik(capital area)"/>
+            <Property name="text" type="java.lang.String" value="Reykjavik (capital area)"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JCheckBox" name="jCheckNorth">
@@ -576,6 +585,14 @@
             </Component>
           </SubComponents>
         </Container>
+        <Component class="javax.swing.JButton" name="jCancelSearch">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Cancel search"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCancelSearchActionPerformed"/>
+          </Events>
+        </Component>
       </SubComponents>
     </Container>
   </SubComponents>

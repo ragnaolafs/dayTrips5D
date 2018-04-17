@@ -43,6 +43,9 @@ public class Search {
     public Search() {
         dbController = new DatabaseController();
     }
+    public ArrayList<Trip> resetSearch(){
+        return dbController.getTripList();
+    }
     
     /**
     * Looks for trips placed in locations selected by the user through the
@@ -53,8 +56,10 @@ public class Search {
         for (int i = 0; i < tripList.size(); i++) {
             boolean locationMatch = false;
             for (int j = 0; j < locations.size(); j++) {
+                System.out.println(tripList.get(i).getLocation());
                 if (tripList.get(i).getLocation().equals(locations.get(j))) {
                     locationMatch = true;
+                    System.out.println("location match");
                     break;
                 }
             }
@@ -138,6 +143,7 @@ public class Search {
         else {
             tripList = dbController.getTripList();
         }
+
         
         tripList = searchLocations(locations, tripList); //breytum triplist í þessa niðurst
         tripList = searchPrices(priceLower, priceHigher, tripList);

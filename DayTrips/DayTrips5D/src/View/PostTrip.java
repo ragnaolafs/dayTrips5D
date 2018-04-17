@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -448,8 +449,12 @@ public class PostTrip extends javax.swing.JFrame {
        HostLogin host = new HostLogin();
        String user = host.getLoggedIn();
        String duration = getduration();
-       insert.insertTrip(dates, time, name, 
+       if(err.isEmpty()){
+           insert.insertTrip(dates, time, name, 
        descr, price, types, duration, capac, false, location, user);
+       }else{
+           JOptionPane.showMessageDialog(this, err);
+       }
         
     }//GEN-LAST:event_jPostActionPerformed
     

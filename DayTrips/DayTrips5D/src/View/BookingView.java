@@ -277,9 +277,7 @@ public class BookingView extends javax.swing.JFrame {
         int tripID = trip.getTripID();
         if(canBook) {
             Booking.bookTrip(cname,  date,  email,  pax,  tripID,  phoneNo);
-            System.out.println("capacity before booking: " + trip.getCapacity());
             Booking.updateTripCapacity(pax,tripID);
-            System.out.println("capacity after booking: " + trip.getCapacity());
             
             JOptionPane.showMessageDialog(null, "Your trip has been successfully booked.",
                     "Success!",

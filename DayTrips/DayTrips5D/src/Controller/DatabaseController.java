@@ -17,7 +17,9 @@ import java.util.Date;
 /**
  * Calls database connection with right SQLite commands according to  
  * parameter values in functions.
- * @author ragna
+ * @author Ragna Ólafsdóttir, rao9@hi.is
+ * @author Hugrún Guðmundsdóttir, hug17@hi.is
+ * @author Karen Ósk Pétursdóttir, kop1@hi.is
  */
 public class DatabaseController {
 
@@ -88,10 +90,8 @@ public class DatabaseController {
                 return true;
             }
         }
-
         return false;
     }
-    
     
     /**
      * Splits values, seperated by ",", in String to ArrayList.
@@ -182,7 +182,6 @@ public class DatabaseController {
         return tripList;
     }
     
-    
     /**
      * Creates a select query to search for trips in a given price range.
      * @param lower int - lower bound of price range
@@ -214,13 +213,11 @@ public class DatabaseController {
         Date fromD = from.parse(dateFrom);
         Date toD = from.parse(dateTo);
         
-        
         ArrayList<Trip> allTrips = getTripList();
         ArrayList<Trip> tripMatches = new ArrayList<Trip>();
         
         for (int i = 0; i < allTrips.size(); i++) {
             ArrayList<String> dates = allTrips.get(i).getDates();
-            
             
             for (int j = 0; j < dates.size(); j++) {
                 SimpleDateFormat tripDate = new SimpleDateFormat(dates.get(j));
@@ -249,7 +246,6 @@ public class DatabaseController {
 
         return tripList;
     }
-    
     
     /**
      * Updates capacity value in Trips relation for the trip matching tripID.
@@ -292,21 +288,20 @@ public class DatabaseController {
             String description, int price, ArrayList<String> types, String duration,
             int capacity, boolean soldOut, String location, String host) {
         
-        
         DatabaseConnection dbConn = new DatabaseConnection();
         
         String datesString = "";
         for (int i = 0; i < dates.size()-1; i++) {
             datesString += dates.get(i) + ", ";
         }
-        // add last date without comma afterwards
+        // Add last date without comma afterwards
         datesString += dates.get(dates.size()-1); 
         
         String typesString = "";
         for (int i = 0; i < types.size()-1; i++) {
             typesString += types.get(i) + ", ";
         }
-        // add last type without comma afterwards
+        // Add last type without comma afterwards
         typesString += types.get(types.size()-1);
         
         int soldOutInt = 0;
@@ -339,6 +334,7 @@ public class DatabaseController {
             dbConn.closeConnection();
         }
     }
+    
     /**
      * Creates a command to insert new booking in Bookings relation in database.
      * @param contactName String - name of contact booking the trip
@@ -373,9 +369,5 @@ public class DatabaseController {
         finally {
             dbConn.closeConnection();
         }
-    }
-    
-    public static void main(String args[]) {
-
     }
 }

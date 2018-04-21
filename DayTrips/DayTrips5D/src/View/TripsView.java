@@ -26,7 +26,6 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JCheckBox;
 
-
 /**
  *
  * @author hugrungudmundsdottir
@@ -47,8 +46,6 @@ public class TripsView extends javax.swing.JFrame {
             jLogout.setVisible(true);
         }
         showTrips();
-      
-        
     }
     public Connection getConnection(){
         Connection con;
@@ -59,11 +56,11 @@ public class TripsView extends javax.swing.JFrame {
             return null;
         }     
     }
+    
     public static Trip getSelectedTrip(){
         return selectedTrip;
     }
 
-    
     public void showTrips(){
         Search search = new Search();
         ArrayList<Trip> tripList =search.resetSearch();
@@ -89,8 +86,6 @@ public class TripsView extends javax.swing.JFrame {
         return checkboxes;
     }
     
-
-   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -498,7 +493,6 @@ public class TripsView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMoreInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMoreInfoActionPerformed
-        // TODO add your handling code here:
         int n = jTable.getSelectedRow();
         Search search = new Search();
         ArrayList<Trip> tripList =search.resetSearch();
@@ -533,15 +527,11 @@ public class TripsView extends javax.swing.JFrame {
         for(int i = 0; i< dates.size();i++){
             datemodel.addElement(dates.get(i));
         }
-        jDatesAvail.setModel(datemodel);
-       
         
+        jDatesAvail.setModel(datemodel);
     }//GEN-LAST:event_jMoreInfoActionPerformed
 
     private void jBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBookActionPerformed
-        // TODO add your handling code here:
-        //bookthistrip
-        
         int n = jTable.getSelectedRow();
         DatabaseController cntr = new DatabaseController();
         ArrayList<Trip> tripList =cntr.getTripList();
@@ -622,23 +612,19 @@ public class TripsView extends javax.swing.JFrame {
             System.out.println("catch");
             Logger.getLogger(TripsView.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }//GEN-LAST:event_jSearchActionPerformed
 
     private void jHostLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jHostLoginActionPerformed
-        // TODO add your handling code here:
         JFrame Login = new LoginView();
         Login.setVisible(true);
     }//GEN-LAST:event_jHostLoginActionPerformed
 
     private void jCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCloseActionPerformed
-        // TODO add your handling code here:
         jDialogMoreInfo.setVisible(false);
     }//GEN-LAST:event_jCloseActionPerformed
 
     private void jCreateTripActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCreateTripActionPerformed
-        // TODO add your handling code here:
-        PostTrip create = new PostTrip();
+        PostTripView create = new PostTripView();
         HostLogin kisi = new HostLogin();
         System.out.println(kisi.getLoggedIn());
         if(kisi.getLoggedIn() == null || "".equals(kisi.getLoggedIn())){
@@ -648,19 +634,15 @@ public class TripsView extends javax.swing.JFrame {
         }else{
             create.setVisible(true);
             jLogout.setVisible(true);
-            
         }
-        
     }//GEN-LAST:event_jCreateTripActionPerformed
 
     private void jCancelSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCancelSearchActionPerformed
-        // TODO add your handling code here:
         DefaultTableModel model = (DefaultTableModel)jTable.getModel();
         int rowCount = model.getRowCount();
         for(int i = 0; i<rowCount; i++){
             model.removeRow(i);
         }
-        
         showTrips();
     }//GEN-LAST:event_jCancelSearchActionPerformed
 

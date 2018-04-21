@@ -13,22 +13,24 @@ import javax.swing.JOptionPane;
 
 /**
  * This view class lets the user book a trip for herself/himself
- * and more people, if desired.
- * @author hugrungudmundsdottir
+ * and more people, if desired. 
+ * @author Ragna Ólafsdóttir, rao9@hi.is
+ * @author Hugrún Guðmundsdóttir, hug17@hi.is
+ * @author Karen Ósk Pétursdóttir, kop1@hi.is
  */
 public class BookingView extends javax.swing.JFrame {
     
     /**
-     * Creates new form BookingView
+     * Creates new form BookingView. Gets the trip that the user has selected
+     * to book along with an ArrayList of dates for this trip.
      */
     public BookingView() {
         initComponents();
-        Trip trip =TripsView.getSelectedTrip();
+        Trip trip = TripsView.getSelectedTrip();
         ArrayList<String> dates = trip.getDates();
         for(int i = 0; i<dates.size();i++){
             jDateChooser.add(dates.get(i));
         }
-
     }
 
     /**
@@ -89,7 +91,7 @@ public class BookingView extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jLabel7)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         jLabel1.setText("Email:");
@@ -124,7 +126,7 @@ public class BookingView extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 951, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 957, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -152,12 +154,9 @@ public class BookingView extends javax.swing.JFrame {
                         .addComponent(jDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jContactEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(218, 218, 218))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                            .addComponent(jContactEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))
+                        .addGap(218, 218, 218)
                         .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel2)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -181,10 +180,11 @@ public class BookingView extends javax.swing.JFrame {
                 .addGap(14, 14, 14)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jContactName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3)
-                            .addComponent(jDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jDateChooser, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jContactName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel3)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -240,6 +240,13 @@ public class BookingView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * This method books the user's trip. It takes the information that the user
+     * typed in, checks wether it is on the correct form and then books the trip
+     * in the database. If the user types in invalid information, a warning will
+     * pop up. After a successful booking has been made, the form is closed.
+     * @param evt 
+     */
     private void jButtonBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBookActionPerformed
         Trip trip =TripsView.selectedTrip;
         ArrayList<String> dates = trip.getDates();
@@ -271,10 +278,12 @@ public class BookingView extends javax.swing.JFrame {
                     "Email address invalid",
                     JOptionPane.INFORMATION_MESSAGE);
         }
+        
         String date = jDateChooser.getSelectedItem();
         String cname = jContactName.getText();
         String phoneNo = jContactPhone.getText();
         int tripID = trip.getTripID();
+        
         if(canBook) {
             Booking.bookTrip(cname,  date,  email,  pax,  tripID,  phoneNo);
             Booking.updateTripCapacity(pax,tripID);
@@ -286,11 +295,13 @@ public class BookingView extends javax.swing.JFrame {
             this.setVisible(false);
             System.out.println("booking successful!");
         }
-            
     }//GEN-LAST:event_jButtonBookActionPerformed
 
+    /**
+     * Cancels the booking and closes the form.
+     * @param evt 
+     */
     private void jButtonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelActionPerformed
-        // TODO add your handling code here:
         this.setVisible(false);
     }//GEN-LAST:event_jButtonCancelActionPerformed
 

@@ -1,17 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Model;
 
-import View.TripsView;
 import Controller.DatabaseController;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import javax.swing.JCheckBox;
 
 /**
  * This class can search the database for trips whose location, date, 
@@ -34,7 +27,7 @@ public class Search {
     private String location;
     private int priceHigher;
     private int priceLower;
-    private String[] dates; // hmm
+    private String[] dates;
     private String keyword;
     private ArrayList<Trip> resultSet;
     private DatabaseController dbController;
@@ -47,7 +40,7 @@ public class Search {
     }
     
     /**
-     * Returns all trip objects. To be used for resetting (cancelling) search.
+     * Returns all trip objects. To be used for resetting (canceling) search.
      * @return ArrayList of all Trip objects in Trips relation in database.
      */
     public ArrayList<Trip> resetSearch(){
@@ -62,19 +55,18 @@ public class Search {
      * @param tripList ArrayList of Trip objects to check for matching locations
      * @return ArrayList of Trip objects matching desired locations
      */
-    private ArrayList<Trip> searchLocations(ArrayList<String> locations, ArrayList<Trip> tripList){
+    private ArrayList<Trip> searchLocations(ArrayList<String> locations, 
+            ArrayList<Trip> tripList){
 
         for (int i = 0; i < tripList.size(); i++) {
             boolean locationMatch = false;
             for (int j = 0; j < locations.size(); j++) {
-                System.out.println(tripList.get(i).getLocation());
                 if (tripList.get(i).getLocation().equals(locations.get(j))) {
                     locationMatch = true;
-                    System.out.println("location match");
                     break;
                 }
             }
-            // if no selected locations matches trip location then remove it
+            // If no selected locations match trip location then remove it
             if (!locationMatch) {
                 tripList.remove(i);
             }
@@ -112,10 +104,8 @@ public class Search {
         SimpleDateFormat from = new SimpleDateFormat(dateFrom);
         SimpleDateFormat to = new SimpleDateFormat(dateTo);
         
-        
         Date fromD = from.parse(dateFrom);
         Date toD = to.parse(dateTo);
-        
         
         for (int i = 0; i < tripList.size(); i++) {
             ArrayList<String> dates = tripList.get(i).getDates();
@@ -139,7 +129,6 @@ public class Search {
         return tripList;
     }
     
-    
     /**
      * Searches for a given string in names and description of trips.
      * @param string
@@ -150,7 +139,6 @@ public class Search {
        ArrayList<Trip> searchResult = dbController.search(string); 
        return searchResult;
     }
-
     
     /**
      * Calls private methods to search for trips in desired locations, within
@@ -167,22 +155,21 @@ public class Search {
      */
     public ArrayList<Trip> search(ArrayList<String> locations, int priceLower,
             int priceHigher, String dateFrom, String dateTo, String searchQuery) throws ParseException {
-        // ASDF bæta við type of trip líka!
+
         ArrayList<Trip> tripList;
         
-        if (searchQuery != "") {
+        if (!"".equals(searchQuery)) {
             tripList = searchStrings(searchQuery); 
         }
         else {
             tripList = dbController.getTripList();
         }
 
-        
-        tripList = searchLocations(locations, tripList); //breytum triplist í þessa niðurst
+        // Update the triplist with the search results:
+        tripList = searchLocations(locations, tripList); 
         tripList = searchPrices(priceLower, priceHigher, tripList);
         tripList = searchDates(dateFrom, dateTo, tripList);
         
         return tripList;
     }
-
 }

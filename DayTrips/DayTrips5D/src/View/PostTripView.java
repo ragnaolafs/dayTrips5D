@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
  *
  * @author EKKIkaren
  */
-public class PostTrip extends javax.swing.JFrame {
+public class PostTripView extends javax.swing.JFrame {
     
     private Trip tripObject;
     private HostLogin host;
@@ -27,7 +27,7 @@ public class PostTrip extends javax.swing.JFrame {
     /**
      * Creates new form PostTrip
      */
-    public PostTrip() {
+    public PostTripView() {
         initComponents();  
         jLocation.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {"Not specified","Reykjavik (capital area)", "North Iceland", "South Iceland","West Iceland","East Iceland"}));
         jTimeFrom.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { 
@@ -504,6 +504,7 @@ public class PostTrip extends javax.swing.JFrame {
        
        return types;
     }
+    
     private static ArrayList<String> check(String name, String descr, ArrayList<String> dates, ArrayList<String> types ){
         ArrayList<String> errors = new ArrayList();
         if(name.equals("")){
@@ -539,8 +540,6 @@ public class PostTrip extends javax.swing.JFrame {
 
             jDateList.setModel(model);
         }
-        
-        
     }//GEN-LAST:event_jDeleteDateActionPerformed
 
     private void jVariousActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jVariousActionPerformed
@@ -578,20 +577,21 @@ public class PostTrip extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PostTrip.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PostTripView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PostTrip.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PostTripView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PostTrip.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PostTripView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PostTrip.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PostTripView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PostTrip().setVisible(true);
+                new PostTripView().setVisible(true);
             }
         });
     }

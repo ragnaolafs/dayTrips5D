@@ -9,21 +9,21 @@ import Model.HostLogin;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-
 /**
- *
- * @author hugrungudmundsdottir
+ * This class lets a user log in or register by typing in the required 
+ * information.
+ * @author Ragna Ólafsdóttir, rao9@hi.is
+ * @author Hugrún Guðmundsdóttir, hug17@hi.is
+ * @author Karen Ósk Pétursdóttir, kop1@hi.is
  */
 public class LoginView extends javax.swing.JFrame {
     private String pw;
-
-
+    
     /**
      * Creates new form LoginView
      */
     public LoginView() {
         initComponents();
-        
     }
 
     /**
@@ -173,11 +173,6 @@ public class LoginView extends javax.swing.JFrame {
         jLabel2.setText("Username");
 
         jUsername.setForeground(new java.awt.Color(0, 0, 100));
-        jUsername.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jUsernameActionPerformed(evt);
-            }
-        });
 
         jLabel3.setText("Password");
 
@@ -283,12 +278,12 @@ public class LoginView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jUsernameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jUsernameActionPerformed
-
+    /**
+     * This method checks wether the user name and password typed in by the 
+     * user match. If so, the user is logged in.
+     * @param evt 
+     */
     private void jSkrainnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSkrainnActionPerformed
-        //login handled
         String username = jUsername.getText();
         char[] pw = jPassword.getPassword();
         String password="";
@@ -305,20 +300,31 @@ public class LoginView extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jSkrainnActionPerformed
 
+    /**
+     * If the user cancels the login procedure, the form will close.
+     * @param evt 
+     */
     private void jCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCancelActionPerformed
-        //close window and go to trips
         JFrame Trips = new TripsView();
         Trips.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jCancelActionPerformed
 
+    /**
+     * Fires up the sign-up form.
+     * @param evt 
+     */
     private void jSignUpBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSignUpBtnActionPerformed
         jSignUp.setSize(500,500);
         jSignUp.setVisible(true);
     }//GEN-LAST:event_jSignUpBtnActionPerformed
 
+    /**
+     * Creates a new host in the system with username and password typed in by
+     * the user.
+     * @param evt 
+     */
     private void jCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCreateActionPerformed
-        
         String name = jFullName.getText();
         String user = jNewUser.getText();
         char[] pw = jNewUserpw.getPassword();
@@ -330,8 +336,11 @@ public class LoginView extends javax.swing.JFrame {
         newuser.createNewUser(name, user, password);
     }//GEN-LAST:event_jCreateActionPerformed
 
+    /**
+     * Cancels the sign-up process and closes the form.
+     * @param evt 
+     */
     private void jCancelSignActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCancelSignActionPerformed
-        // TODO add your handling code here:
         jSignUp.setVisible(false);
     }//GEN-LAST:event_jCancelSignActionPerformed
 

@@ -6,6 +6,7 @@
 package Model;
 
 import Controller.DatabaseController;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -32,13 +33,12 @@ public class HostLogin {
     }
 
 	
-	public void login(String username, String password) {
+	public boolean login(String username, String password) {
             loggedInUser = username;
             System.out.println(username);
             DatabaseController logincontrol = new DatabaseController();
-            logincontrol.login(username,password);
-            
-            
+            boolean loggedIn = logincontrol.login(username,password);
+            return loggedIn;
 		
 	}
         public void createNewUser(String fullname, String username, String password){

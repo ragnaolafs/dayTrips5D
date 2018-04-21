@@ -7,6 +7,7 @@ package View;
 
 import Model.HostLogin;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -296,7 +297,12 @@ public class LoginView extends javax.swing.JFrame {
         }
         
         HostLogin user = new HostLogin(username, password);       
-        user.login(username, password);
+        boolean yes = user.login(username, password);
+        if(yes){
+            this.setVisible(false);
+        }else{
+            JOptionPane.showMessageDialog(this, "Username or password wrong");
+        }
     }//GEN-LAST:event_jSkrainnActionPerformed
 
     private void jCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCancelActionPerformed

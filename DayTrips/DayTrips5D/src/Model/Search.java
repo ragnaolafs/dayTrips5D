@@ -42,7 +42,8 @@ public class Search {
         dbController = new DatabaseController();
     }
     public ArrayList<Trip> resetSearch(){
-        return dbController.getTripList();
+        resultSet = dbController.getTripList();
+        return resultSet;
     }
     
     /**

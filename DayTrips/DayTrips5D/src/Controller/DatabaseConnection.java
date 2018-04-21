@@ -10,8 +10,11 @@ import java.sql.*;
 import java.util.ArrayList;
 
 /**
- *
- * @author ragna
+ * Class connecting to database. Calls and updates database with commands
+ * as parameters to functions.
+ * @author Ragna Ólafsdóttir, rao9@hi.is
+ * @author Hugrún Guðmundsdóttir, hug17@hi.is
+ * @author Karen Ósk Pétursdóttir, kop1@hi.is
  */
 public class DatabaseConnection {
 	
@@ -20,6 +23,9 @@ public class DatabaseConnection {
 	Statement stmt = null;
 	ResultSet r = null;
 	
+        /**
+         * Constructor creates a connection to the database with SQLite JDBC.
+         */
 	public DatabaseConnection() {
             try {
                 Class.forName("org.sqlite.JDBC");
@@ -31,7 +37,10 @@ public class DatabaseConnection {
             }
 	}
         
-        
+        /**
+         * Updates database with insert command. Throws SQLException.
+         * @param insertValues - String with full SQLite command
+         */
         public void insert(String insertValues) {
             try {
                 System.out.println(insertValues);
@@ -42,7 +51,10 @@ public class DatabaseConnection {
             }
         }
         
-        
+        /**
+         * Updates database with delete command. Throws SQLException.
+         * @param deleteValues - String with full SQLite command
+         */
         public void delete(String deleteValues) {
             try {
                 stmt.executeUpdate(deleteValues);
@@ -52,7 +64,10 @@ public class DatabaseConnection {
             }
         }
         
-        
+        /**
+         * Updates database with update command. Throws SQLException.
+         * @param updateValues - String with full SQLite command
+         */
         public void update(String updateValues) {
             try {
                 System.out.println(updateValues);
@@ -64,6 +79,11 @@ public class DatabaseConnection {
         }
         
         
+        /**
+         * Calls database with select query. Throws SQLException.
+         * @param selectQuery - String with full SQLite command
+         * @return - ResulSet with result from select command
+         */
         public ResultSet select(String selectQuery) {
             ResultSet rs = null;
             try {
@@ -77,7 +97,9 @@ public class DatabaseConnection {
         }
         
         
-        
+        /**
+         * Closes database connection. Throws SQLException.
+         */
         public void closeConnection() {
             try {
                 if(connection != null) {

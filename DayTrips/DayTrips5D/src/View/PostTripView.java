@@ -443,8 +443,8 @@ public class PostTripView extends javax.swing.JFrame {
        ArrayList<String> dates = new ArrayList();
        dates = getdate();
 
-       ArrayList<String> err = new ArrayList();
-       err = check(name,descr,dates,types);
+       ArrayList<String> err = check(name,descr,dates,types);
+       
        DatabaseController insert = new DatabaseController();
        HostLogin host = new HostLogin();
        String user = host.getLoggedIn();
@@ -453,7 +453,9 @@ public class PostTripView extends javax.swing.JFrame {
            insert.insertTrip(dates, time, name, 
        descr, price, types, duration, capac, false, location, user);
        }else{
-           JOptionPane.showMessageDialog(this, err);
+           for(int i = 0; i<err.size();i++){
+            JOptionPane.showMessageDialog(this, err.get(i));
+           }
        }
         
     }//GEN-LAST:event_jPostActionPerformed

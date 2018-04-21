@@ -7,6 +7,7 @@ package View;
 
 import Model.HostLogin;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  * This class lets a user log in or register by typing in the required 
@@ -291,7 +292,12 @@ public class LoginView extends javax.swing.JFrame {
         }
         
         HostLogin user = new HostLogin(username, password);       
-        user.login(username, password);
+        boolean yes = user.login(username, password);
+        if(yes){
+            this.setVisible(false);
+        }else{
+            JOptionPane.showMessageDialog(this, "Username or password wrong");
+        }
     }//GEN-LAST:event_jSkrainnActionPerformed
 
     /**

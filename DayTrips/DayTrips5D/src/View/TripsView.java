@@ -493,10 +493,20 @@ public class TripsView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMoreInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMoreInfoActionPerformed
-        int n = jTable.getSelectedRow();
         Search search = new Search();
-        ArrayList<Trip> tripList =search.resetSearch();
+        ArrayList<Trip> tripList = search.resetSearch();
+        DefaultTableModel model = (DefaultTableModel)jTable.getModel();
+        Object[] row = new Object[3];
+  
+        for(int i = 0; i < tripList.size(); i++){
+            row[0]= tripList.get(i).getName();
+            row[1]= tripList.get(i).getPrice();
+            row[2]= tripList.get(i).getLocation();
+            model.insertRow(i, row);
+        }
+        jTable.setModel(model);
         
+        int n = jTable.getSelectedRow();
         tripList.get(n).getName();
 
         jDialogMoreInfo.setSize(700,500);
@@ -534,7 +544,8 @@ public class TripsView extends javax.swing.JFrame {
     private void jBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBookActionPerformed
         int n = jTable.getSelectedRow();
         DatabaseController cntr = new DatabaseController();
-        ArrayList<Trip> tripList =cntr.getTripList();
+        Search search = new Search();
+        ArrayList<Trip> tripList = search.resetSearch();
         
         selectedTrip = tripList.get(n);
 
@@ -594,17 +605,20 @@ public class TripsView extends javax.swing.JFrame {
             DefaultTableModel model = (DefaultTableModel)jTable.getModel();
             
             Object[] row = new Object[3];
+            System.out.println(search1.size());
             System.out.println(model.getRowCount());
             int rowCount = model.getRowCount();
-            for(int i = 0; i<rowCount; i++){
+            for(int i = rowCount - 1; i >= 0; i--){
                 model.removeRow(i);
             }
+            //ATH SEARCH1.SIZE ER 0
+            System.out.println(search1.size());
 
-            for(int i = 0; i < search1.size(); i++){
+            for(int i = 0;i<search1.size();i++){
                 row[0]= search1.get(i).getName();
                 row[1]= search1.get(i).getPrice();
                 row[2]= search1.get(i).getLocation();
-            
+                System.out.println(search1.get(i).getName());
                 model.insertRow(i, row);
             }
             jTable.setModel(model);
@@ -626,7 +640,7 @@ public class TripsView extends javax.swing.JFrame {
     private void jCreateTripActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCreateTripActionPerformed
         PostTripView create = new PostTripView();
         HostLogin kisi = new HostLogin();
-        System.out.println(kisi.getLoggedIn());
+        
         if(kisi.getLoggedIn() == null || "".equals(kisi.getLoggedIn())){
             JOptionPane.showMessageDialog(this, "You must be logged in");
             create.setVisible(false);
@@ -638,9 +652,10 @@ public class TripsView extends javax.swing.JFrame {
     }//GEN-LAST:event_jCreateTripActionPerformed
 
     private void jCancelSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCancelSearchActionPerformed
+
         DefaultTableModel model = (DefaultTableModel)jTable.getModel();
         int rowCount = model.getRowCount();
-        for(int i = 0; i<rowCount; i++){
+        for(int i = rowCount - 1; i >= 0; i--){
             model.removeRow(i);
         }
         showTrips();

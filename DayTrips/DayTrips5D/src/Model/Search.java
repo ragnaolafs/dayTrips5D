@@ -1,17 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Model;
 
-import View.TripsView;
 import Controller.DatabaseController;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import javax.swing.JCheckBox;
 
 /**
  * This class can search the database for trips whose location, date, 
@@ -47,11 +40,12 @@ public class Search {
     }
     
     /**
-     * Returns all trip objects. To be used for resetting (cancelling) search.
+     * Returns all trip objects. To be used for resetting (canceling) search.
      * @return ArrayList of all Trip objects in Trips relation in database.
      */
     public ArrayList<Trip> resetSearch(){
-        return dbController.getTripList();
+        resultSet = dbController.getTripList();
+        return resultSet;
     }
     
     /**
@@ -67,10 +61,8 @@ public class Search {
         for (int i = 0; i < tripList.size(); i++) {
             boolean locationMatch = false;
             for (int j = 0; j < locations.size(); j++) {
-                System.out.println(tripList.get(i).getLocation());
                 if (tripList.get(i).getLocation().equals(locations.get(j))) {
                     locationMatch = true;
-                    System.out.println("location match");
                     break;
                 }
             }
@@ -166,7 +158,7 @@ public class Search {
 
         ArrayList<Trip> tripList;
         
-        if (searchQuery != "") {
+        if (!"".equals(searchQuery)) {
             tripList = searchStrings(searchQuery); 
         }
         else {

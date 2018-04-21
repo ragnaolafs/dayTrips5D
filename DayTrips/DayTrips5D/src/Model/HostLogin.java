@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Model;
 
 import Controller.DatabaseController;
@@ -33,27 +28,8 @@ public class HostLogin {
     public HostLogin() {
       this.username = username;
     }
-	
-    public void login(String username, String password) {
-        loggedInUser = username;
-        System.out.println(username);
-        DatabaseController logincontrol = new DatabaseController();
-        logincontrol.login(username,password);
-    }
     
-    /**
-     * Creates a new host in the system with the typed-in username and password
-     * from the user and inserts the new host into the database.
-     * @param fullname
-     * @param username
-     * @param password 
-     */
-    public void createNewUser(String fullname, String username, String password){
-        DatabaseController newuser = new DatabaseController();
-        newuser.createNewUser(fullname,username,password);
-    }
-    
-    /**
+     /**
      * Getters
      * @return 
      */
@@ -66,4 +42,31 @@ public class HostLogin {
     public String getLoggedIn(){
         return loggedInUser;
     }
+    /**
+     * Calls the databaseController with the username and password
+     * and returns true if the database found a match, false otherwise.
+     * @param username
+     * @param password 
+     */
+    public boolean login(String username, String password) {
+        loggedInUser = username;
+        System.out.println(username);
+        DatabaseController logincontrol = new DatabaseController();
+        boolean loggedIn = logincontrol.login(username,password);
+        return loggedIn;
+
+    }
+
+    /**
+     * Calls the database with full name, username and password.
+     * @param fullname
+     * @param username
+     * @param password 
+     */
+    public void createNewUser(String fullname, String username, String password){
+        DatabaseController newuser = new DatabaseController();
+        newuser.createNewUser(fullname,username,password);
+    }
+    
+
 }

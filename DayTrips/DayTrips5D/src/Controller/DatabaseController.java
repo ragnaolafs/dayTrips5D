@@ -15,11 +15,19 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
- *
+ * Calls database connection with right SQLite commands according to  
+ * parameter values in functions.
  * @author ragna
  */
 public class DatabaseController {
 
+    /**
+     * Creates an insert command to create a new user in Hosts relation in 
+     * database.
+     * @param fullname String - full name of new user
+     * @param username String - username for new user
+     * @param password String - password for new user
+     */
     public void createNewUser(String fullname, String username, String password) {
         
         DatabaseConnection dbConn = new DatabaseConnection();
@@ -39,6 +47,14 @@ public class DatabaseController {
         }
     }
 
+    /**
+     * Selects all values from relation Hosts in database and checks if
+     * username and password parameters match some user in database.
+     * @param username String - username to check
+     * @param password String - password to check
+     * @return boolean value - true if username and password match a user in
+     * the database, false otherwise.
+     */
     public boolean login(String username, String password) {
         ArrayList<HostLogin> hostsList = new ArrayList<HostLogin>();
         
@@ -77,7 +93,11 @@ public class DatabaseController {
     }
     
     
-    
+    /**
+     * Splits values, seperated by ",", in String to ArrayList.
+     * @param s String to split into array list
+     * @return Arraylist of split string
+     */
     private ArrayList<String> stringToArrayList(String s) {
         String[] split = s.split(", ");
         ArrayList<String> splitList = new ArrayList<String>();
@@ -87,7 +107,12 @@ public class DatabaseController {
         return splitList;
     }
     
-    
+    /**
+     * Calls database with select query according to search string.
+     * Makes Trip objects from result and puts them in ArrayList.
+     * @param q String - SQLite search query
+     * @return ArrayList of Trip objects matching search query
+     */
     private ArrayList<Trip> helperSearch(String q) {
         ArrayList<Trip> tripList = new ArrayList<Trip>();
         
@@ -123,7 +148,12 @@ public class DatabaseController {
         return tripList;
     }
     
-    
+    /**
+     * Creates a select query to search for trips with the parameter String
+     * matching part of name or description of trip.
+     * @param q String value to search for in names and descriptions of trips
+     * @return ArrayList of Trip objects matching search query
+     */
     public ArrayList<Trip> search(String q) {
         
         String searchQuery = "SELECT * FROM Trips WHERE nameOfTrip LIKE '%" + q + 
@@ -134,7 +164,11 @@ public class DatabaseController {
         return tripList;
     }
     
-    
+    /**
+     * Creates a select query to search for trips according to location.
+     * @param locations ArrayList of String of locations to search for
+     * @return ArrayList of Trip objects matching search query
+     */
     public ArrayList<Trip> searchLocation(ArrayList<String> locations) {
         
         String q = "SELECT * FROM Trips WHERE location = '" + locations.get(0) + "'";
@@ -149,6 +183,12 @@ public class DatabaseController {
     }
     
     
+    /**
+     * Creates a select query to search for trips in a given price range.
+     * @param lower int - lower bound of price range
+     * @param higher int - upper bound of price range
+     * @return ArrayList of Trip objects matching search query
+     */
     public ArrayList<Trip> searchPrice(int lower, int higher) {
         
         String q = "SELECT * FROM Trips WHERE price > " + lower + 
@@ -159,7 +199,13 @@ public class DatabaseController {
         return tripList;
     }
     
-    
+    /**
+     * Searches for trips between to dates.
+     * @param dateFrom 
+     * @param dateTo
+     * @return ArrayList of Trip objects with a date between dateFrom and dateTo
+     * @throws ParseException 
+     */
     public ArrayList<Trip> searchDate(String dateFrom, String dateTo) throws ParseException {
         
         SimpleDateFormat from = new SimpleDateFormat(dateFrom);
@@ -187,12 +233,14 @@ public class DatabaseController {
                 }
             }
         }
-        
-        
         return tripMatches;
     }
             
-            
+    
+    /**
+     * Creates a select query to get all trips form Trips relation in database.
+     * @return ArrayList of Trip objectes - all trips in Trips relation
+     */
     public ArrayList<Trip> getTripList() {       
 
         String q = "SELECT * FROM Trips";
@@ -202,6 +250,12 @@ public class DatabaseController {
         return tripList;
     }
     
+    
+    /**
+     * Updates capacity value in Trips relation for the trip matching tripID.
+     * @param tripID int - ID of trip to update capacity for
+     * @param newCapacity int - new value of capacity for trip
+     */
     public void updateTripCapacity(int tripID, int newCapacity) {
         
         DatabaseConnection dbConn = new DatabaseConnection();
@@ -220,12 +274,24 @@ public class DatabaseController {
         }
     }
     
-    // asdf útfæra föll sem ráða við ef einhvern dálk vantar löglega í töfluna
+    /**
+     * Creates a command to insert a new trip to the Trips relation in database.
+     * @param dates 
+     * @param time 
+     * @param nameOfTrip
+     * @param description
+     * @param price
+     * @param types
+     * @param duration
+     * @param capacity
+     * @param soldOut
+     * @param location
+     * @param host 
+     */
     public void insertTrip(ArrayList<String> dates, String time, String nameOfTrip, 
             String description, int price, ArrayList<String> types, String duration,
             int capacity, boolean soldOut, String location, String host) {
         
-   // asdf breyta host í hostlogin!!!
         
         DatabaseConnection dbConn = new DatabaseConnection();
         
@@ -240,7 +306,7 @@ public class DatabaseController {
         for (int i = 0; i < types.size()-1; i++) {
             typesString += types.get(i) + ", ";
         }
-        // add last date without comma afterwards
+        // add last type without comma afterwards
         typesString += types.get(types.size()-1);
         
         int soldOutInt = 0;
@@ -274,14 +340,13 @@ public class DatabaseController {
         }
     }
     /**
-     * This method updates the Bookings table.
-     * If 
-     * @param contactName
-     * @param date
-     * @param contactEmail
-     * @param pax
-     * @param trip
-     * @param contactPhoneNo 
+     * Creates a command to insert new booking in Bookings relation in database.
+     * @param contactName String - name of contact booking the trip
+     * @param date String - date of trip to book
+     * @param contactEmail String - e-mail for contact booking the trip
+     * @param pax int - number of passengers for this booking
+     * @param tripID int - ID of trip to book
+     * @param contactPhoneNo String - phonenumber for contact booking the trip
      */
     public void insertBooking(String contactName, String date, String contactEmail, 
                     int pax, int tripID, String contactPhoneNo){
@@ -311,31 +376,6 @@ public class DatabaseController {
     }
     
     public static void main(String args[]) {
-        ArrayList<String> dates = new ArrayList<String>();
-        dates.add("2018-05-06");
-        dates.add("2018-05-07");
-        ArrayList<String> types = new ArrayList<String>();
-        types.add("Hot Spring tour");
-        
-        String descr = "The geothermal water originates 2,000 metres below the surface, where freshwater and seawater combine at extreme temperatures. It is then harnessed via drilling holes at a nearby geothermal power plant, Svartsengi, to create electricity and hot water for nearby communities." +
-" On its way to the surface, the water picks up silica and minerals. When the water emerges, its temperature is generally between 37°C and 40°C (98-104°F). But owing to variables outside of our control - including weather and time of year - the water temperature sometimes fluctuates beyond this range.";
-        
-        DatabaseController dbc = new DatabaseController();
-        //dbc.insertTrip(dates, "12:00", "Ferd", "skemmtileg", 2000, types, "6 timar",
-          //      30, false, "Austurland", "Karen");
-        
-        //dbc.insertTrip(dates, "12:00", "Blue Lagoon", descr, 9900, types, "2",
-          //      30, false, "Capital area", "1");
-        /*ArrayList<Trip> location = dbController.searchDate("2.2.19");
-        for (int i = 0; i < location.size(); i++) {
-            System.out.println(location.get(i).getTripID());
-        }*/
-        
-        ArrayList<Trip> matches = dbc.searchPrice(1000, 15000);
-        for (int i = 0; i < matches.size(); i++) {
-            System.out.println(matches.get(i).getTripID());
-        }
-        
-        dbc.updateTripCapacity(1, 29);
+
     }
 }

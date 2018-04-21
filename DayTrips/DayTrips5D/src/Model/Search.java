@@ -19,12 +19,14 @@ import javax.swing.JCheckBox;
  * the user through the GUI. 
  * Each search method returns a container with some properties that 
  * DatabaseController then uses to search for the desired trips.
- * (Search first searches the database for trips having the desired locations 
- * and gives an ArrayList<Trip> with the results. The following search methods 
- * then each search the results of their forerunning ArrayList<Trip> objects in 
- * a cascading manner until the last method delivers the final result of the 
- * search.)
- * @author karen
+ * (Search first searches the database for trips having a name or
+ * description matching a search query and gives an ArrayList<Trip> with the 
+ * results. The following search methods then each search the results of their 
+ * forerunning ArrayList<Trip> objects in a cascading manner until the last 
+ * method delivers the final result of the search.)
+ * @author Ragna Ólafsdóttir, rao9@hi.is
+ * @author Hugrún Guðmundsdóttir, hug17@hi.is
+ * @author Karen Ósk Pétursdóttir, kop1@hi.is
  */
 public class Search {
     
@@ -37,18 +39,28 @@ public class Search {
     private ArrayList<Trip> resultSet;
     private DatabaseController dbController;
     
-    
+    /**
+     * Constructor creates an object of DatabaseController class.
+     */
     public Search() {
         dbController = new DatabaseController();
     }
+    
+    /**
+     * Returns all trip objects. To be used for resetting (cancelling) search.
+     * @return ArrayList of all Trip objects in Trips relation in database.
+     */
     public ArrayList<Trip> resetSearch(){
         return dbController.getTripList();
     }
     
     /**
-    * Looks for trips placed in locations selected by the user through the
-    * GUI and returns ArrayList<Trip> with the results.
-    **/
+     * Returns trips matching desired locations by removing all trips in tripList
+     * not matching any desired location.
+     * @param locations ArrayList of strings of desired locations
+     * @param tripList ArrayList of Trip objects to check for matching locations
+     * @return ArrayList of Trip objects matching desired locations
+     */
     private ArrayList<Trip> searchLocations(ArrayList<String> locations, ArrayList<Trip> tripList){
 
         for (int i = 0; i < tripList.size(); i++) {
@@ -70,9 +82,12 @@ public class Search {
     }
     
     /**
-    * Looks through the list of trips in the desired locations for trips within the price range specified by the user through the
-    * GUI, then . and returns ArrayList<Trip> with the results.
-    **/
+     * Removes Trip objects not matching desired price range from tripList.
+     * @param lower int - lower bound of price range
+     * @param higher int - upper bound of price range
+     * @param tripList ArrayList of Trip objects to look for desired price range
+     * @return ArrayList of Trip objects with prices within a desired price range
+     */
     private ArrayList<Trip> searchPrices(int lower, int higher, ArrayList<Trip> tripList){
 
         for(int i = 0; i < tripList.size(); i++){
@@ -84,9 +99,14 @@ public class Search {
     }
     
     /**
-    * Looks for trips within the timeframe specified by the user through the
-    * GUI and returns 3ArrayList<Trip> with the results.
-    **/
+     * Removes trips not within a given timeframe from tripList.
+     * @param dateFrom String - lower bound of timeframe
+     * @param dateTo String - upper bound of timeframe
+     * @param tripList ArrayList of Trip objects to check on dates within the
+     * desired timeframe
+     * @return ArrayList of Trip objects matching the desired timeframe
+     * @throws ParseException 
+     */
     private ArrayList<Trip> searchDates(String dateFrom, String dateTo, ArrayList<Trip> tripList) throws ParseException{
         SimpleDateFormat from = new SimpleDateFormat(dateFrom);
         SimpleDateFormat to = new SimpleDateFormat(dateTo);
@@ -120,16 +140,30 @@ public class Search {
     
     
     /**
-    * Looks for the given string in title and description of all trips
-    * and returns ArrayList<Trip> with the results.
-    **/
+     * Searches for a given string in names and description of trips.
+     * @param string
+     * @return ArrayList of Trip objects where string was found in name or
+     * description of trip
+     */
     private ArrayList<Trip> searchStrings(String string) {
        ArrayList<Trip> searchResult = dbController.search(string); 
        return searchResult;
     }
 
     
-    
+    /**
+     * Calls private methods to search for trips in desired locations, within
+     * a given price range and timeframe, with some string matching part
+     * of name or description.
+     * @param locations
+     * @param priceLower
+     * @param priceHigher
+     * @param dateFrom
+     * @param dateTo
+     * @param searchQuery
+     * @return ArrayList of Trip objects matching given search parameters
+     * @throws ParseException 
+     */
     public ArrayList<Trip> search(ArrayList<String> locations, int priceLower,
             int priceHigher, String dateFrom, String dateTo, String searchQuery) throws ParseException {
         // ASDF bæta við type of trip líka!

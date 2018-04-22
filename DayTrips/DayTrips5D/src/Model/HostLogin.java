@@ -50,7 +50,6 @@ public class HostLogin {
      */
     public boolean login(String username, String password) {
         loggedInUser = username;
-        System.out.println(username);
         DatabaseController logincontrol = new DatabaseController();
         boolean loggedIn = logincontrol.login(username,password);
         return loggedIn;

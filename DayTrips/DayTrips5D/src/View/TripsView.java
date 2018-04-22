@@ -1,10 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package View;
-
+/**
+ * imports
+ */
 import Controller.DatabaseController;
 import Model.HostLogin;
 import Model.Search;
@@ -16,19 +13,20 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.JFrame;
-
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
-
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JCheckBox;
 
 /**
- *
- * @author hugrungudmundsdottir
+ * This class is the main view form of the application.
+ * It shows all the trips, has a view of the search and a login option.
+ * @author Ragna Ólafsdóttir, rao9@hi.is
+ * @author Hugrún Guðmundsdóttir, hug17@hi.is
+ * @author Karen Ósk Pétursdóttir, kop1@hi.is
  */
 public class TripsView extends javax.swing.JFrame {
 
@@ -47,6 +45,10 @@ public class TripsView extends javax.swing.JFrame {
         }
         showTrips();
     }
+    /**
+     * Gets connection from database.
+     * @return 
+     */
     public Connection getConnection(){
         Connection con;
         try{
@@ -56,11 +58,23 @@ public class TripsView extends javax.swing.JFrame {
             return null;
         }     
     }
-    
-    public static Trip getSelectedTrip(){
+    /**
+     * Gets user selected trip.
+     * @return 
+     */
+    public Trip getSelectedTrip(){
+        int n = jTable.getSelectedRow();
+        Search search = new Search();
+        ArrayList<Trip> tripList = search.getCurrentTripList();
+
+        selectedTrip = tripList.get(n);
+        
         return selectedTrip;
     }
-
+    
+    /**
+     * Calls search class and gets current list.
+     */
     public void showTrips(){
         Search search = new Search();
         ArrayList<Trip> tripList =search.resetSearch();
@@ -75,7 +89,10 @@ public class TripsView extends javax.swing.JFrame {
         }
         jTable.setModel(model);
     }
-    
+    /**
+     * Checks checked checkboxes and returns them.
+     * @return 
+     */
     public ArrayList<JCheckBox> getCheckboxes(){
         ArrayList<JCheckBox> checkboxes = new ArrayList();
         checkboxes.add(jCheckReykjavik);
@@ -491,48 +508,41 @@ public class TripsView extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    /**
+     * Gets all info for current selected trip and opens a more info dialog.
+     * @param evt 
+     */
     private void jMoreInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMoreInfoActionPerformed
-        Search search = new Search();
-        ArrayList<Trip> tripList = search.resetSearch();
-        DefaultTableModel model = (DefaultTableModel)jTable.getModel();
-        Object[] row = new Object[3];
-  
-        for(int i = 0; i < tripList.size(); i++){
-            row[0]= tripList.get(i).getName();
-            row[1]= tripList.get(i).getPrice();
-            row[2]= tripList.get(i).getLocation();
-            model.insertRow(i, row);
-        }
-        jTable.setModel(model);
-        
+
+        Trip trip = getSelectedTrip();
         int n = jTable.getSelectedRow();
-        tripList.get(n).getName();
+        trip.getName();
 
         jDialogMoreInfo.setSize(700,500);
         jDialogMoreInfo.setVisible(true); 
         
-        String descr = tripList.get(n).getDescription();
-        ArrayList<String> types = tripList.get(n).getTypes();
+        String descr = trip.getDescription();
+        ArrayList<String> types = trip.getTypes();
         String typestring = types.get(0);
         for(int i = 1; i<types.size();i++){
             typestring = " and " + types.get(i);
         }
-        String time = tripList.get(n).getTime();
-        int price = tripList.get(n).getPrice();
-        String loc = tripList.get(n).getLocation();
-        int cap = tripList.get(n).getCapacity();
-        String dur = tripList.get(n).getDuration();
+        String time = trip.getTime();
+        int price = trip.getPrice();
+        String loc = trip.getLocation();
+        int cap = trip.getCapacity();
+        String dur = trip.getDuration();
         String everything = "Description: "+ descr +"\n" + "When : " + time + " for " + dur + " hours" + "\n"
                             + "Where: " + loc + "\n" + "Available spots: " + cap + "\n" + "Price: " + price;
                 
                 
         jInfo.setText(everything);
         
-        String name = tripList.get(n).getName();
+        String name = trip.getName();
         jTripName.setText(name);
         
-        ArrayList<String> dates = tripList.get(n).getDates();
+        ArrayList<String> dates = trip.getDates();
         DefaultListModel datemodel = new DefaultListModel();
         for(int i = 0; i< dates.size();i++){
             datemodel.addElement(dates.get(i));
@@ -540,7 +550,11 @@ public class TripsView extends javax.swing.JFrame {
         
         jDatesAvail.setModel(datemodel);
     }//GEN-LAST:event_jMoreInfoActionPerformed
-
+    
+    /**
+     * Gets selected trip and opens a from of Booking view.
+     * @param evt 
+     */
     private void jBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBookActionPerformed
         int n = jTable.getSelectedRow();
         DatabaseController cntr = new DatabaseController();
@@ -553,7 +567,11 @@ public class TripsView extends javax.swing.JFrame {
         BookingView.setVisible(true);
         jDialogMoreInfo.setVisible(false);
     }//GEN-LAST:event_jBookActionPerformed
-
+    
+    /**
+     * Gets all user input and calls search class for searched trips.
+     * @param evt 
+     */
     private void jSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSearchActionPerformed
         // Make ArrayList<JCheckBox> for all checked boxes
         ArrayList<JCheckBox> checkboxes = getCheckboxes();
@@ -588,7 +606,6 @@ public class TripsView extends javax.swing.JFrame {
         String dateTo = "";
         try{
             dateTo = new SimpleDateFormat("yyyy-MM-dd").format(dateT);
-            System.out.println(dateTo);
         }catch (Exception e){
             if(dateT == null){
             Date date= new Date();
@@ -600,43 +617,48 @@ public class TripsView extends javax.swing.JFrame {
         
         Search search = new Search();
         try {
-            System.out.println("try");
             ArrayList<Trip> search1 = search.search(locations, priceLower, priceHigher, dateFrom, dateTo, query);
             DefaultTableModel model = (DefaultTableModel)jTable.getModel();
             
             Object[] row = new Object[3];
-            System.out.println(search1.size());
-            System.out.println(model.getRowCount());
+
             int rowCount = model.getRowCount();
             for(int i = rowCount - 1; i >= 0; i--){
                 model.removeRow(i);
             }
-            //ATH SEARCH1.SIZE ER 0
-            System.out.println(search1.size());
-
-            for(int i = 0;i<search1.size();i++){
+            for(int i = 0; i<search1.size();i++){
                 row[0]= search1.get(i).getName();
                 row[1]= search1.get(i).getPrice();
                 row[2]= search1.get(i).getLocation();
-                System.out.println(search1.get(i).getName());
                 model.insertRow(i, row);
+        
             }
             jTable.setModel(model);
         } catch (ParseException ex) {
-            System.out.println("catch");
             Logger.getLogger(TripsView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jSearchActionPerformed
-
+    /**
+     * Opens a form of Login view.
+     * @param evt 
+     */
     private void jHostLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jHostLoginActionPerformed
         JFrame Login = new LoginView();
         Login.setVisible(true);
     }//GEN-LAST:event_jHostLoginActionPerformed
-
+    
+    /**
+     * Closes more info dialog.
+     * @param evt 
+     */
     private void jCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCloseActionPerformed
         jDialogMoreInfo.setVisible(false);
     }//GEN-LAST:event_jCloseActionPerformed
-
+    
+    /**
+     * Opens a form of post trip view if user is logged in.
+     * @param evt 
+     */
     private void jCreateTripActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCreateTripActionPerformed
         PostTripView create = new PostTripView();
         HostLogin kisi = new HostLogin();
@@ -650,7 +672,11 @@ public class TripsView extends javax.swing.JFrame {
             jLogout.setVisible(true);
         }
     }//GEN-LAST:event_jCreateTripActionPerformed
-
+    
+    /**
+     * Cancels search and returns the initial list.
+     * @param evt 
+     */
     private void jCancelSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCancelSearchActionPerformed
 
         DefaultTableModel model = (DefaultTableModel)jTable.getModel();

@@ -8,7 +8,6 @@ package View;
 import Controller.DatabaseController;
 import Model.HostLogin;
 import Model.Trip;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,8 +15,11 @@ import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author EKKIkaren
+ * Post trip view form for user. 
+ * Only visible if user is logged in.
+ * @author Ragna Ólafsdóttir, rao9@hi.is
+ * @author Hugrún Guðmundsdóttir, hug17@hi.is
+ * @author Karen Ósk Pétursdóttir, kop1@hi.is
  */
 public class PostTripView extends javax.swing.JFrame {
     
@@ -427,6 +429,11 @@ public class PostTripView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * View form that handles the post trip option.
+     * All user input is gotten and put in correct form.
+     * @param evt 
+     */
     private void jPostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPostActionPerformed
 
        String time = "" + jTimeFrom.getSelectedItem() + "-" + jTimeTo.getSelectedItem();
@@ -459,7 +466,11 @@ public class PostTripView extends javax.swing.JFrame {
        }
         
     }//GEN-LAST:event_jPostActionPerformed
-    
+    /**
+     * A sub method for jPostActionPerformed. 
+     * Returns a string in correct form.
+     * @return 
+     */
     private String getduration(){
        String timefrom = "" + jTimeFrom.getSelectedItem();
        String timeto = "" + jTimeTo.getSelectedItem();
@@ -480,6 +491,11 @@ public class PostTripView extends javax.swing.JFrame {
        return dur;
     }
     
+    /**
+     * A sub method for jPostActionPerformed. 
+     * Returns a ArrayList of strings in correct form.
+     * @return 
+     */
     private ArrayList<String> getdate(){
         int listLength = jDateList.getModel().getSize();
         ArrayList<String> dates = new ArrayList();
@@ -489,7 +505,11 @@ public class PostTripView extends javax.swing.JFrame {
         }
         return dates;
     }
-    
+    /**
+     * A sub method for jPostActionPerformed. 
+     * Returns a ArrayList of strings in correct form.
+     * @return 
+     */
     private ArrayList<String> getChecks(){
        ArrayList<String> types = new ArrayList();
        if(jExtreme.isSelected())    types.add(jExtreme.getText());
@@ -504,7 +524,14 @@ public class PostTripView extends javax.swing.JFrame {
        
        return types;
     }
-    
+    /**
+     * Checks if user has inputted everything that is necessary for posting a trip.
+     * @param name
+     * @param descr
+     * @param dates
+     * @param types
+     * @return 
+     */
     private static ArrayList<String> check(String name, String descr, ArrayList<String> dates, ArrayList<String> types ){
         ArrayList<String> errors = new ArrayList();
         if(name.equals("")){
@@ -521,7 +548,11 @@ public class PostTripView extends javax.swing.JFrame {
         }
         return errors;
     }
-    
+    /**
+     * A sub method for jPostActionPerformed. 
+     * Adds date to a list.
+     * @param evt 
+     */
     private void jAddDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jAddDateActionPerformed
         DefaultListModel model = (DefaultListModel) jDateList.getModel();
         Date date = jChooseDate.getDate();
@@ -530,18 +561,25 @@ public class PostTripView extends javax.swing.JFrame {
         jDateList.setModel(model);
 
     }//GEN-LAST:event_jAddDateActionPerformed
-
+    /**
+     * A sub method for jPostActionPerformed. 
+     * Deletes date from a list.
+     * @param evt 
+     */
     private void jDeleteDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDeleteDateActionPerformed
         if(!jDateList.isSelectionEmpty()){
             int i = jDateList.getSelectedIndex();
-            System.out.println(i);
             DefaultListModel model = (DefaultListModel) jDateList.getModel();
             model.remove(i);
 
             jDateList.setModel(model);
         }
     }//GEN-LAST:event_jDeleteDateActionPerformed
-
+    /**
+     * A sub method for jPostActionPerformed. 
+     * Handles time choosing.
+     * @param evt 
+     */
     private void jVariousActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jVariousActionPerformed
         if(jVarious.isSelected()){
             jTimeFrom.setEnabled(false);
@@ -551,7 +589,11 @@ public class PostTripView extends javax.swing.JFrame {
             jTimeTo.setEnabled(true);
         }
     }//GEN-LAST:event_jVariousActionPerformed
-
+    /**
+     * A sub method for jPostActionPerformed. 
+     * Handles capacity choosing.
+     * @param evt 
+     */
     private void jNoCapacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jNoCapacActionPerformed
         if(jNoCapac.isSelected()){
             jCapacity.setEnabled(false);

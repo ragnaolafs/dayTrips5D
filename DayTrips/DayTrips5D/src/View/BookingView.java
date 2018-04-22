@@ -26,7 +26,7 @@ public class BookingView extends javax.swing.JFrame {
      */
     public BookingView() {
         initComponents();
-        Trip trip = TripsView.getSelectedTrip();
+        Trip trip = TripsView.selectedTrip;
         ArrayList<String> dates = trip.getDates();
         for(int i = 0; i<dates.size();i++){
             jDateChooser.add(dates.get(i));

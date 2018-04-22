@@ -31,6 +31,7 @@ public class Search {
     private String keyword;
     private ArrayList<Trip> resultSet;
     private DatabaseController dbController;
+    private static ArrayList<Trip> currentTripList;
     
     /**
      * Constructor creates an object of DatabaseController class.
@@ -140,6 +141,7 @@ public class Search {
        return searchResult;
     }
     
+    
     /**
      * Calls private methods to search for trips in desired locations, within
      * a given price range and timeframe, with some string matching part
@@ -166,10 +168,14 @@ public class Search {
         }
 
         // Update the triplist with the search results:
-        tripList = searchLocations(locations, tripList); 
+        tripList = searchLocations(locations, tripList);
         tripList = searchPrices(priceLower, priceHigher, tripList);
         tripList = searchDates(dateFrom, dateTo, tripList);
-        
+        currentTripList=tripList;
+
         return tripList;
+    }
+    public ArrayList<Trip> getCurrentTripList(){
+        return currentTripList;
     }
 }
